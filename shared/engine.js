@@ -720,10 +720,23 @@ function renderReadingContent(n){
     }).join("");
     html += `<div class="rc-mustknows"><div class="rc-mk-head">⭐ Must-knows <span>— what your professors stress</span></div><ul>${lis}</ul></div>`;
   }
-  getChapters(n).forEach((ch, ci) => {
+  const chapters = getChapters(n);
+  const deck = (typeof SLIDES !== "undefined") ? SLIDES[n] : null;
+  const usedSlides = new Set();
+  chapters.forEach((ch, ci) => {
+    const content = renderChapterContent(n, ch.los);
+    // if this section has no curated inline slide, distribute a proportional deck slide so every section has a visual
+    let sectionSlide = "";
+    if (deck && deck.count && !content.includes("rc-inline-slide")){
+      let pg = Math.max(2, Math.round((ci + 0.5) / chapters.length * deck.count));
+      pg = Math.min(pg, deck.count);
+      while (usedSlides.has(pg) && pg < deck.count) pg++;   // avoid repeating the same slide
+      usedSlides.add(pg);
+      sectionSlide = `<div class="rc-section-slide">${inlineSlideHTML(n, pg)}</div>`;
+    }
     html += `<section class="rc-chapter" id="ch-${n}-${ci}">
       <h3 class="rc-chapter-h"><span class="rc-chapter-n">${ci+1}</span>${ch.icon?`<span class="rc-chapter-ic">${ch.icon}</span>`:""}<span class="rc-chapter-t">${esc(ch.title)}</span></h3>
-      ${renderChapterContent(n, ch.los)}</section>`;
+      ${sectionSlide}${content}</section>`;
   });
   return html;
 }
@@ -798,10 +811,12 @@ function masterWeakItems(n){
     });
   });
   Object.keys(state.markReview).forEach(pb => { const t = state.markReview[pb]; if (t.lec === n) out.push({ type:"para", pb, text: t.text }); });
+  (state.hl[n] || []).forEach(a => { if (a.type === "review") out.push({ type:"hl", id:a.id, ci:a.ci, text:a.text }); });
   return out;
 }
 function masterWeakCount(n){ return masterWeakItems(n).length; }
 function masterClearPara(pb){ removeParaTag("review", pb); setView("master"); showToast("Cleared ✓"); }
+function masterClearHl(id){ const n = state.currentLec; state.hl[n] = (state.hl[n] || []).filter(a => a.id !== id); save(KEYS.hl, state.hl); updateMarkupCount(); setView("master"); showToast("Cleared ✓"); }
 function renderMasterView(){
   showTray(false); hideAnnoPopup();
   const main = document.getElementById("main");
@@ -811,7 +826,7 @@ function renderMasterView(){
   const items = masterWeakItems(n);
   const missed = items.filter(i => i.type==="q" && i.reason==="missed").length;
   const flagged = items.filter(i => i.type==="q" && i.reason==="flagged").length;
-  const paras = items.filter(i => i.type==="para").length;
+  const paras = items.filter(i => i.type==="para" || i.type==="hl").length;
   let html = `
     <div class="lecture-header"><span class="lec-pill">Lecture ${n}</span><h2>${esc(title)}</h2></div>
     ${lectureModeBar(n)}
@@ -832,12 +847,19 @@ function renderMasterView(){
   items.forEach(it => {
     if (it.type === "q"){
       html += `<div class="master-item"><div class="master-item-tag ${it.reason}">${it.reason==="missed"?"✗ You missed this":"⚑ Flagged"}</div>${renderQuestionCard(it.qe, n, it.lo)}</div>`;
-    } else {
+    } else if (it.type === "para"){
       html += `<div class="master-item"><div class="master-item-tag rev">⚠️ Marked to review</div>
         <div class="master-para">${esc(it.text)}</div>
         <div class="master-para-actions">
           <button class="btn btn-small" onclick="jumpToPara(${n},'${it.pb}',0)">Open in lecture</button>
           <button class="btn-start-practice" onclick="masterClearPara('${it.pb}')">✓ Got it</button>
+        </div></div>`;
+    } else { // type "hl" — text selection marked ⚠️
+      html += `<div class="master-item"><div class="master-item-tag rev">⚠️ Highlighted to review</div>
+        <div class="master-para">${esc(it.text)}</div>
+        <div class="master-para-actions">
+          <button class="btn btn-small" onclick="jumpToMarkup(${n},${it.ci})">Open in lecture</button>
+          <button class="btn-start-practice" onclick="masterClearHl('${it.id}')">✓ Got it</button>
         </div></div>`;
     }
   });
@@ -2014,8 +2036,8 @@ function closeLightbox(){ document.getElementById("lightbox").classList.remove("
 // =============================================================
 // TEXT-TO-SPEECH (listen mode) — mini audio player with seek
 // =============================================================
-let TTS = { on:false, playing:false, chunks:[], durs:[], cum:[], total:0, idx:0, lec:null, voice:null, tickStart:0, timer:null };
-const TTS_CPS = 14.5; // approx chars/sec spoken at rate 0.95 (for the time bar)
+let TTS = { on:false, playing:false, chunks:[], durs:[], cum:[], total:0, idx:0, lec:null, voice:null, tickStart:0, timer:null, gen:0, rate:1.0 };
+const TTS_SPEEDS = [0.8, 1.0, 1.2, 1.5];
 // expand abbreviations + symbols so the voice reads naturally, not like code
 const SAY = [
   [/→|->/g, " leads to "], [/[⇄↔]/g, " versus "], [/&/g, " and "],
@@ -2064,22 +2086,31 @@ function pickVoice(){
       || vs.find(v=>v.lang==="en-US") || vs[0];
 }
 function fmtTime(s){ s=Math.max(0,Math.round(s)); const m=Math.floor(s/60); return m + ":" + String(s%60).padStart(2,"0"); }
-function ttsBuild(n){
-  const chunks = ttsChunks(n);
-  const durs = chunks.map(c => Math.max(1.0, c.length / TTS_CPS));
-  const cum = [0]; durs.forEach(d => cum.push(cum[cum.length-1] + d));
-  TTS.chunks = chunks; TTS.durs = durs; TTS.cum = cum; TTS.total = cum[cum.length-1]; TTS.lec = n;
+function ttsRecalcTimes(){
+  const cps = 15 * (TTS.rate || 1);
+  TTS.durs = TTS.chunks.map(c => Math.max(0.8, c.length / cps));
+  const cum = [0]; TTS.durs.forEach(d => cum.push(cum[cum.length-1] + d));
+  TTS.cum = cum; TTS.total = cum[cum.length-1];
 }
+function ttsBuild(n){ TTS.chunks = ttsChunks(n); TTS.lec = n; ttsRecalcTimes(); }
 function ttsSpeakCurrent(){
   if(!("speechSynthesis" in window)) return;
   if(!TTS.playing || TTS.idx >= TTS.chunks.length){ if(TTS.idx >= TTS.chunks.length) ttsEnd(); return; }
+  const myGen = ++TTS.gen;   // generation guard: a cancelled utterance's onend must not advance/fight a seek
   const u = new SpeechSynthesisUtterance(TTS.chunks[TTS.idx]);
-  if(TTS.voice) u.voice = TTS.voice; u.rate = 0.95; u.pitch = 1.0;
-  u.onend = () => { if(TTS.playing){ TTS.idx++; TTS.tickStart = performance.now(); ttsSpeakCurrent(); ttsRenderPlayer(); } };
+  if(TTS.voice) u.voice = TTS.voice; u.rate = TTS.rate; u.pitch = 1.0;
+  u.onend = () => { if(TTS.gen !== myGen) return; if(TTS.playing){ TTS.idx++; TTS.tickStart = performance.now(); ttsSpeakCurrent(); ttsRenderPlayer(); } };
   u.onerror = () => {};
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(u);
   TTS.tickStart = performance.now();
+}
+function ttsCycleSpeed(){
+  const i = TTS_SPEEDS.indexOf(TTS.rate);
+  TTS.rate = TTS_SPEEDS[(i + 1) % TTS_SPEEDS.length];
+  ttsRecalcTimes();
+  if(TTS.playing) ttsSpeakCurrent();   // apply new rate immediately
+  ttsRenderPlayer();
 }
 function ttsStartTicker(){ if(TTS.timer) return; TTS.timer = setInterval(ttsTick, 200); }
 function ttsStopTicker(){ if(TTS.timer){ clearInterval(TTS.timer); TTS.timer = null; } }
@@ -2097,6 +2128,7 @@ function ttsRenderPlayer(){
   fill.style.width = pct + "%"; if(dot) dot.style.left = pct + "%";
   if(cur) cur.textContent = fmtTime(t); if(tot) tot.textContent = fmtTime(TTS.total);
   const pb = document.getElementById("ap-play"); if(pb) pb.textContent = TTS.playing ? "⏸" : "▶";
+  const sp = document.getElementById("ap-speed"); if(sp) sp.textContent = (Number.isInteger(TTS.rate) ? TTS.rate : TTS.rate) + "×";
 }
 function showPlayer(on){ const p = document.getElementById("aplayer"); if(p) p.classList.toggle("show", on); }
 function ttsPlayBtnLabel(){ const b=document.getElementById("tts-btn"); if(b){ b.classList.toggle("on", TTS.on); b.innerHTML = TTS.on ? "🔊 Playing" : "🔊 Listen"; } }
@@ -2301,7 +2333,12 @@ function annoFromSelection(type){
   if (!_selRange) { hideAnnoPopup(); return; }
   const ci = chapterIndexOfNode(_selRange.startContainer);
   const text = _selRange.toString().trim().replace(/\s+/g, " ");
-  if (type === "bookmark"){ setBookmark(n, ci, text); cleanupSelection(); return; }
+  if (type === "bookmark"){
+    const sc = _selRange.startContainer;
+    const pbEl = (sc.nodeType === 3 ? sc.parentElement : sc).closest("[data-pb]");
+    setBookmark(n, ci, text, pbEl ? pbEl.getAttribute("data-pb") : null);
+    cleanupSelection(); return;
+  }
   const id = annoId();
   wrapRange(_selRange, ANNO_META[type].cls, id);
   (state.hl[n] = state.hl[n] || []).push({ id, ci, text, type });
@@ -2319,21 +2356,31 @@ function reapplyAnnotations(n){
     highlightFirstOccurrence(ch, a.text, ANNO_META[a.type].cls, a.id);
   });
 }
+// map a character offset within container.textContent to a {node, offset}
+function offsetToNodePos(container, target){
+  const tw = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+  let acc = 0, node;
+  while ((node = tw.nextNode())){
+    const len = node.nodeValue.length;
+    if (target <= acc + len) return { node, offset: target - acc };
+    acc += len;
+  }
+  return null;
+}
+// re-wrap a stored highlight even when it spans inline <strong> (multiple text nodes)
 function highlightFirstOccurrence(container, text, cls, id){
   if (!text) return false;
-  const tw = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
-  let node;
-  while ((node = tw.nextNode())){
-    if (node.parentElement && node.parentElement.closest(".anno")) continue;
-    const idx = node.nodeValue.indexOf(text);
-    if (idx >= 0){
-      const range = document.createRange();
-      range.setStart(node, idx); range.setEnd(node, idx + text.length);
-      wrapRange(range, cls, id);
-      return true;
-    }
-  }
-  return false;
+  const full = container.textContent;
+  let idx = full.indexOf(text);
+  if (idx < 0){ const ws = text.replace(/\s+/g, " "); idx = full.replace(/\s+/g, " ").indexOf(ws); }
+  if (idx < 0) return false;
+  const start = offsetToNodePos(container, idx);
+  const end = offsetToNodePos(container, idx + text.length);
+  if (!start || !end) return false;
+  const range = document.createRange();
+  try { range.setStart(start.node, start.offset); range.setEnd(end.node, end.offset); }
+  catch (e) { return false; }
+  return wrapRange(range, cls, id);
 }
 // click an existing highlight to remove it
 function onReadingClick(e){
@@ -2349,13 +2396,14 @@ function onReadingClick(e){
 }
 
 // ---- bookmarks (resume) ----
-function setBookmark(n, ci, label){
-  state.bookmarks[n] = { ci, label: (label || "").slice(0, 90), ts: Date.now() };
+function setBookmark(n, ci, label, pb){
+  state.bookmarks[n] = { ci, pb: pb || null, label: (label || "").slice(0, 90), ts: Date.now() };
   save(KEYS.bookmarks, state.bookmarks);
-  renderChapterBadges(n);
-  showToast("🔖 Bookmarked — your spot is saved");
+  applyParaTags(n);
+  showToast("🔖 Bookmark dropped — your spot is saved");
   updateMarkupCount();
 }
+function removeBookmark(n){ delete state.bookmarks[n]; save(KEYS.bookmarks, state.bookmarks); applyParaTags(n); updateMarkupCount(); showToast("Bookmark removed"); }
 function mostRecentBookmark(){
   let best = null;
   Object.keys(state.bookmarks).forEach(k => { const b = state.bookmarks[k]; if (b && (!best || b.ts > best.ts)) best = Object.assign({ lec: parseInt(k) }, b); });
@@ -2365,7 +2413,10 @@ function resumeReading(lec){
   const b = lec != null ? Object.assign({ lec }, state.bookmarks[lec]) : mostRecentBookmark();
   if (!b || b.ci == null) return;
   goToLec(b.lec); setView("learn");
-  setTimeout(() => { const el = document.getElementById(`ch-${b.lec}-${b.ci}`); if (el) el.scrollIntoView({ behavior:"smooth", block:"start" }); }, 80);
+  setTimeout(() => {
+    const el = (b.pb && document.querySelector(`#reading [data-pb="${b.pb}"]`)) || document.getElementById(`ch-${b.lec}-${b.ci}`);
+    if (el) el.scrollIntoView({ behavior:"smooth", block: b.pb ? "center" : "start" });
+  }, 80);
 }
 
 // ---- chapter-level tags (from draggable tray) ----
@@ -2374,7 +2425,7 @@ function tagParagraph(type, el, n){
   const pb = el.getAttribute("data-pb"); if (!pb) return;
   const ci = chapterIndexOfNode(el);
   const text = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 160);
-  if (type === "bookmark"){ setBookmark(n, ci, text); applyParaTags(n); return; }
+  if (type === "bookmark"){ setBookmark(n, ci, text, pb); return; }
   const store = type === "review" ? state.markReview : state.markStar;
   if (store[pb]) delete store[pb]; else store[pb] = { lec:n, pb, ci, text };
   save(type === "review" ? KEYS.markReview : KEYS.markStar, store);
@@ -2388,22 +2439,27 @@ function removeParaTag(type, pb){
 }
 function applyParaTags(n){
   document.querySelectorAll("#reading [data-pb]").forEach(el => {
-    el.classList.remove("pb-review", "pb-important");
-    el.querySelectorAll(".pb-remove").forEach(x => x.remove());
+    el.classList.remove("pb-review", "pb-important", "pb-bookmark");
+    const g = el.querySelector(":scope > .pb-gutter"); if (g) g.remove();
   });
-  const paint = (store, cls, type, icon) => {
-    Object.keys(store).forEach(pb => {
-      const t = store[pb]; if (t.lec !== n) return;
-      const el = document.querySelector(`#reading [data-pb="${pb}"]`); if (!el) return;
-      el.classList.add(cls);
+  const markers = {};  // pb -> [{icon, cls, rm}]
+  const add = (pb, m) => { (markers[pb] = markers[pb] || []).push(m); };
+  Object.keys(state.markStar).forEach(pb => { const t = state.markStar[pb]; if (t.lec === n) add(pb, { icon:"⭐", cls:"important", rm:() => removeParaTag("important", pb) }); });
+  Object.keys(state.markReview).forEach(pb => { const t = state.markReview[pb]; if (t.lec === n) add(pb, { icon:"⚠️", cls:"review", rm:() => removeParaTag("review", pb) }); });
+  const bm = state.bookmarks[n];
+  if (bm && bm.pb) add(bm.pb, { icon:"🔖", cls:"bookmark", rm:() => removeBookmark(n) });
+  Object.keys(markers).forEach(pb => {
+    const el = document.querySelector(`#reading [data-pb="${pb}"]`); if (!el) return;
+    const g = document.createElement("span"); g.className = "pb-gutter";
+    markers[pb].forEach(m => {
+      el.classList.add("pb-" + m.cls);
       const b = document.createElement("button");
-      b.className = "pb-remove " + type; b.textContent = icon; b.title = "Click to remove";
-      b.onclick = (e) => { e.stopPropagation(); removeParaTag(type, pb); };
-      el.appendChild(b);
+      b.className = "pb-remove"; b.textContent = m.icon; b.title = "Click to remove";
+      b.onclick = (e) => { e.stopPropagation(); m.rm(); };
+      g.appendChild(b);
     });
-  };
-  paint(state.markStar, "pb-important", "important", "⭐");
-  paint(state.markReview, "pb-review", "review", "⚠️");
+    el.appendChild(g);
+  });
 }
 // kept for any old callers
 function renderChapterBadges(n){ applyParaTags(n); }

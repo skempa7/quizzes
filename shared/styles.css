@@ -2199,7 +2199,7 @@ h1, h2, h3, h4, h5, h6,
 }
 .shell.rail-collapsed { --rail-w: 0px; }
 .shell.notes-open { --notes-w: 340px; }
-.rail { overflow: hidden; }
+.rail { overflow-x: hidden; overflow-y: auto; }
 main { max-width: 1120px; padding-right: 56px; }
 .shell.notes-open main { padding-right: 40px; }
 
@@ -2253,10 +2253,9 @@ main { max-width: 1120px; padding-right: 56px; }
 [data-pb].pb-important, [data-pb].pb-review { padding-left: 14px; border-left: 3px solid; }
 [data-pb].pb-important { border-left-color: var(--primary); }
 [data-pb].pb-review    { border-left-color: var(--c-confuse); }
-.pb-remove {
-  position: absolute; left: -26px; top: 0; background: transparent; border: none;
-  cursor: pointer; font-size: .8rem; line-height: 1.7; opacity: .55; padding: 0;
-}
+[data-pb].pb-bookmark  { background: var(--primary-softer); border-radius: 4px; box-shadow: inset 3px 0 0 var(--primary); padding-left: 11px; }
+.pb-gutter { position: absolute; left: -24px; top: 1px; display: flex; flex-direction: column; gap: 2px; }
+.pb-remove { background: transparent; border: none; cursor: pointer; font-size: .78rem; line-height: 1.2; opacity: .6; padding: 0; }
 .pb-remove:hover { opacity: 1; transform: scale(1.12); }
 
 /* =============================================================
@@ -2358,3 +2357,10 @@ main { max-width: 1120px; padding-right: 56px; }
   border-radius: var(--radius-md); padding: 12px 15px;
 }
 .master-para-actions { display: flex; gap: 10px; margin-top: 10px; }
+
+/* audio player speed pill */
+.ap-speed { font-size: .74rem; font-weight: 700; border: 1px solid var(--border); border-radius: 999px; padding: 3px 9px; }
+/* section-level distributed slide (lectures with sparse curated matches) */
+.rc-section-slide { float: right; width: 230px; margin: 2px 0 12px 18px; }
+.rc-section-slide .rc-inline-slide { width: 100%; }
+@media (max-width: 760px){ .rc-section-slide { float: none; width: 100%; max-width: 320px; margin: 8px 0 12px; } }
