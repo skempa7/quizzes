@@ -349,8 +349,9 @@ function renderSidebar() {
     const active = (!onDash && n === state.currentLec) ? "active" : "";
     const shortTitle = title.length > 26 ? title.substring(0, 24) + "…" : title;
     const mastered = lectureMastered(n);
+    const practiceDone = s.total > 0 && s.answered === s.total;
     const status = mastered ? `<span class="lec-status master" title="Mastered">★</span>`
-                 : state.read[n] ? `<span class="lec-status read" title="Read">✓</span>` : "";
+                 : practiceDone ? `<span class="lec-status read" title="Practice complete">✓</span>` : "";
     html += `<div class="lec-item ${active}" onclick="goToLec(${n})">
       <span class="lec-name">${status}<strong>${n}.</strong> ${shortTitle}</span>
       <span class="count">${s.answered}/${s.total}</span>
@@ -570,7 +571,6 @@ function markRead(n) {
 function setView(mode) {
   if (typeof stopTTS === "function") stopTTS();
   state.viewMode = mode;
-  if (mode === "practice") markRead(state.currentLec);
   renderMain(); renderSidebar(); renderRSidebar();
   refreshNotesIfOpen();
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -1229,6 +1229,15 @@ function answerQ(key, picked, correctIdx) {
     const ls = lectureStats(lecN);
     if (ls.total > 0 && ls.answered === ls.total && ls.correct === ls.total && ls.total >= 5) awardBadge("sharpshooter");
     checkMastery(lecN);
+  }
+
+  // Practice complete → mark lecture done (rail checkmark) once every question is answered
+  const lecDone = parseInt(key.split("_")[0]);
+  const lcs = lectureStats(lecDone);
+  if (lcs.total > 0 && lcs.answered === lcs.total && !state.read[lecDone]) {
+    burstXP("✍️ Practice complete! +20 XP");
+    markRead(lecDone);
+    checkMastery(lecDone);
   }
 
   bumpDaily();
