@@ -2443,3 +2443,17 @@ main { max-width: 1120px; padding-right: 56px; }
   .lecture-header h2 { font-size: 1.5rem; }
   .rc-chapter-h { font-size: 1.2rem; }
 }
+
+/* =============================================================
+   SYNC MODAL (⋯ → Sync across devices)
+   ============================================================= */
+.sync-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 0; border-top: 1px solid var(--border); font-size: .88rem; color: var(--text-soft); }
+.sync-row code { color: var(--primary); font-weight: 700; font-size: .92rem; }
+.sync-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+.sync-label { display: block; font-size: .8rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; margin: 16px 0 6px; }
+.sync-inline { display: flex; gap: 8px; }
+.sync-input { flex: 1; min-width: 0; background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text); padding: 10px 12px; font-size: .95rem; letter-spacing: .05em; font-family: inherit; }
+.sync-input:focus { outline: none; border-color: var(--primary); }
+.sync-link-btn { width: 100%; margin-top: 14px; border: none; cursor: pointer; }
+.sync-note { font-size: .78rem; color: var(--muted); line-height: 1.55; margin-top: 12px; }
+.sync-msg { color: var(--wrong); font-size: .84rem; margin-top: 8px; min-height: 1em; }

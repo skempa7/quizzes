@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../shared/styles.css?v=14">
+<link rel="stylesheet" href="../../shared/styles.css?v=15">
 </head>
 <body>
 
@@ -36,6 +36,8 @@
       <button id="btn-review-incorrect">Review Incorrect</button>
       <button class="btn-flag-head" id="btn-review-flagged">⚑ Review Flagged</button>
       <button id="btn-markups">📌 My Markups <span class="menu-count" id="markups-count"></span></button>
+      <div class="tb-divider"></div>
+      <button id="btn-sync">🔄 Sync across devices</button>
       <div class="tb-divider"></div>
       <button id="btn-editmode">Enter Edit Mode</button>
       <button class="editmode-only" id="btn-commit">Commit Changes</button>
@@ -101,6 +103,17 @@
   </div>
 </div>
 
+<!-- Sync modal -->
+<div class="modal-overlay" id="sync-modal">
+  <div class="modal">
+    <h2>🔄 Sync across devices</h2>
+    <div id="sync-body"></div>
+    <div class="footer-row">
+      <button class="btn" onclick="closeSyncModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <!-- Fast Mode -->
 <div class="fast-overlay" id="fast-overlay">
   <div class="fast-head">
@@ -151,7 +164,7 @@
 <div class="toast" id="toast"></div>
 
 <script src="content.js?v=7"></script>
-<script src="../../shared/engine.js?v=12"></script>
+<script src="../../shared/engine.js?v=13"></script>
 
 </body>
 </html>

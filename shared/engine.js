@@ -82,7 +82,163 @@ function load(key, fallback) {
 }
 function save(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+  onLocalChange(key);
 }
+
+// =============================================================
+// CROSS-DEVICE SYNC (Supabase REST + client-side AES encryption)
+//   Local-first & opt-in: nothing syncs until you link a device with a code.
+//   Your progress is encrypted in the browser before upload and stored under
+//   a hash of the code, so the cloud only ever holds unreadable blobs.
+// =============================================================
+const SUPABASE_URL  = "https://inkuigestowrcapubnsn.supabase.co";
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlua3VpZ2VzdG93cmNhcHVibnNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTk0NTEsImV4cCI6MjA5Njc3NTQ1MX0.NveD40-d63Im5b6ClI6FpbnKcd-vKE1bzWYFl0XiYI0";
+const SYNC_ENABLED  = !!(SUPABASE_URL && SUPABASE_ANON);
+const SYNC_CODE_KEY = "studyhub_sync_code_v1";
+const SYNC_AT_KEY   = "studyhub_sync_at_v1";
+const SYNC_META = new Set([SYNC_CODE_KEY, SYNC_AT_KEY]);
+let _syncBusy = false, _syncTimer = null;
+
+const _te = new TextEncoder(), _td = new TextDecoder();
+function _b64(buf){ const b=new Uint8Array(buf); let s=""; for(let i=0;i<b.length;i++) s+=String.fromCharCode(b[i]); return btoa(s); }
+function _unb64(str){ return Uint8Array.from(atob(str), c=>c.charCodeAt(0)); }
+async function _sha256hex(str){ const h=await crypto.subtle.digest("SHA-256", _te.encode(str)); return [...new Uint8Array(h)].map(b=>b.toString(16).padStart(2,"0")).join(""); }
+async function _deriveKey(code, salt){
+  const base = await crypto.subtle.importKey("raw", _te.encode(code), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name:"PBKDF2", salt, iterations:100000, hash:"SHA-256" }, base, { name:"AES-GCM", length:256 }, false, ["encrypt","decrypt"]);
+}
+async function _encrypt(code, obj){
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await _deriveKey(code, salt);
+  const ct = await crypto.subtle.encrypt({ name:"AES-GCM", iv }, key, _te.encode(JSON.stringify(obj)));
+  return _b64(salt)+"."+_b64(iv)+"."+_b64(ct);
+}
+async function _decrypt(code, blob){
+  const p = blob.split("."); const key = await _deriveKey(code, _unb64(p[0]));
+  const pt = await crypto.subtle.decrypt({ name:"AES-GCM", iv:_unb64(p[1]) }, key, _unb64(p[2]));
+  return JSON.parse(_td.decode(pt));
+}
+async function _rowId(code){ return "v1_" + await _sha256hex("studyhub-sync:" + code); }
+function _syncHeaders(){ return { "apikey": SUPABASE_ANON, "Authorization": "Bearer " + SUPABASE_ANON }; }
+
+function syncCode(){ try { return JSON.parse(localStorage.getItem(SYNC_CODE_KEY)); } catch(e){ return null; } }
+function isSynced(){ return SYNC_ENABLED && !!syncCode(); }
+
+async function _cloudGet(code){
+  const id = await _rowId(code);
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/sync_data?id=eq.${id}&select=blob`, { headers:_syncHeaders() });
+  if(!r.ok) throw new Error("get "+r.status);
+  const rows = await r.json();
+  if(!rows.length) return null;
+  return _decrypt(code, rows[0].blob);
+}
+async function _cloudPut(code, bundle){
+  const id = await _rowId(code), blob = await _encrypt(code, bundle);
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/sync_data`, {
+    method:"POST",
+    headers: Object.assign(_syncHeaders(), { "Content-Type":"application/json", "Prefer":"resolution=merge-duplicates,return=minimal" }),
+    body: JSON.stringify({ id, blob, updated_at: new Date().toISOString() })
+  });
+  if(!r.ok) throw new Error("put "+r.status);
+  localStorage.setItem(SYNC_AT_KEY, JSON.stringify(Date.now()));
+}
+
+// ---- progress bundle: every localStorage entry except the sync meta ----
+function gatherLocal(){
+  const out = {};
+  for(let i=0;i<localStorage.length;i++){ const k=localStorage.key(i); if(SYNC_META.has(k)) continue;
+    try{ out[k]=JSON.parse(localStorage.getItem(k)); }catch(e){ out[k]=localStorage.getItem(k); } }
+  return out;
+}
+function applyBundle(b){ for(const k in b){ if(SYNC_META.has(k)) continue; try{ localStorage.setItem(k, JSON.stringify(b[k])); }catch(e){} } }
+// ---- merge two bundles without losing progress on either device ----
+function _numMap(a,b){ const o=Object.assign({},a); for(const k in b) o[k]=Math.max(o[k]||0, b[k]||0); return o; }
+function _mergeAnswers(a,b){ const o=Object.assign({},a); for(const k in b){ if(!(k in o)) o[k]=b[k]; else { const x=o[k], y=b[k]; if(y&&y.correct&&!(x&&x.correct)) o[k]=y; } } return o; }
+function _mergeListMap(a,b){ const o=Object.assign({},a); for(const lec in b){ const la=o[lec]||[], lb=b[lec]||[], seen=new Set(la.map(x=>x&&x.id)); o[lec]=la.concat(lb.filter(x=>x&&!seen.has(x.id))); } return o; }
+function _mergeBookmarks(a,b){ const o=Object.assign({},a); for(const lec in b){ if(!o[lec] || (b[lec].ts||0)>(o[lec].ts||0)) o[lec]=b[lec]; } return o; }
+function _mergeVal(k,a,b){
+  if(a==null) return b; if(b==null) return a;
+  if(k.includes("_xp_v1")) return Math.max(Number(a)||0, Number(b)||0);
+  if(k.includes("_activity_")) return _numMap(a,b);
+  if(k.includes("_streak_")) return { current:Math.max(a.current||0,b.current||0), highest:Math.max(a.highest||0,b.highest||0) };
+  if(k.includes("_daily_")) return ((a.date||"")>=(b.date||"")) ? a : b;
+  if(k.includes("_answers_")) return _mergeAnswers(a,b);
+  if(k.includes("_hl_v1") || k.includes("_notes_v1")) return _mergeListMap(a,b);
+  if(k.includes("_bookmarks_")) return _mergeBookmarks(a,b);
+  if(typeof a==="object" && typeof b==="object" && !Array.isArray(a)) return Object.assign({}, b, a); // union of maps (local wins ties)
+  return a;
+}
+function mergeBundles(local, cloud){ const o=Object.assign({},local); for(const k in cloud) o[k]=(k in local)?_mergeVal(k,local[k],cloud[k]):cloud[k]; return o; }
+
+// ---- flows ----
+async function syncLink(code){
+  code = (code||"").trim();
+  if(code.length < 4) return { ok:false, msg:"Use a code of at least 4 characters." };
+  try{
+    let cloud=null; try{ cloud = await _cloudGet(code); }catch(e){ if(/get 4\d\d/.test(String(e))) throw e; cloud=null; } // decrypt fail => treat as new
+    const merged = cloud ? mergeBundles(gatherLocal(), cloud) : gatherLocal();
+    applyBundle(merged);
+    localStorage.setItem(SYNC_CODE_KEY, JSON.stringify(code));
+    await _cloudPut(code, merged);
+    return { ok:true };
+  }catch(e){ return { ok:false, msg:"Couldn't connect. Check your internet and try again." }; }
+}
+function syncUnlink(){ localStorage.removeItem(SYNC_CODE_KEY); localStorage.removeItem(SYNC_AT_KEY); }
+function onLocalChange(key){
+  if(!isSynced() || SYNC_META.has(key)) return;
+  clearTimeout(_syncTimer); _syncTimer = setTimeout(syncPush, 2500);
+}
+async function syncPush(){
+  if(!isSynced() || _syncBusy) return; _syncBusy=true;
+  try{ const code=syncCode(); let cloud=null; try{ cloud=await _cloudGet(code); }catch(e){}
+    const merged = cloud ? mergeBundles(gatherLocal(), cloud) : gatherLocal();
+    await _cloudPut(code, merged); updateSyncUI();
+  }catch(e){} finally{ _syncBusy=false; }
+}
+async function syncPullOnLoad(){
+  if(!isSynced()) return;
+  try{
+    const code=syncCode(); const cloud=await _cloudGet(code);
+    if(!cloud){ await _cloudPut(code, gatherLocal()); return; }
+    const local=gatherLocal(), merged=mergeBundles(local, cloud);
+    if(JSON.stringify(merged)!==JSON.stringify(local)){ applyBundle(merged); await _cloudPut(code, merged); location.reload(); }
+    else { localStorage.setItem(SYNC_AT_KEY, JSON.stringify(Date.now())); updateSyncUI(); }
+  }catch(e){}
+}
+// ---- sync UI (⋯ → Sync across devices) ----
+function fmtSyncAt(){ try{ const t=JSON.parse(localStorage.getItem(SYNC_AT_KEY)); if(!t) return ""; const m=Math.round((Date.now()-t)/60000); return m<1?"just now":(m<60?m+" min ago":Math.round(m/60)+" hr ago"); }catch(e){ return ""; } }
+function genSyncCode(){ const a="ABCDEFGHJKMNPQRSTUVWXYZ23456789", r=crypto.getRandomValues(new Uint8Array(12)); let s=""; for(let i=0;i<12;i++){ s+=a[r[i]%a.length]; if(i%4===3&&i<11) s+="-"; } return s; }
+function maskCode(c){ return c ? c.slice(0,2)+"•••"+c.slice(-2) : ""; }
+function renderSyncBody(){
+  const body=document.getElementById("sync-body"); if(!body) return;
+  if(isSynced()){
+    const at=fmtSyncAt();
+    body.innerHTML = `<p class="sub">✅ This device is syncing. Your progress saves to the cloud automatically and merges across your devices.</p>
+      <div class="sync-row"><span>Sync code</span><code>${esc(maskCode(syncCode()))}</code></div>
+      ${at?`<div class="sync-row"><span>Last synced</span><span>${at}</span></div>`:""}
+      <div class="sync-actions"><button class="btn" onclick="doSyncNow(this)">⟳ Sync now</button><button class="btn" onclick="doUnlink()">Unlink this device</button></div>
+      <p class="sync-note">Add another device: open this site there → ⋯ → Sync across devices → enter the same code once.</p>`;
+  } else {
+    body.innerHTML = `<p class="sub">Sync progress across your own devices. It stays local until you link with a private code — anyone else who opens the link keeps their own separate progress.</p>
+      <label class="sync-label">Your sync code</label>
+      <div class="sync-inline"><input id="sync-code-input" class="sync-input" type="text" placeholder="e.g. K7QF-3MTP-9XHA" autocomplete="off" autocapitalize="characters" spellcheck="false"><button class="btn" onclick="var i=document.getElementById('sync-code-input'); i.value=genSyncCode();">Generate</button></div>
+      <button class="btn-continue sync-link-btn" onclick="doLink(this)">🔗 Link this device</button>
+      <p class="sync-note">First device: make up a code (or Generate one), then Link. Other devices: enter the <b>same</b> code. Treat it like a password.</p>
+      <div id="sync-msg" class="sync-msg"></div>`;
+  }
+}
+function openSyncModal(){ const mm=document.getElementById("more-menu"); if(mm) mm.classList.remove("show"); renderSyncBody(); document.getElementById("sync-modal").classList.add("show"); }
+function closeSyncModal(){ document.getElementById("sync-modal").classList.remove("show"); }
+async function doLink(btn){
+  const inp=document.getElementById("sync-code-input"), msg=document.getElementById("sync-msg");
+  const code=inp?inp.value:""; if(btn){ btn.disabled=true; btn.textContent="Linking…"; }
+  const res=await syncLink(code);
+  if(res.ok){ showToast("🔗 Linked — syncing your progress…"); setTimeout(()=>location.reload(), 700); }
+  else { if(msg) msg.textContent=res.msg||"Failed."; if(btn){ btn.disabled=false; btn.textContent="🔗 Link this device"; } }
+}
+function doUnlink(){ syncUnlink(); renderSyncBody(); updateSyncUI(); showToast("Unlinked — this device is local-only again"); }
+async function doSyncNow(btn){ if(btn){ btn.disabled=true; btn.textContent="Syncing…"; } await syncPush(); if(btn){ btn.disabled=false; btn.textContent="⟳ Sync now"; } renderSyncBody(); showToast("Synced ✓"); }
+function updateSyncUI(){ const b=document.getElementById("btn-sync"); if(b) b.textContent=isSynced()?"🔄 Sync · on":"🔄 Sync across devices"; const m=document.getElementById("sync-modal"); if(m && m.classList.contains("show")) renderSyncBody(); }
 
 function todayStr() {
   const d = new Date();
@@ -2719,6 +2875,9 @@ bind("btn-review-incorrect", toggleReviewIncorrect);
 bind("btn-review-flagged", toggleReviewFlagged);
 bind("btn-markups", () => openNotes("highlight"));
 bind("btn-reset", () => document.getElementById("reset-modal").classList.add("show"));
+bind("btn-sync", openSyncModal);
+updateSyncUI();
+syncPullOnLoad();          // if this device is linked, pull + merge cloud progress
 initTray();
 updateMarkupCount();
 // audio player scrub-dot dragging
