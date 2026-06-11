@@ -4,31 +4,67 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Question Bank</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../../shared/styles.css">
 </head>
 <body>
 
-<header>
-  <h1 id="quiz-title"><span class="emoji">🩺</span>Quiz</h1>
-  <span class="head-stat" id="head-stat-overall">0 / 0 answered</span>
+<header class="topbar">
+  <div class="brand" onclick="goHome()" title="Home">
+    <svg class="brand-mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
+      <path d="M8 5 C8 12, 24 12, 24 19 C24 26, 10 25, 10 28" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
+      <circle cx="8" cy="5" r="3" fill="currentColor"/>
+    </svg>
+    <span class="brand-name" id="quiz-title">Quiz</span>
+  </div>
+
+  <button class="tb-btn" id="btn-home" onclick="goHome()" title="Dashboard">🏠</button>
 
   <div class="head-spacer"></div>
 
-  <button class="btn btn-fast" id="btn-fast">⚡ Fast Mode</button>
-  <button class="btn theme-toggle" id="btn-theme" title="Toggle dark mode">🌙</button>
-  <button class="btn" id="btn-hide-sidebar">Hide Stats</button>
-  <button class="btn" id="btn-editmode">Enter Edit Mode</button>
-  <button class="btn editmode-only" id="btn-commit">Commit Changes</button>
-  <button class="btn editmode-only" id="btn-download">Download Changes</button>
-  <button class="btn" id="btn-review-incorrect">Review Incorrect</button>
-  <button class="btn btn-flag-head" id="btn-review-flagged">⚑ Review Flagged</button>
-  <button class="btn" id="btn-reset">Reset</button>
+  <div class="rank-chip" id="rank-chip" onclick="openDrawer()" title="Your stats"></div>
+  <button class="tb-btn btn-fast" id="btn-fast" title="Fast Mode">⚡</button>
+  <button class="tb-btn" id="btn-theme" title="Toggle dark mode">🌙</button>
+  <button class="tb-btn" id="btn-stats" onclick="openDrawer()" title="Stats">📊</button>
+  <div class="tb-more">
+    <button class="tb-btn" onclick="toggleMoreMenu()" title="More">⋯</button>
+    <div class="tb-dropdown" id="more-menu">
+      <button id="btn-review-incorrect">Review Incorrect</button>
+      <button class="btn-flag-head" id="btn-review-flagged">⚑ Review Flagged</button>
+      <button id="btn-review-concepts" onclick="toggleReviewConcepts()">🚩 Review Flagged Concepts</button>
+      <div class="tb-divider"></div>
+      <button id="btn-editmode">Enter Edit Mode</button>
+      <button class="editmode-only" id="btn-commit">Commit Changes</button>
+      <button class="editmode-only" id="btn-download">Download Changes</button>
+      <div class="tb-divider"></div>
+      <button id="btn-reset">Reset Progress</button>
+    </div>
+  </div>
+  <!-- hidden legacy control kept for engine binding -->
+  <button id="btn-hide-sidebar" style="display:none"></button>
 </header>
 
-<div class="layout" id="layout">
-  <nav class="sidebar" id="sidebar"></nav>
+<div class="shell" id="layout">
+  <nav class="rail" id="sidebar"></nav>
   <main id="main"></main>
-  <aside class="rsidebar" id="rsidebar"></aside>
+</div>
+
+<!-- Stats drawer -->
+<div class="drawer-scrim" id="drawer-scrim" onclick="closeDrawer()"></div>
+<aside class="drawer" id="drawer">
+  <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  <div class="rsidebar" id="rsidebar"></div>
+</aside>
+
+<!-- Slide lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-nav lb-prev" onclick="lbStep(-1)">‹</button>
+  <img class="lb-img" id="lb-img" src="" alt="slide">
+  <button class="lb-nav lb-next" onclick="lbStep(1)">›</button>
+  <div class="lb-counter" id="lb-counter"></div>
 </div>
 
 <!-- Reset modal -->
@@ -38,7 +74,7 @@
     <p class="sub">Pick what you want to reset. This only affects your browser — your file is untouched until you click <em>Download Changes</em>.</p>
     <div class="option-row" onclick="confirmReset('progress')">
       <strong>Reset Question Progress Only</strong>
-      <span>Clears answers, streak, flags, and today's count. Keeps any edits/additions/deletions you've made.</span>
+      <span>Clears answers, streak, flags, XP, and today's count. Keeps any edits/additions/deletions you've made.</span>
     </div>
     <div class="option-row" onclick="confirmReset('everything')">
       <strong>Reset Everything to Original</strong>
@@ -70,10 +106,7 @@
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-
-<!-- 1) content.js defines QUIZ_CONFIG + the questions for THIS quiz -->
 <script src="content.js"></script>
-<!-- 2) the shared engine renders everything (never edit per-quiz) -->
 <script src="../../shared/engine.js"></script>
 
 </body>

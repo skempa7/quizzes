@@ -22,7 +22,10 @@ const KEYS = {
   reviewFlagged: SUBJ + "_rev_flag_v1",
   xp: SUBJ + "_xp_v1",
   read: SUBJ + "_read_v1",
-  badges: SUBJ + "_badges_v1"
+  badges: SUBJ + "_badges_v1",
+  conceptDone: SUBJ + "_cdone_v1",
+  conceptFlag: SUBJ + "_cflag_v1",
+  recall: SUBJ + "_recall_v1"
 };
 
 const state = {
@@ -44,7 +47,11 @@ const state = {
   xp: load(KEYS.xp, 0),
   read: load(KEYS.read, {}),       // { lecNum: true }
   badges: load(KEYS.badges, {}),   // { badgeId: true }
-  viewMode: "learn"                // "learn" | "practice"
+  conceptDone: load(KEYS.conceptDone, {}),  // { "lec_lo_bi": true }
+  conceptFlag: load(KEYS.conceptFlag, {}),  // { "lec_lo_bi": true }
+  recallMode: load(KEYS.recall, false),
+  viewMode: "dashboard",           // "dashboard" | "learn" | "practice"
+  reviewConceptsMode: false
 };
 
 function load(key, fallback) {
@@ -154,10 +161,11 @@ function overallStats() {
 // =============================================================
 function renderSidebar() {
   const el = document.getElementById("sidebar");
-  let html = `<h3>Lectures</h3>`;
+  const onDash = state.viewMode === "dashboard" && !state.reviewIncorrectMode && !state.reviewFlaggedMode && !state.reviewConceptsMode;
+  let html = `<div class="lec-item home-item ${onDash?'active':''}" onclick="goHome()"><span class="lec-name">🏠 Dashboard</span></div><h3>Lectures</h3>`;
   QUIZ.forEach(([n, title, los]) => {
     const s = lectureStats(n);
-    const active = n === state.currentLec ? "active" : "";
+    const active = (!onDash && n === state.currentLec) ? "active" : "";
     const shortTitle = title.length > 26 ? title.substring(0, 24) + "…" : title;
     const mastered = lectureMastered(n);
     const status = mastered ? `<span class="lec-status master" title="Mastered">★</span>`
@@ -284,6 +292,8 @@ function renderRSidebar() {
 function renderMain() {
   if (state.reviewIncorrectMode) return renderReviewIncorrect();
   if (state.reviewFlaggedMode) return renderReviewFlagged();
+  if (state.reviewConceptsMode) return renderReviewConcepts();
+  if (state.viewMode === "dashboard") return renderDashboard();
   if (state.viewMode === "learn") return renderLearnView();
   return renderLecture();
 }
@@ -323,6 +333,7 @@ function addXP(amount, msg) {
   if (after.name !== before) {
     burstXP(`${after.icon} RANK UP! ${after.name}`);
   }
+  if (typeof updateRankChip === "function") updateRankChip();
 }
 const BADGES = {
   first_correct: "🩸 First Blood — your first correct answer",
@@ -369,6 +380,7 @@ function markRead(n) {
   }
 }
 function setView(mode) {
+  if (typeof stopTTS === "function") stopTTS();
   state.viewMode = mode;
   if (mode === "practice") markRead(state.currentLec);
   renderMain(); renderSidebar(); renderRSidebar();
@@ -384,49 +396,98 @@ function burstXP(text) {
   setTimeout(() => el.remove(), 1300);
 }
 
+function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
 function lectureModeBar(n) {
   const learnActive = state.viewMode === "learn" ? "active" : "";
   const practiceActive = state.viewMode === "practice" ? "active" : "";
-  const readDot = state.read[n] ? `<span class="mode-dot done" title="Read">✓ read</span>` : "";
-  const masterDot = lectureMastered(n) ? `<span class="mode-dot master" title="Mastered">★ mastered</span>` : "";
+  const tools = state.viewMode === "learn" ? `
+    <div class="mode-tools">
+      <button class="tool-btn ${state.recallMode?'on':''}" onclick="toggleRecall()" title="Hide answers for active recall">🧠 Recall</button>
+      <button class="tool-btn" id="tts-btn" onclick="toggleTTS()" title="Listen">🔊 Listen</button>
+    </div>` : `<div class="mode-status">${lectureMastered(n)?'<span class="mode-dot master">★ mastered</span>':(state.read[n]?'<span class="mode-dot done">✓ read</span>':'')}</div>`;
   return `<div class="mode-bar">
     <button class="mode-btn ${learnActive}" onclick="setView('learn')">📖 Learn</button>
     <button class="mode-btn ${practiceActive}" onclick="setView('practice')">✍️ Practice</button>
-    <div class="mode-status">${readDot}${masterDot}</div>
+    ${tools}
   </div>`;
 }
 
-function formatBlock(b) {
-  const x = b.x;
-  switch (b.t) {
-    case "cq":   return `<div class="rc-cq">${x}</div>`;
-    case "key":  return `<div class="rc-callout rc-key"><span class="rc-tag">🔑 Key</span><div>${x}</div></div>`;
-    case "pearl":return `<div class="rc-callout rc-pearl"><span class="rc-tag">💎 Pearl</span><div>${x}</div></div>`;
-    case "trap": return `<div class="rc-callout rc-trap"><span class="rc-tag">⚠️ Trap</span><div>${x}</div></div>`;
-    case "confusion": return `<div class="rc-callout rc-confusion"><span class="rc-tag">🔀 Don't confuse</span><div>${x}</div></div>`;
-    case "cue":  return `<div class="rc-callout rc-cue"><span class="rc-tag">👁 Cue</span><div>${x}</div></div>`;
-    case "q":    return `<div class="rc-callout rc-think"><span class="rc-tag">🤔 Think it through</span><div>${x}</div></div>`;
-    default:     return `<p>${x}</p>`;
-  }
+function splitLead(t){
+  const m = t.match(/^(.{3,64}?[.:])\s+(.+)$/s);
+  if (m && m[1].length < t.length*0.7) return [m[1].replace(/[.:]\s*$/,""), m[2]];
+  return [null, t];
 }
 
-function renderReadingContent(n) {
+const CC_META = {
+  cq:    {tag:"✓ Key fact", cls:"cc-cq"},
+  key:   {tag:"🔑 Key",      cls:"cc-key"},
+  pearl: {tag:"💎 Pearl",    cls:"cc-pearl"},
+  cue:   {tag:"👁 Cue",      cls:"cc-cue"},
+  q:     {tag:"🤔 Think",    cls:"cc-think"},
+  p:     {tag:"",            cls:"cc-p"}
+};
+
+function ccFoot(key){
+  return `<div class="cc-foot">
+    <button class="cc-btn cc-flag${state.conceptFlag[key]?' on':''}" onclick="toggleConceptFlag('${key}',this)" title="Flag for review">🚩</button>
+    <button class="cc-btn cc-check${state.conceptDone[key]?' on':''}" onclick="toggleConceptDone('${key}',this)">✓ Got it</button>
+  </div>`;
+}
+
+function conceptCardHTML(b, key){
+  const done = state.conceptDone[key] ? " cc-done" : "";
+  const flag = state.conceptFlag[key] ? " cc-flagged" : "";
+  if (b.t === "trap" || b.t === "confusion"){
+    const tag = b.t === "trap" ? "⚠️ Trap" : "🔀 Don't confuse";
+    return `<div class="cc cc-flip ${b.t==='trap'?'cc-trap':'cc-confusion'}${done}${flag}" data-key="${key}">
+      <div class="cc-flip-inner" onclick="this.parentElement.classList.toggle('flipped')">
+        <div class="cc-flip-face cc-flip-front"><span class="cc-tag">${tag}</span><span class="cc-flip-hint">tap to reveal ⟲</span></div>
+        <div class="cc-flip-face cc-flip-back">${esc(b.x)}</div>
+      </div>${ccFoot(key)}</div>`;
+  }
+  const meta = CC_META[b.t] || CC_META.p;
+  const [lead, body] = splitLead(b.x);
+  const tagHtml = meta.tag ? `<span class="cc-tag">${meta.tag}</span>` : "";
+  const head = (lead || meta.tag) ? `<div class="cc-head">${tagHtml}${lead?`<span class="cc-title">${esc(lead)}</span>`:""}</div>` : "";
+  return `<div class="cc ${meta.cls}${done}${flag}" data-key="${key}">
+    ${head}
+    <div class="cc-body" onclick="this.parentElement.classList.add('revealed')"><span class="cc-text">${esc(body)}</span><span class="cc-reveal-hint">👁 tap to reveal</span></div>
+    ${ccFoot(key)}</div>`;
+}
+
+function mustKnowCardHTML(text, key, i){
+  const done = state.conceptDone[key] ? " cc-done" : "";
+  const flag = state.conceptFlag[key] ? " cc-flagged" : "";
+  return `<div class="cc cc-must${done}${flag}" data-key="${key}">
+    <div class="cc-body" onclick="this.parentElement.classList.add('revealed')"><span class="cc-must-num">${i+1}</span><span class="cc-text">${esc(text)}</span><span class="cc-reveal-hint">👁 tap to reveal</span></div>
+    ${ccFoot(key)}</div>`;
+}
+
+function microCheckHTML(n, loId){
+  const qs = getEffectiveQuestions(n, loId);
+  if (!qs.length) return "";
+  const un = qs.find(q => !state.answers[q.key]) || qs[0];
+  return `<div class="micro-check"><div class="micro-label">⚡ Quick check</div>${renderQuestionCard(un, n, loId)}</div>`;
+}
+
+function renderReadingContent(n){
   const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
-  if (!c) {
-    return `<div class="empty-state"><div class="icon">📖</div><h3>Reading content coming soon</h3>
-      <p>This lecture's notes haven't been added yet. Jump into the questions below.</p></div>`;
-  }
+  if (!c) return `<div class="empty-state"><div class="icon">📖</div><h3>Reading content coming soon</h3><p>Jump into the questions instead.</p></div>`;
   let html = "";
-  if (c.tldr) {
-    html += `<div class="rc-tldr"><span class="rc-tldr-label">TL;DR</span>${c.tldr}</div>`;
-  }
-  if (c.mustKnows && c.mustKnows.length) {
+  if (c.tldr) html += `<div class="rc-tldr"><span class="rc-tldr-label">TL;DR</span>${esc(c.tldr)}</div>`;
+  if (c.mustKnows && c.mustKnows.length){
     html += `<div class="rc-section"><h3 class="rc-h">⭐ Must-Knows <span class="rc-sub">— what your professors stress</span></h3>
-      <ol class="rc-musts">${c.mustKnows.map(m => `<li>${m}</li>`).join("")}</ol></div>`;
+      <div class="cc-grid">${c.mustKnows.map((m,i)=>mustKnowCardHTML(m, `${n}_mk_${i}`, i)).join("")}</div></div>`;
   }
   (c.los || []).forEach(lo => {
-    html += `<div class="rc-lo"><h3 class="rc-h"><span class="lo-num">LO ${lo.id}</span>${lo.statement || ""}</h3>
-      <div class="rc-body">${(lo.blocks || []).map(formatBlock).join("")}</div></div>`;
+    const diag = (typeof DIAGRAMS !== "undefined" && DIAGRAMS[`${n}_${lo.id}`]) ? `<div class="rc-diagram">${DIAGRAMS[`${n}_${lo.id}`]}</div>` : "";
+    html += `<div class="rc-lo">
+      <h3 class="rc-h"><span class="lo-num">LO ${lo.id}</span>${esc(lo.statement || "")}</h3>
+      ${diag}
+      <div class="cc-grid">${(lo.blocks||[]).map((b,bi)=>conceptCardHTML(b, `${n}_${lo.id}_${bi}`)).join("")}</div>
+      ${microCheckHTML(n, lo.id)}
+    </div>`;
   });
   return html;
 }
@@ -442,14 +503,21 @@ function renderLearnView() {
   const prev = idx > 0 ? QUIZ[idx - 1][0] : null;
   const next = idx < QUIZ.length - 1 ? QUIZ[idx + 1][0] : null;
   const qCount = lectureStats(n).total;
+  const rs = lectureReadingStats(n);
+  const recallCls = state.recallMode ? " cc-recall" : "";
 
-  let html = `
+  main.innerHTML = `
     <div class="lecture-header">
       <span class="lec-pill">Lecture ${n}${prof}</span>
-      <h2>${title}</h2>
+      <h2>${esc(title)}</h2>
     </div>
     ${lectureModeBar(n)}
-    <div class="reading">${renderReadingContent(n)}</div>
+    <div class="reading-prog">
+      <div class="reading-prog-bar"><div class="reading-prog-fill" id="reading-prog-fill" style="width:${rs.pct}%"></div></div>
+      <span class="reading-prog-txt" id="reading-prog-txt">${rs.done}/${rs.total} concepts</span>
+    </div>
+    <div class="reading${recallCls}" id="reading">${renderReadingContent(n)}</div>
+    ${slidesPanelHTML(n)}
     <div class="learn-cta">
       <div class="learn-cta-text">Done reading? Lock it in with ${qCount} practice question${qCount===1?"":"s"}.</div>
       <button class="btn-start-practice" onclick="setView('practice')">✍️ Start Practice →</button>
@@ -458,7 +526,6 @@ function renderLearnView() {
       ${prev !== null ? `<button class="btn" onclick="goToLec(${prev})">← Lecture ${prev}</button>` : `<span></span>`}
       ${next !== null ? `<button class="btn" onclick="goToLec(${next})">Lecture ${next} →</button>` : `<span></span>`}
     </div>`;
-  main.innerHTML = html;
 }
 
 function renderLecture() {
@@ -690,8 +757,10 @@ function updateHeaderFlagBtn() {
 }
 
 function updateHeaderStat() {
+  const el = document.getElementById("head-stat-overall");
+  if (!el) return;
   const o = overallStats();
-  document.getElementById("head-stat-overall").textContent = `${o.answered} / ${o.total} answered`;
+  el.textContent = `${o.answered} / ${o.total} answered`;
 }
 
 // =============================================================
@@ -710,10 +779,12 @@ function toggleTeach(loKey) {
 // LECTURE NAV
 // =============================================================
 function goToLec(n) {
+  if (typeof stopTTS === "function") stopTTS();
   state.currentLec = n;
   save(KEYS.currentLec, n);
   state.reviewIncorrectMode = false;
   state.reviewFlaggedMode = false;
+  state.reviewConceptsMode = false;
   state.viewMode = "learn";
   updateReviewButtons();
   renderMain();
@@ -1544,17 +1615,220 @@ function burst(text) {
 }
 
 // =============================================================
+// CONCEPT TRACKING + READING PROGRESS
+// =============================================================
+function lectureConceptKeys(n){
+  const c = (typeof LECTURE_CONTENT!=="undefined") ? LECTURE_CONTENT[n] : null;
+  if(!c) return [];
+  const keys=[];
+  (c.mustKnows||[]).forEach((m,i)=>keys.push(`${n}_mk_${i}`));
+  (c.los||[]).forEach(lo=>(lo.blocks||[]).forEach((b,bi)=>keys.push(`${n}_${lo.id}_${bi}`)));
+  return keys;
+}
+function lectureReadingStats(n){
+  const keys=lectureConceptKeys(n);
+  const done=keys.filter(k=>state.conceptDone[k]).length;
+  return {total:keys.length, done, pct: keys.length?Math.round(100*done/keys.length):0};
+}
+function updateReadingProgress(){
+  const rs=lectureReadingStats(state.currentLec);
+  const f=document.getElementById("reading-prog-fill"); if(f) f.style.width=rs.pct+"%";
+  const t=document.getElementById("reading-prog-txt"); if(t) t.textContent=`${rs.done}/${rs.total} concepts`;
+}
+function toggleConceptDone(key, el){
+  const card=el.closest(".cc");
+  if(state.conceptDone[key]){ delete state.conceptDone[key]; }
+  else { state.conceptDone[key]=true; addXP(2); }
+  save(KEYS.conceptDone, state.conceptDone);
+  const on=!!state.conceptDone[key];
+  el.classList.toggle("on", on); if(card) card.classList.toggle("cc-done", on);
+  updateReadingProgress();
+  const n=state.currentLec, rs=lectureReadingStats(n);
+  if(rs.total>0 && rs.done===rs.total){ if(!state.read[n]) burstXP("📖 Lecture read! +20 XP"); markRead(n); checkMastery(n); renderSidebar(); }
+}
+function toggleConceptFlag(key, el){
+  if(state.conceptFlag[key]) delete state.conceptFlag[key]; else state.conceptFlag[key]=true;
+  save(KEYS.conceptFlag, state.conceptFlag);
+  const on=!!state.conceptFlag[key];
+  el.classList.toggle("on", on); const card=el.closest(".cc"); if(card) card.classList.toggle("cc-flagged", on);
+}
+function toggleRecall(){ state.recallMode=!state.recallMode; save(KEYS.recall, state.recallMode); renderMain(); }
+
+// =============================================================
+// SLIDES VIEWER + LIGHTBOX
+// =============================================================
+function slidesPanelHTML(n){
+  const s=(typeof SLIDES!=="undefined")?SLIDES[n]:null;
+  if(!s) return "";
+  return `<div class="slides-panel">
+    <button class="slides-toggle" onclick="toggleSlides(this, ${n})">📑 Lecture slides <span class="slides-count">${s.count}</span><span class="chev">▾</span></button>
+    <div class="slides-strip" id="slides-strip-${n}" style="display:none"></div>
+  </div>`;
+}
+function toggleSlides(btn, n){
+  const strip=document.getElementById("slides-strip-"+n); const s=SLIDES[n];
+  const open = strip.style.display==="none" || !strip.style.display;
+  if(open && !strip.dataset.loaded){
+    let h="";
+    for(let i=1;i<=s.count;i++){ const num=String(i).padStart(2,"0");
+      h+=`<img class="slide-thumb" loading="lazy" src="slides/${s.dir}/${num}.jpg" alt="slide ${i}" onclick="openLightbox('${s.dir}',${s.count},${i})">`; }
+    strip.innerHTML=h; strip.dataset.loaded="1";
+  }
+  strip.style.display=open?"flex":"none"; btn.classList.toggle("open", open);
+}
+const LB={dir:null,count:0,idx:1};
+function openLightbox(dir,count,idx){ LB.dir=dir; LB.count=count; LB.idx=idx; document.getElementById("lightbox").classList.add("show"); lbShow(); }
+function lbShow(){ const num=String(LB.idx).padStart(2,"0"); document.getElementById("lb-img").src=`slides/${LB.dir}/${num}.jpg`; document.getElementById("lb-counter").textContent=`${LB.idx} / ${LB.count}`; }
+function lbStep(d){ LB.idx=Math.max(1,Math.min(LB.count,LB.idx+d)); lbShow(); }
+function closeLightbox(){ document.getElementById("lightbox").classList.remove("show"); }
+
+// =============================================================
+// TEXT-TO-SPEECH (listen mode)
+// =============================================================
+let TTS={on:false};
+function ttsText(n){
+  const c=(typeof LECTURE_CONTENT!=="undefined")?LECTURE_CONTENT[n]:null; if(!c) return "";
+  let parts=[];
+  if(c.tldr) parts.push("Summary. "+c.tldr);
+  (c.mustKnows||[]).forEach((m,i)=>parts.push(`Must know ${i+1}. ${m}`));
+  (c.los||[]).forEach(lo=>{ if(lo.statement) parts.push("Objective. "+lo.statement); (lo.blocks||[]).forEach(b=>parts.push(b.x)); });
+  return parts.join(" ");
+}
+function stopTTS(){ if("speechSynthesis" in window) window.speechSynthesis.cancel(); TTS.on=false; const b=document.getElementById("tts-btn"); if(b){b.classList.remove("on"); b.innerHTML="🔊 Listen";} }
+function toggleTTS(){
+  if(!("speechSynthesis" in window)){ showToast("Speech not supported here"); return; }
+  const btn=document.getElementById("tts-btn");
+  if(TTS.on){ stopTTS(); return; }
+  const u=new SpeechSynthesisUtterance(ttsText(state.currentLec)); u.rate=1.03;
+  u.onend=()=>{ TTS.on=false; if(btn){btn.classList.remove("on"); btn.innerHTML="🔊 Listen";} };
+  window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+  TTS.on=true; if(btn){btn.classList.add("on"); btn.innerHTML="⏸ Stop";}
+}
+
+// =============================================================
+// DASHBOARD (home) + DRAWER + RANK CHIP
+// =============================================================
+function goHome(){ stopTTS(); state.viewMode="dashboard"; state.reviewIncorrectMode=state.reviewFlaggedMode=state.reviewConceptsMode=false; updateReviewButtons(); renderMain(); renderSidebar(); renderRSidebar(); window.scrollTo({top:0,behavior:"smooth"}); }
+function renderDashboard(){
+  const main=document.getElementById("main");
+  const rk=rankFor(state.xp); const o=overallStats();
+  const readCount=Object.keys(state.read).filter(k=>state.read[k]).length;
+  const masterCount=QUIZ.filter(L=>lectureMastered(L[0])).length;
+  const acc=o.answered?Math.round(100*o.correct/o.answered):0;
+  const goal=20, todayN=dailyCount(), goalPct=Math.min(100,Math.round(100*todayN/goal));
+  const last=state.currentLec;
+  let tiles="";
+  QUIZ.forEach(([n,title])=>{
+    const s=lectureStats(n); const rsd=lectureReadingStats(n);
+    const status=lectureMastered(n)?"master":(state.read[n]?"read":((s.answered>0||rsd.done>0)?"started":"new"));
+    const pct=s.total?Math.round(100*s.answered/s.total):0;
+    const icon=status==="master"?"★":(status==="read"?"✓":"");
+    tiles+=`<button class="map-tile map-${status}" onclick="goToLec(${n})">
+      <div class="map-top"><span class="map-num">${n}</span>${icon?`<span class="map-icon">${icon}</span>`:""}</div>
+      <div class="map-title">${esc(title)}</div>
+      <div class="map-bar"><div class="map-bar-fill" style="width:${pct}%"></div></div></button>`;
+  });
+  main.innerHTML=`<div class="dash">
+    <div class="dash-hero">
+      <div class="rank-ring" style="--p:${rk.pct}"><div class="rank-ring-inner"><span class="rank-ring-icon">${rk.cur.icon}</span></div></div>
+      <div class="dash-hero-info">
+        <div class="dash-greeting">Welcome back 👋</div>
+        <div class="dash-rank">${rk.cur.name}</div>
+        <div class="dash-xp">${state.xp} XP ${rk.next?`· <b>${rk.next.min-state.xp}</b> to ${rk.next.name}`:"· max rank 👑"}</div>
+        <button class="btn-continue" onclick="goToLec(${last})">▶ Continue · Lecture ${last}</button>
+      </div>
+    </div>
+    <div class="dash-stats">
+      <div class="dstat"><div class="dstat-num">${readCount}<span>/30</span></div><div class="dstat-lab">📖 Read</div></div>
+      <div class="dstat"><div class="dstat-num">${masterCount}<span>/30</span></div><div class="dstat-lab">★ Mastered</div></div>
+      <div class="dstat"><div class="dstat-num">${o.answered}</div><div class="dstat-lab">Answered</div></div>
+      <div class="dstat"><div class="dstat-num">${o.answered?acc+"%":"—"}</div><div class="dstat-lab">Accuracy</div></div>
+      <div class="dstat"><div class="dstat-num">${state.streakData.current} 🔥</div><div class="dstat-lab">Streak</div></div>
+    </div>
+    <div class="dash-goal">
+      <div class="dash-goal-top"><span>🎯 Daily goal</span><span>${todayN}/${goal} questions</span></div>
+      <div class="dash-goal-bar"><div class="dash-goal-fill" style="width:${goalPct}%"></div></div>
+    </div>
+    <h3 class="dash-h">Lectures</h3>
+    <div class="map-grid">${tiles}</div>
+  </div>`;
+}
+function openDrawer(){ renderRSidebar(); document.getElementById("drawer").classList.add("open"); document.getElementById("drawer-scrim").classList.add("show"); }
+function closeDrawer(){ document.getElementById("drawer").classList.remove("open"); document.getElementById("drawer-scrim").classList.remove("show"); }
+function toggleMoreMenu(){ document.getElementById("more-menu").classList.toggle("show"); }
+function updateRankChip(){
+  const chip=document.getElementById("rank-chip"); if(!chip) return;
+  const rk=rankFor(state.xp);
+  chip.innerHTML=`<span class="rc-ico">${rk.cur.icon}</span><span class="rc-meta"><span class="rc-name">${rk.cur.name}</span><span class="rc-xp">${state.xp} XP</span></span>`;
+}
+
+// =============================================================
+// REVIEW FLAGGED CONCEPTS
+// =============================================================
+function conceptByKey(key){
+  const p=key.split("_"); const n=parseInt(p[0]);
+  const c=(typeof LECTURE_CONTENT!=="undefined")?LECTURE_CONTENT[n]:null; if(!c) return null;
+  if(p[1]==="mk"){ const m=(c.mustKnows||[])[parseInt(p[2])]; return m?{t:"cq",x:m}:null; }
+  const lo=(c.los||[]).find(l=>l.id===parseInt(p[1])); if(!lo) return null;
+  return (lo.blocks||[])[parseInt(p[2])]||null;
+}
+function toggleReviewConcepts(){
+  state.reviewConceptsMode=!state.reviewConceptsMode;
+  state.reviewIncorrectMode=state.reviewFlaggedMode=false;
+  const mm=document.getElementById("more-menu"); if(mm) mm.classList.remove("show");
+  updateReviewButtons(); renderMain();
+}
+function renderReviewConcepts(){
+  const main=document.getElementById("main");
+  const keys=Object.keys(state.conceptFlag).filter(k=>state.conceptFlag[k]);
+  if(!keys.length){ main.innerHTML=`<div class="review-banner"><div><h2>🚩 Flagged Concepts</h2><div class="review-sub">No flagged concepts yet.</div></div><button onclick="toggleReviewConcepts()">Exit</button></div><div class="empty-state"><div class="icon">🚩</div><h3>Nothing flagged</h3><p>Tap 🚩 on any concept card while reading to save it here.</p></div>`; return; }
+  const byLec={}; keys.forEach(k=>{ const n=parseInt(k.split("_")[0]); (byLec[n]=byLec[n]||[]).push(k); });
+  let html=`<div class="review-banner"><div><h2>🚩 Flagged Concepts</h2><div class="review-sub">${keys.length} saved for review</div></div><button onclick="toggleReviewConcepts()">Exit</button></div>`;
+  Object.keys(byLec).map(Number).sort((a,b)=>a-b).forEach(n=>{
+    const lec=getLecture(n);
+    html+=`<h3 class="review-lec-header">Lecture ${n}. ${lec?esc(lec[1]):""}</h3><div class="cc-grid">`;
+    byLec[n].forEach(k=>{ const b=conceptByKey(k); if(b) html+=conceptCardHTML(b,k); });
+    html+=`</div>`;
+  });
+  main.innerHTML=html;
+}
+
+// =============================================================
+// CONCEPT DIAGRAMS (signature visuals)
+// =============================================================
+const DIAGRAMS = {
+  "1_1": `<svg viewBox="0 0 520 116" class="dgm" preserveAspectRatio="xMidYMid meet">
+    <rect class="dgm-box" x="8" y="22" width="232" height="72" rx="11"/>
+    <text class="dgm-t" x="124" y="52" text-anchor="middle">Submucosal · Meissner</text>
+    <text class="dgm-s" x="124" y="76" text-anchor="middle">→ Secretion</text>
+    <rect class="dgm-box dgm-box2" x="280" y="22" width="232" height="72" rx="11"/>
+    <text class="dgm-t" x="396" y="52" text-anchor="middle">Myenteric · Auerbach</text>
+    <text class="dgm-s" x="396" y="76" text-anchor="middle">→ Motility</text></svg>`,
+  "1_2": `<svg viewBox="0 0 580 96" class="dgm" preserveAspectRatio="xMidYMid meet">
+    <rect class="dgm-box" x="6" y="34" width="108" height="40" rx="8"/><text class="dgm-t" x="60" y="59" text-anchor="middle">Normal</text>
+    <rect class="dgm-box" x="156" y="34" width="108" height="40" rx="8"/><text class="dgm-t" x="210" y="59" text-anchor="middle">Metaplasia</text>
+    <rect class="dgm-box" x="306" y="34" width="108" height="40" rx="8"/><text class="dgm-t" x="360" y="59" text-anchor="middle">Dysplasia</text>
+    <rect class="dgm-box dgm-box-bad" x="456" y="34" width="118" height="40" rx="8"/><text class="dgm-t" x="515" y="59" text-anchor="middle">Carcinoma</text>
+    <line class="dgm-arrow" x1="116" y1="54" x2="154" y2="54"/><line class="dgm-arrow" x1="266" y1="54" x2="304" y2="54"/><line class="dgm-arrow dgm-arrow-bad" x1="416" y1="54" x2="454" y2="54"/>
+    <text class="dgm-cap dgm-good" x="135" y="26" text-anchor="middle">reversible</text>
+    <text class="dgm-cap dgm-good" x="285" y="26" text-anchor="middle">reversible</text>
+    <text class="dgm-cap dgm-bad" x="435" y="26" text-anchor="middle">irreversible</text></svg>`
+};
+
+// =============================================================
 // INITIAL HOOK-UP
 // =============================================================
-document.getElementById("btn-fast").onclick = openFast;
-document.getElementById("btn-theme").onclick = toggleDarkMode;
-document.getElementById("btn-hide-sidebar").onclick = toggleSidebar;
-document.getElementById("btn-editmode").onclick = toggleEditMode;
-document.getElementById("btn-commit").onclick = commitChanges;
-document.getElementById("btn-download").onclick = downloadChanges;
-document.getElementById("btn-review-incorrect").onclick = toggleReviewIncorrect;
-document.getElementById("btn-review-flagged").onclick = toggleReviewFlagged;
-document.getElementById("btn-reset").onclick = () => document.getElementById("reset-modal").classList.add("show");
+function bind(id, fn){ const el=document.getElementById(id); if(el) el.onclick=fn; }
+bind("btn-fast", openFast);
+bind("btn-theme", toggleDarkMode);
+bind("btn-hide-sidebar", toggleSidebar);
+bind("btn-editmode", toggleEditMode);
+bind("btn-commit", commitChanges);
+bind("btn-download", downloadChanges);
+bind("btn-review-incorrect", toggleReviewIncorrect);
+bind("btn-review-flagged", toggleReviewFlagged);
+bind("btn-reset", () => document.getElementById("reset-modal").classList.add("show"));
+document.addEventListener("keydown", (e)=>{ if(e.key==="Escape"){ closeLightbox(); closeDrawer(); const mm=document.getElementById("more-menu"); if(mm) mm.classList.remove("show"); } });
 
 document.getElementById("reset-modal").addEventListener("click", (e) => {
   if (e.target.id === "reset-modal") e.target.classList.remove("show");
@@ -1599,13 +1873,14 @@ renderMain();
 renderRSidebar();
 updateHeaderStat();
 updateHeaderFlagBtn();
+updateRankChip();
 
 // ============================================================
 // Populate page title + header from QUIZ_CONFIG (set in content.js)
 // ============================================================
 (function () {
   if (typeof QUIZ_CONFIG === "undefined") return;
-  document.title = QUIZ_CONFIG.title + " — Question Bank";
+  document.title = QUIZ_CONFIG.title + " — Study";
   var h = document.getElementById("quiz-title");
-  if (h) h.innerHTML = '<span class="emoji">' + (QUIZ_CONFIG.emoji || "") + "</span>" + QUIZ_CONFIG.title;
+  if (h) h.textContent = QUIZ_CONFIG.title;
 })();
