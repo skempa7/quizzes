@@ -29,26 +29,27 @@
 }
 
 body.dark {
-  --bg: #0f172a;
-  --bg-soft: #1e293b;
-  --surface: #1e293b;
-  --surface-2: #334155;
-  --border: #334155;
-  --border-soft: #1e293b;
-  --text: #f1f5f9;
-  --text-soft: #cbd5e1;
-  --muted: #94a3b8;
-  --primary: #f59e0b;
-  --primary-hover: #fbbf24;
-  --primary-light: #3a2a0a;
-  --primary-softer: #292524;
-  --primary-glow: rgba(245, 158, 11, 0.32);
-  --correct: #4ade80;
-  --correct-bg: #0f3320;
-  --wrong: #f87171;
-  --wrong-bg: #3d1620;
-  --warning: #facc15;
-  --warning-bg: #3d2c0a;
+  /* Dark mode — Espresso (warm) */
+  --bg: #1a120c;
+  --bg-soft: #241910;
+  --surface: #2a1e14;
+  --surface-2: #352617;
+  --border: #3f2e1d;
+  --border-soft: #2a1e14;
+  --text: #f5ead9;
+  --text-soft: #ddc9ab;
+  --muted: #b39a7c;
+  --primary: #fb923c;
+  --primary-hover: #fdba74;
+  --primary-light: #3c2611;
+  --primary-softer: #2a1c10;
+  --primary-glow: rgba(251, 146, 60, 0.30);
+  --correct: #6fd59f;
+  --correct-bg: #16301f;
+  --wrong: #f6826b;
+  --wrong-bg: #3a1c12;
+  --warning: #f6c453;
+  --warning-bg: #3a2810;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.5);
   --shadow-md: 0 4px 14px rgba(0,0,0,0.45), 0 2px 6px rgba(0,0,0,0.4);
   --shadow-lg: 0 10px 30px rgba(0,0,0,0.6), 0 4px 14px rgba(0,0,0,0.65);
@@ -2074,11 +2075,10 @@ body.dark .rc-p { color: var(--text); }
    chapter badges, My Markups page, dashboard resume banner.
    ============================================================= */
 /* highlight spans */
-.anno { border-radius: 3px; padding: 0 1px; cursor: pointer; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.anno-hl  { background: rgba(245, 200, 66, 0.42); }
-.anno-rev { background: rgba(245, 158, 11, 0.30); box-shadow: inset 0 -2px 0 var(--warning); }
-.anno-imp { background: rgba(217, 119, 6, 0.22); box-shadow: inset 0 -2px 0 var(--primary); }
-body.dark .anno-hl { background: rgba(245, 200, 66, 0.30); color: #fff; }
+.anno { border-radius: 3px; padding: 0 1px; cursor: pointer; color: inherit !important; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.anno-hl  { background: rgba(245, 200, 66, 0.32); }
+.anno-rev { background: rgba(251, 146, 60, 0.26); box-shadow: inset 0 -2px 0 var(--warning); }
+.anno-imp { background: rgba(251, 146, 60, 0.20); box-shadow: inset 0 -2px 0 var(--primary); }
 .anno:hover { outline: 1px dashed var(--muted); }
 
 /* selection popup */
@@ -2164,3 +2164,86 @@ body.dark .anno-hl { background: rgba(245, 200, 66, 0.30); color: #fff; }
   vertical-align: middle; white-space: nowrap;
 }
 .slide-jump:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* =============================================================
+   APPLE SYSTEM FONT — unify everything to the native stack
+   ============================================================= */
+body, button, input, textarea, select,
+h1, h2, h3, h4, h5, h6,
+.brand-name, .reading, .reading *, .slide-jump {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Segoe UI", Roboto, Arial, sans-serif !important;
+}
+
+/* topic-titled recall groups (replaces ClaudeCompares) */
+.rc-recall-group { margin: 0 0 14px; }
+.rc-recall-group:last-child { margin-bottom: 0; }
+.rc-recall-group-h {
+  font-size: .95rem; font-weight: 600; color: var(--primary);
+  margin: 0 0 7px; padding-bottom: 5px;
+  border-bottom: 1px solid var(--border);
+}
+/* removable chapter badges */
+.rc-cbadge {
+  background: transparent; border: none; cursor: pointer;
+  font-size: 1rem; padding: 0 2px; line-height: 1; opacity: .92;
+}
+.rc-cbadge:hover { opacity: 1; transform: scale(1.15); }
+
+/* =============================================================
+   COLLAPSIBLE RAIL + RIGHT NOTES PANEL + wider reading column
+   ============================================================= */
+.shell {
+  display: grid;
+  grid-template-columns: var(--rail-w, 236px) minmax(0, 1fr) var(--notes-w, 0px);
+  transition: grid-template-columns .18s ease;
+}
+.shell.rail-collapsed { --rail-w: 0px; }
+.shell.rail-collapsed .rail { display: none; }
+.shell.notes-open { --notes-w: 340px; }
+.rail { overflow-x: hidden; }
+main { max-width: 1120px; padding-right: 56px; }
+.shell.notes-open main { padding-right: 40px; }
+
+/* notes panel */
+.notes-panel { display: none; }
+.shell.notes-open .notes-panel {
+  display: flex; flex-direction: column;
+  border-left: 1px solid var(--border); background: var(--bg-soft);
+  position: sticky; top: 60px; height: calc(100vh - 60px); overflow: hidden;
+}
+.np-head { display: flex; align-items: center; gap: 6px; padding: 10px 10px 0; }
+.np-tabs { display: flex; gap: 4px; flex: 1; flex-wrap: wrap; }
+.np-tab {
+  background: transparent; border: none; cursor: pointer;
+  font-size: .78rem; font-weight: 600; color: var(--muted);
+  padding: 6px 9px; border-radius: 8px;
+}
+.np-tab:hover { background: var(--surface-2); color: var(--text); }
+.np-tab.on { background: var(--primary); color: #2a1606; }
+.np-close { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 4px 8px; }
+.np-body { flex: 1; overflow-y: auto; padding: 12px 14px 24px; }
+.np-ctx { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin-bottom: 10px; }
+.np-empty { color: var(--muted); font-size: .85rem; line-height: 1.5; padding: 20px 4px; text-align: center; }
+/* notes tab */
+.np-drop { min-height: 60px; border-radius: var(--radius-md); transition: background .15s; }
+.np-drop.drop-on { background: var(--primary-softer); outline: 2px dashed var(--primary); outline-offset: 2px; }
+.np-note { display: flex; gap: 8px; align-items: flex-start; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 9px 11px; margin-bottom: 8px; }
+.np-note-tx { flex: 1; font-size: .86rem; line-height: 1.5; color: var(--text); white-space: pre-wrap; }
+.np-note-x { background: transparent; border: none; color: var(--muted); cursor: pointer; font-size: .8rem; }
+.np-note-x:hover { color: var(--wrong); }
+.np-add { margin-top: 10px; }
+.np-note-input { width: 100%; box-sizing: border-box; resize: vertical; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); color: var(--text); padding: 9px 11px; font-size: .86rem; }
+.np-add-btn { margin-top: 7px; width: 100%; background: var(--primary); color: #2a1606; border: none; border-radius: var(--radius-md); padding: 9px; font-size: .82rem; font-weight: 700; cursor: pointer; }
+.np-add-btn:hover { background: var(--primary-hover); }
+/* markup tabs */
+.np-lec { font-size: .72rem; font-weight: 700; color: var(--primary); margin: 14px 0 6px; }
+.np-item { display: flex; gap: 8px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 9px 11px; margin-bottom: 7px; cursor: pointer; }
+.np-item:hover { border-color: var(--primary); }
+.np-item.chap { border-left: 3px solid var(--primary); }
+.np-item-tx { flex: 1; font-size: .82rem; line-height: 1.45; color: var(--text); }
+.np-item-go { color: var(--primary); font-weight: 700; }
+#btn-notes.on { background: var(--primary); color: #2a1606; }
+@media (max-width: 900px){
+  .shell.notes-open { --notes-w: 0px; }
+  .shell.notes-open .notes-panel { position: fixed; right: 0; top: 60px; width: 88vw; max-width: 360px; z-index: 1150; box-shadow: var(--shadow-lg); }
+}

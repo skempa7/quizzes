@@ -30,7 +30,10 @@ const KEYS = {
   hl: SUBJ + "_hl_v1",               // { lec: [ {ch, text, color} ] } highlights
   markReview: SUBJ + "_markrev_v1",  // { anchorKey: {lec, ch, text} } ⚠️ review-more tags
   markStar: SUBJ + "_markstar_v1",   // { anchorKey: {lec, ch, text} } ⭐ important tags
-  bookmarks: SUBJ + "_bookmarks_v1"  // { lec: {ci, label, ts} } 🔖 resume points
+  bookmarks: SUBJ + "_bookmarks_v1", // { lec: {ci, label, ts} } 🔖 resume points
+  notes: SUBJ + "_notes_v1",         // { lec: [ {id, text, ts} ] } freeform notes
+  railCollapsed: SUBJ + "_rail_v1",
+  notesOpen: SUBJ + "_notesopen_v1"
 };
 
 const state = {
@@ -44,7 +47,7 @@ const state = {
   currentLec: load(KEYS.currentLec, 1),
   editMode: load(KEYS.editmode, false),
   rsidebarHidden: load(KEYS.rsidebar, false),
-  darkMode: load(KEYS.darkmode, false),
+  darkMode: load(KEYS.darkmode, true),
   reviewIncorrectMode: false,
   reviewFlaggedMode: false,
   reviewSnapshot: null,
@@ -60,6 +63,10 @@ const state = {
   markReview: load(KEYS.markReview, {}),
   markStar: load(KEYS.markStar, {}),
   bookmarks: load(KEYS.bookmarks, {}), // { lec: {ci, label, ts} }
+  notes: load(KEYS.notes, {}),         // { lec: [ {id, text, ts} ] }
+  railCollapsed: load(KEYS.railCollapsed, false),
+  notesOpen: load(KEYS.notesOpen, false),
+  notesTab: "notes",
   viewMode: "dashboard",           // "dashboard" | "learn" | "practice"
   reviewConceptsMode: false,
   markupsMode: null                // null | "highlight" | "review" | "important" | "bookmark"
@@ -396,6 +403,7 @@ function setView(mode) {
   state.viewMode = mode;
   if (mode === "practice") markRead(state.currentLec);
   renderMain(); renderSidebar(); renderRSidebar();
+  refreshNotesIfOpen();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -602,22 +610,20 @@ function renderChapterContent(n, losIds){
     const blocks = lo.blocks || [];
     const dk = `${n}_${id}`;
     if (typeof DIAGRAMS !== "undefined" && DIAGRAMS[dk]) body += `<div class="rc-diagram">${DIAGRAMS[dk]}</div>`;
-    let cqRun = [];
+    let cqRun = [], topic = chapterTitleFromLO(lo) || "";
     const flushCQ = () => {
       if (!cqRun.length) return;
       const items = [];
       cqRun.forEach(bi => cqItems(blocks[bi].x).forEach((it, ii) => items.push({ it, key:`${n}_${lo.id}_cc${bi}_${ii}` })));
-      if (items.length >= 2)
-        recall += `<div class="rc-compare"><div class="rc-compare-head">⇄ ClaudeCompares <span>— recall each, then sort them apart</span></div>${items.map(o => recallRowHTML(o.it, o.key)).join("")}</div>`;
-      else if (items.length)
-        recall += recallRowHTML(items[0].it, items[0].key);
+      const title = topic ? esc(topic) : "Recall";
+      recall += `<div class="rc-recall-group"><div class="rc-recall-group-h">${title}</div>${items.map(o => recallRowHTML(o.it, o.key)).join("")}</div>`;
       cqRun = [];
     };
     blocks.forEach((b, bi) => {
       if (b.t === "cq") { cqRun.push(bi); return; }
       flushCQ();
       if (b.t === "q")            recall += reflectHTML(n, lo.id, b.x, `${n}_${lo.id}_q${bi}`);
-      else if (b.t === "p")       body += proseHTML(b.x);
+      else if (b.t === "p")       { const [lead] = splitLead(b.x); if (lead) topic = lead; body += proseHTML(b.x); }
       else if (NOTE_META[b.t])    body += noteHTML(b, b.t === "key" ? slideJumpBtn(n, `key_${lo.id}_${bi}`) : "");
       else                        body += proseHTML(b.x);
     });
@@ -966,6 +972,7 @@ function goToLec(n) {
   updateReviewButtons();
   renderMain();
   renderSidebar();
+  refreshNotesIfOpen();
   renderRSidebar();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -1873,23 +1880,74 @@ function closeLightbox(){ document.getElementById("lightbox").classList.remove("
 // TEXT-TO-SPEECH (listen mode)
 // =============================================================
 let TTS={on:false};
-function ttsText(n){
-  const c=(typeof LECTURE_CONTENT!=="undefined")?LECTURE_CONTENT[n]:null; if(!c) return "";
-  let parts=[];
-  if(c.tldr) parts.push("Summary. "+c.tldr);
-  (c.mustKnows||[]).forEach((m,i)=>parts.push(`Must know ${i+1}. ${m}`));
-  (c.los||[]).forEach(lo=>{ if(lo.statement) parts.push("Objective. "+lo.statement); (lo.blocks||[]).forEach(b=>parts.push(b.x)); });
-  return parts.join(" ");
+// expand abbreviations + symbols so the voice reads naturally, not like code
+const SAY = [
+  [/→|->/g, " leads to "], [/[⇄↔]/g, " versus "], [/&/g, " and "],
+  [/\bvs\.?\b/gi, "versus"], [/\bGI\b/g, "G I"], [/\bGERD\b/g, "gerd"],
+  [/\bLES\b/g, "lower esophageal sphincter"], [/\bUES\b/g, "upper esophageal sphincter"],
+  [/\bENS\b/g, "enteric nervous system"], [/\bPNS\b/g, "parasympathetic nervous system"],
+  [/\bSNS\b/g, "sympathetic nervous system"], [/\bCCK\b/g, "cholecystokinin"],
+  [/\bVIP\b/g, "V I P"], [/\bPPI\b/g, "proton pump inhibitor"], [/\bPUD\b/g, "peptic ulcer disease"],
+  [/\bIDA\b/g, "iron deficiency anemia"], [/\bIBS\b/g, "I B S"], [/\bIBD\b/g, "I B D"],
+  [/\bSCC\b/g, "squamous cell carcinoma"], [/\bNO\b/g, "nitric oxide"], [/\be\.g\.\,?/gi, "for example,"],
+  [/\bi\.e\.\,?/gi, "that is,"]
+];
+function cleanForSpeech(t){
+  t = String(t||"");
+  SAY.forEach(([re, rep]) => t = t.replace(re, rep));
+  t = t.replace(/\([^)]{0,40}\)/g, m => " " + m.slice(1,-1) + " "); // drop parens, keep words
+  t = t.replace(/\s+/g, " ").trim();
+  return t;
+}
+function ttsChunks(n){
+  const c=(typeof LECTURE_CONTENT!=="undefined")?LECTURE_CONTENT[n]:null; if(!c) return [];
+  const lec=getLecture(n);
+  const out=[];
+  if(lec) out.push(`Lecture ${n}. ${lec[1]}.`);
+  if(c.tldr) out.push(cleanForSpeech(c.tldr));
+  if((c.mustKnows||[]).length){ out.push("Here are the key things to know."); (c.mustKnows||[]).forEach(m=>out.push(cleanForSpeech(m))); }
+  getChapters(n).forEach(ch=>{
+    if(ch.title) out.push(`Next. ${cleanForSpeech(ch.title)}.`);
+    ch.los.forEach(id=>{ const lo=loById(n,id); if(!lo) return;
+      (lo.blocks||[]).forEach(b=>{ if(b.t==="p"||b.t==="key"||b.t==="pearl") out.push(cleanForSpeech(b.x)); });
+    });
+  });
+  // split into sentence-sized utterances for natural pacing
+  const chunks=[];
+  out.join(" ").split(/(?<=[.!?])\s+/).forEach(s=>{ s=s.trim(); if(s) chunks.push(s); });
+  return chunks;
+}
+function pickVoice(){
+  if(!("speechSynthesis" in window)) return null;
+  const vs=speechSynthesis.getVoices().filter(v=>/^en[-_]/i.test(v.lang));
+  if(!vs.length) return null;
+  const byName=n=>vs.find(v=>v.name.toLowerCase().includes(n));
+  return vs.find(v=>/premium|enhanced/i.test(v.name))   // best: downloaded premium voices
+      || byName("ava") || byName("samantha") || byName("allison") || byName("zoe")
+      || byName("joelle") || byName("tom") || byName("daniel")
+      || vs.find(v=>v.lang==="en-US") || vs[0];
 }
 function stopTTS(){ if("speechSynthesis" in window) window.speechSynthesis.cancel(); TTS.on=false; const b=document.getElementById("tts-btn"); if(b){b.classList.remove("on"); b.innerHTML="🔊 Listen";} }
+function speakQueue(chunks, voice, i){
+  if(!TTS.on || i>=chunks.length){ stopTTS(); return; }
+  const u=new SpeechSynthesisUtterance(chunks[i]);
+  if(voice) u.voice=voice;
+  u.rate=0.95; u.pitch=1.0;
+  u.onend=()=>speakQueue(chunks, voice, i+1);
+  u.onerror=()=>stopTTS();
+  window.speechSynthesis.speak(u);
+}
 function toggleTTS(){
   if(!("speechSynthesis" in window)){ showToast("Speech not supported here"); return; }
   const btn=document.getElementById("tts-btn");
   if(TTS.on){ stopTTS(); return; }
-  const u=new SpeechSynthesisUtterance(ttsText(state.currentLec)); u.rate=1.03;
-  u.onend=()=>{ TTS.on=false; if(btn){btn.classList.remove("on"); btn.innerHTML="🔊 Listen";} };
-  window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+  const chunks=ttsChunks(state.currentLec);
+  if(!chunks.length){ showToast("Nothing to read here"); return; }
+  window.speechSynthesis.cancel();
   TTS.on=true; if(btn){btn.classList.add("on"); btn.innerHTML="⏸ Stop";}
+  const start=()=>speakQueue(chunks, pickVoice(), 0);
+  if(speechSynthesis.getVoices().length){ start(); }
+  else { speechSynthesis.onvoiceschanged=()=>{ speechSynthesis.onvoiceschanged=null; if(TTS.on) start(); }; setTimeout(()=>{ if(TTS.on && !speechSynthesis.speaking) start(); }, 250); }
 }
 
 // =============================================================
@@ -2067,7 +2125,7 @@ function annoFromSelection(type){
   (state.hl[n] = state.hl[n] || []).push({ id, ci, text, type });
   save(KEYS.hl, state.hl);
   showToast(ANNO_META[type].icon + " " + ANNO_META[type].label + " saved");
-  updateMarkupCount();
+  updateMarkupCount(); refreshNotesIfOpen();
   cleanupSelection();
 }
 function cleanupSelection(){ hideAnnoPopup(); const s = window.getSelection(); if (s) s.removeAllRanges(); _selRange = null; }
@@ -2105,7 +2163,7 @@ function onReadingClick(e){
   const parent = m.parentNode;
   while (m.firstChild) parent.insertBefore(m.firstChild, m);
   parent.removeChild(m); parent.normalize();
-  updateMarkupCount(); showToast("Removed");
+  updateMarkupCount(); refreshNotesIfOpen(); showToast("Removed");
 }
 
 // ---- bookmarks (resume) ----
@@ -2138,7 +2196,7 @@ function tagChapter(type, n, ci){
   const key = chapterKey(n, ci);
   if (store[key]) delete store[key]; else store[key] = { lec:n, ci, title };
   save(type === "review" ? KEYS.markReview : KEYS.markStar, store);
-  renderChapterBadges(n); updateMarkupCount();
+  renderChapterBadges(n); updateMarkupCount(); refreshNotesIfOpen();
   showToast(ANNO_META[type].icon + " " + ANNO_META[type].label + (store[key] ? " — chapter tagged" : " removed"));
 }
 function renderChapterBadges(n){
@@ -2149,11 +2207,18 @@ function renderChapterBadges(n){
     let badge = h.querySelector(".rc-chapter-badges");
     if (!badge){ badge = document.createElement("span"); badge.className = "rc-chapter-badges"; h.appendChild(badge); }
     let s = "";
-    if (state.markReview[key]) s += `<span class="rc-cbadge rev" title="Marked to review">⚠️</span>`;
-    if (state.markStar[key])   s += `<span class="rc-cbadge imp" title="Marked important">⭐</span>`;
-    if (state.bookmarks[n] && state.bookmarks[n].ci === ci) s += `<span class="rc-cbadge bm" title="Your bookmark">🔖</span>`;
+    if (state.markReview[key]) s += `<button class="rc-cbadge rev" title="Click to remove this review tag" onclick="event.stopPropagation(); removeChapterTag('review',${n},${ci})">⚠️</button>`;
+    if (state.markStar[key])   s += `<button class="rc-cbadge imp" title="Click to remove this important tag" onclick="event.stopPropagation(); removeChapterTag('important',${n},${ci})">⭐</button>`;
+    if (state.bookmarks[n] && state.bookmarks[n].ci === ci) s += `<button class="rc-cbadge bm" title="Click to remove this bookmark" onclick="event.stopPropagation(); removeChapterTag('bookmark',${n},${ci})">🔖</button>`;
     badge.innerHTML = s;
   });
+}
+function removeChapterTag(type, n, ci){
+  if (type === "bookmark"){ delete state.bookmarks[n]; save(KEYS.bookmarks, state.bookmarks); }
+  else { const store = type === "review" ? state.markReview : state.markStar; delete store[chapterKey(n, ci)]; save(type === "review" ? KEYS.markReview : KEYS.markStar, store); }
+  renderChapterBadges(n); updateMarkupCount();
+  if (typeof renderNotesPanel === "function" && state.notesOpen) renderNotesPanel();
+  showToast("Removed");
 }
 
 // ---- draggable tray ----
@@ -2246,6 +2311,85 @@ function jumpToMarkup(n, ci){
 }
 
 // =============================================================
+// LEFT RAIL COLLAPSE + RIGHT NOTES PANEL (Notes/Highlights/Important/Review)
+// =============================================================
+function toggleRail(){
+  state.railCollapsed = !state.railCollapsed;
+  save(KEYS.railCollapsed, state.railCollapsed);
+  document.getElementById("layout").classList.toggle("rail-collapsed", state.railCollapsed);
+}
+function applyNotesPanel(){
+  save(KEYS.notesOpen, state.notesOpen);
+  document.getElementById("layout").classList.toggle("notes-open", state.notesOpen);
+  const b = document.getElementById("btn-notes"); if (b) b.classList.toggle("on", state.notesOpen);
+  if (state.notesOpen) renderNotesPanel();
+}
+function toggleNotes(){ state.notesOpen = !state.notesOpen; applyNotesPanel(); }
+function openNotes(tab){ if (tab) state.notesTab = tab; state.notesOpen = true; applyNotesPanel(); }
+function setNotesTab(tab){ state.notesTab = tab; renderNotesPanel(); }
+function refreshNotesIfOpen(){ if (state.notesOpen) renderNotesPanel(); }
+
+function renderNotesPanel(){
+  const body = document.getElementById("notes-body"); if (!body) return;
+  document.querySelectorAll("#notes-panel .np-tab").forEach(t => t.classList.toggle("on", t.dataset.tab === state.notesTab));
+  body.innerHTML = state.notesTab === "notes" ? notesTabHTML() : markupTabHTML(state.notesTab);
+  if (state.notesTab === "notes") wireNoteDrop();
+}
+function notesTabHTML(){
+  const n = state.currentLec;
+  const lec = getLecture(n);
+  const list = state.notes[n] || [];
+  const items = list.map(note =>
+    `<div class="np-note"><div class="np-note-tx">${esc(note.text)}</div><button class="np-note-x" onclick="removeNote(${n},'${note.id}')" title="Delete note">✕</button></div>`
+  ).join("") || `<div class="np-empty">No notes for this lecture yet.<br>Type below, or drag selected text in.</div>`;
+  return `<div class="np-ctx">📝 Notes · Lecture ${n}${lec?` — ${esc(lec[1])}`:""}</div>
+    <div class="np-drop" id="np-drop">${items}</div>
+    <div class="np-add">
+      <textarea id="note-input" class="np-note-input" rows="3" placeholder="Write a note…"></textarea>
+      <button class="np-add-btn" onclick="addNoteFromInput()">+ Add note</button>
+    </div>`;
+}
+function markupTabHTML(kind){
+  const label = { highlight:"Highlights", important:"Important", review:"To review" }[kind] || kind;
+  const items = markupItems(kind);
+  if (!items.length) return `<div class="np-ctx">${label}</div><div class="np-empty">Nothing here yet.<br>Select text while reading → choose ${kind === "highlight" ? "🖊️ Highlight" : (kind === "important" ? "⭐ Important" : "⚠️ Review")}.</div>`;
+  const byLec = {}; items.forEach(it => (byLec[it.lec] = byLec[it.lec] || []).push(it));
+  let h = `<div class="np-ctx">${label} · ${items.length}</div>`;
+  Object.keys(byLec).map(Number).sort((a,b)=>a-b).forEach(L => {
+    const lec = getLecture(L);
+    h += `<div class="np-lec">Lecture ${L}${lec?` · ${esc(lec[1]).slice(0,28)}`:""}</div>`;
+    byLec[L].forEach(it => {
+      h += `<div class="np-item ${it.isChapter?'chap':''}" onclick="jumpToMarkup(${L},${it.ci})"><span class="np-item-tx">${esc(it.text)}</span><span class="np-item-go">→</span></div>`;
+    });
+  });
+  return h;
+}
+function addNote(n, text){
+  text = String(text || "").trim(); if (!text) return;
+  (state.notes[n] = state.notes[n] || []).unshift({ id: annoId(), text, ts: Date.now() });
+  save(KEYS.notes, state.notes);
+  renderNotesPanel();
+}
+function addNoteFromInput(){
+  const ta = document.getElementById("note-input"); if (!ta) return;
+  addNote(state.currentLec, ta.value); ta.value = "";
+}
+function removeNote(n, id){
+  state.notes[n] = (state.notes[n] || []).filter(x => x.id !== id);
+  save(KEYS.notes, state.notes); renderNotesPanel();
+}
+function wireNoteDrop(){
+  const d = document.getElementById("np-drop"); if (!d) return;
+  d.ondragover = (e) => { e.preventDefault(); d.classList.add("drop-on"); };
+  d.ondragleave = () => d.classList.remove("drop-on");
+  d.ondrop = (e) => {
+    e.preventDefault(); d.classList.remove("drop-on");
+    const t = e.dataTransfer.getData("text/plain") || (window.getSelection && window.getSelection().toString());
+    if (t && t.trim()) addNote(state.currentLec, t.trim());
+  };
+}
+
+// =============================================================
 // INITIAL HOOK-UP
 // =============================================================
 function bind(id, fn){ const el=document.getElementById(id); if(el) el.onclick=fn; }
@@ -2257,10 +2401,12 @@ bind("btn-commit", commitChanges);
 bind("btn-download", downloadChanges);
 bind("btn-review-incorrect", toggleReviewIncorrect);
 bind("btn-review-flagged", toggleReviewFlagged);
-bind("btn-markups", () => openMarkups("highlight"));
+bind("btn-markups", () => openNotes("highlight"));
 bind("btn-reset", () => document.getElementById("reset-modal").classList.add("show"));
 initTray();
 updateMarkupCount();
+if (state.railCollapsed) document.getElementById("layout").classList.add("rail-collapsed");
+if (state.notesOpen) applyNotesPanel();
 // hide the selection popup when clicking outside of it
 document.addEventListener("mousedown", (e)=>{ const p=document.getElementById("anno-popup"); if(p && p.style.display!=="none" && !p.contains(e.target)) { /* allow button clicks */ if(!e.target.closest(".anno-popup")) setTimeout(()=>{ const s=window.getSelection(); if(!s||s.isCollapsed) hideAnnoPopup(); }, 0); } });
 document.addEventListener("keydown", (e)=>{ if(e.key==="Escape"){ closeLightbox(); closeDrawer(); hideAnnoPopup(); const mm=document.getElementById("more-menu"); if(mm) mm.classList.remove("show"); } });

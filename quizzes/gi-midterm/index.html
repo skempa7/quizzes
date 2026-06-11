@@ -12,6 +12,7 @@
 <body>
 
 <header class="topbar">
+  <button class="tb-btn" id="btn-rail" onclick="toggleRail()" title="Show/hide lecture list">☰</button>
   <div class="brand" onclick="goHome()" title="Home">
     <svg class="brand-mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true">
       <path d="M8 5 C8 12, 24 12, 24 19 C24 26, 10 25, 10 28" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/>
@@ -26,6 +27,7 @@
 
   <div class="rank-chip" id="rank-chip" onclick="openDrawer()" title="Your stats"></div>
   <button class="tb-btn btn-fast" id="btn-fast" title="Fast Mode">⚡</button>
+  <button class="tb-btn" id="btn-notes" onclick="toggleNotes()" title="Notes & markups">📝</button>
   <button class="tb-btn" id="btn-theme" title="Toggle dark mode">🌙</button>
   <button class="tb-btn" id="btn-stats" onclick="openDrawer()" title="Stats">📊</button>
   <div class="tb-more">
@@ -49,6 +51,18 @@
 <div class="shell" id="layout">
   <nav class="rail" id="sidebar"></nav>
   <main id="main"></main>
+  <aside class="notes-panel" id="notes-panel">
+    <div class="np-head">
+      <div class="np-tabs">
+        <button class="np-tab on" data-tab="notes" onclick="setNotesTab('notes')">Notes</button>
+        <button class="np-tab" data-tab="highlight" onclick="setNotesTab('highlight')">Highlights</button>
+        <button class="np-tab" data-tab="important" onclick="setNotesTab('important')">Important</button>
+        <button class="np-tab" data-tab="review" onclick="setNotesTab('review')">Review</button>
+      </div>
+      <button class="np-close" onclick="toggleNotes()" title="Close">✕</button>
+    </div>
+    <div class="np-body" id="notes-body"></div>
+  </aside>
 </div>
 
 <!-- Stats drawer -->
