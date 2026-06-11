@@ -180,7 +180,8 @@ function overallStats() {
 function renderSidebar() {
   const el = document.getElementById("sidebar");
   const onDash = state.viewMode === "dashboard" && !state.reviewIncorrectMode && !state.reviewFlaggedMode && !state.reviewConceptsMode;
-  let html = `<div class="lec-item home-item ${onDash?'active':''}" onclick="goHome()"><span class="lec-name">🏠 Dashboard</span></div><h3>Lectures</h3>`;
+  let html = `<a class="lec-item hub-item" href="../../index.html"><span class="lec-name">← All classes</span></a>
+    <div class="lec-item home-item ${onDash?'active':''}" onclick="goHome()"><span class="lec-name">🏠 Dashboard</span></div><h3>Lectures</h3>`;
   QUIZ.forEach(([n, title, los]) => {
     const s = lectureStats(n);
     const active = (!onDash && n === state.currentLec) ? "active" : "";

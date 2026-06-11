@@ -2364,3 +2364,8 @@ main { max-width: 1120px; padding-right: 56px; }
 .rc-section-slide { float: right; width: 230px; margin: 2px 0 12px 18px; }
 .rc-section-slide .rc-inline-slide { width: 100%; }
 @media (max-width: 760px){ .rc-section-slide { float: none; width: 100%; max-width: 320px; margin: 8px 0 12px; } }
+
+/* "← All classes" hub link in the rail */
+.hub-item { text-decoration: none; color: var(--muted); font-size: .82rem; font-weight: 700; }
+.hub-item:hover { color: var(--primary); background: var(--surface-2); }
+.hub-item .lec-name { color: inherit; }
