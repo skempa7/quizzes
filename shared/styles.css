@@ -1984,3 +1984,87 @@ body.dark .rc-p { color: var(--text-soft); }
 }
 .rc-drill:hover { background: var(--primary-hover); }
 .rc-diagram { margin: 18px 0; }
+
+/* =============================================================
+   READING VIEW — v2 overrides (user feedback):
+   one font (Times New Roman), wider column, bolder/bigger text,
+   strategic bolding, lighter inline callouts, recall at chapter end.
+   ============================================================= */
+.reading,
+.reading * {
+  font-family: "Times New Roman", Times, serif !important;
+}
+.reading { max-width: 1080px; }
+
+/* Standfirst — readable, not italic */
+.rc-standfirst {
+  font-size: 1.34rem; line-height: 1.5; font-style: normal;
+  font-weight: 400; color: var(--text);
+  margin: 0 0 24px; padding-left: 18px;
+  border-left: 4px solid var(--primary);
+}
+
+/* Prose — bigger, full contrast, wide measure */
+.rc-p {
+  font-size: 1.2rem; line-height: 1.6; color: var(--text);
+  margin: 0 0 13px;
+}
+body.dark .rc-p { color: var(--text); }
+.rc-p .rc-lead, .rc-p strong { font-weight: 700; color: var(--text); }
+
+/* Chapter heading — same font family, clearly a heading */
+.rc-chapter { margin-bottom: 30px; }
+.rc-chapter-h {
+  font-size: 1.7rem; font-weight: 700; letter-spacing: 0;
+  gap: 12px; margin-bottom: 14px; padding-bottom: 10px;
+}
+.rc-chapter-n { width: 32px; height: 32px; font-size: 1rem; }
+
+/* Must-knows — wider, bigger, strategic bold leads */
+.rc-mustknows { padding: 18px 24px 20px; margin-bottom: 28px; }
+.rc-mk-head { font-size: 1.15rem; }
+.rc-mk-head span { font-size: .95rem; }
+.rc-mustknows li {
+  font-size: 1.12rem; line-height: 1.5; padding: 8px 0 8px 28px; color: var(--text);
+}
+.rc-mustknows li strong { font-weight: 700; }
+.rc-mustknows li::before { top: 9px; font-size: .9rem; }
+
+/* Inline callouts — light, woven into the text (no heavy boxes) */
+.rc-note {
+  display: block; margin: 13px 0; padding: 2px 0 2px 15px;
+  border-left: 3px solid var(--muted); background: transparent !important;
+  border-radius: 0; font-size: 1.2rem; line-height: 1.6; color: var(--text);
+}
+.rc-note-tag {
+  font-size: .92rem; font-weight: 700; text-transform: none;
+  letter-spacing: 0; margin-right: 4px;
+}
+.rc-note-key       { border-left-color: var(--primary); }
+.rc-note-key .rc-note-tag { color: var(--primary); }
+.rc-note-pearl     { border-left-color: #0d9488; }
+.rc-note-pearl .rc-note-tag { color: #14b8a6; }
+.rc-note-trap      { border-left-color: var(--wrong); }
+.rc-note-trap .rc-note-tag { color: #ef4444; }
+.rc-note-confusion { border-left-color: #7c3aed; }
+.rc-note-confusion .rc-note-tag { color: #a78bfa; }
+.rc-note-cue       { border-left-color: var(--warning); }
+.rc-note-cue .rc-note-tag { color: var(--warning); }
+
+/* Recall zone — collected at the end of each chapter */
+.rc-recall-zone {
+  margin: 22px 0 4px; padding: 16px 18px 8px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.rc-recall-zone-h {
+  font-size: 1.05rem; font-weight: 700; color: var(--text);
+  margin-bottom: 12px;
+}
+.rc-recall-zone .rc-compare { background: var(--surface); margin: 0 0 12px; }
+.rc-recall-zone .rc-reflect { margin: 0 0 12px; }
+.rc-recall-q { font-size: 1.08rem; }
+.rc-recall-a { font-size: 1.05rem; line-height: 1.55; }
+.rc-reflect-q { font-size: 1.12rem; }
+.rc-reflect-a { font-size: 1.05rem; }
+.rc-recall-hint, .rc-compare-head, .rc-recall-zone-h, .rc-mk-head { letter-spacing: 0 !important; }

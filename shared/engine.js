@@ -561,35 +561,60 @@ function reflectHTML(n, loId, qtext, key){
     <span class="rc-recall-hint">tap to check</span></div>`;
 }
 
-function renderLOFlow(n, lo){
-  const blocks = lo.blocks || [];
-  let html = "", cqRun = [];
-  const flushCQ = () => {
-    if (!cqRun.length) return;
-    const items = [];
-    cqRun.forEach(bi => cqItems(blocks[bi].x).forEach((it, ii) => items.push({ it, key:`${n}_${lo.id}_cc${bi}_${ii}` })));
-    if (items.length >= 2)
-      html += `<div class="rc-compare"><div class="rc-compare-head">⇄ ClaudeCompares <span>— recall each, then sort them apart</span></div>${items.map(o => recallRowHTML(o.it, o.key)).join("")}</div>`;
-    else if (items.length)
-      html += recallRowHTML(items[0].it, items[0].key);
-    cqRun = [];
-  };
-  blocks.forEach((b, bi) => {
-    if (b.t === "cq") { cqRun.push(bi); return; }
+// strategic, sparse bolding: high-yield possessive eponyms (Barrett's, Meissner's…)
+function emphEponyms(escaped){
+  return String(escaped).replace(/\b([A-Z][a-zA-Z]+(?:[-’'][A-Z][a-zA-Z]+)?[’']s)\b/g, '<strong>$1</strong>');
+}
+// split a must-know into [leadTerm, rest, separator] for strategic bolding
+function splitMustLead(s){
+  let m = s.match(/^(.{3,62}?)\s+[—–]\s+([\s\S]+)$/);          // "Term — explanation"
+  if (m) return [m[1].trim(), m[2].trim(), " — "];
+  m = s.match(/^(.{3,62}?[.:])\s+([\s\S]+)$/);                  // "Term. explanation"
+  if (m) return [m[1].replace(/[.:]\s*$/, "").trim(), m[2].trim(), ". "];
+  return [null, s, ""];
+}
+function proseHTML(text){
+  const [lead, body] = splitLead(text);
+  if (lead) return `<p class="rc-p"><strong class="rc-lead">${esc(lead)}.</strong> ${emphEponyms(esc(body))}</p>`;
+  return `<p class="rc-p">${emphEponyms(esc(text))}</p>`;
+}
+function noteHTML(b){
+  const m = NOTE_META[b.t];
+  return `<p class="rc-note rc-note-${m.cls}"><strong class="rc-note-tag">${m.tag}</strong> ${emphEponyms(esc(b.x))}</p>`;
+}
+
+// Render one chapter: continuous prose + light inline callouts, then a single
+// end-of-chapter "Recall" zone holding all ClaudeCompares + ReClaude reveals.
+function renderChapterContent(n, losIds){
+  let body = "", recall = "";
+  losIds.forEach(id => {
+    const lo = loById(n, id); if (!lo) return;
+    const blocks = lo.blocks || [];
+    const dk = `${n}_${id}`;
+    if (typeof DIAGRAMS !== "undefined" && DIAGRAMS[dk]) body += `<div class="rc-diagram">${DIAGRAMS[dk]}</div>`;
+    let cqRun = [];
+    const flushCQ = () => {
+      if (!cqRun.length) return;
+      const items = [];
+      cqRun.forEach(bi => cqItems(blocks[bi].x).forEach((it, ii) => items.push({ it, key:`${n}_${lo.id}_cc${bi}_${ii}` })));
+      if (items.length >= 2)
+        recall += `<div class="rc-compare"><div class="rc-compare-head">⇄ ClaudeCompares <span>— recall each, then sort them apart</span></div>${items.map(o => recallRowHTML(o.it, o.key)).join("")}</div>`;
+      else if (items.length)
+        recall += recallRowHTML(items[0].it, items[0].key);
+      cqRun = [];
+    };
+    blocks.forEach((b, bi) => {
+      if (b.t === "cq") { cqRun.push(bi); return; }
+      flushCQ();
+      if (b.t === "q")            recall += reflectHTML(n, lo.id, b.x, `${n}_${lo.id}_q${bi}`);
+      else if (b.t === "p")       body += proseHTML(b.x);
+      else if (NOTE_META[b.t])    body += noteHTML(b);
+      else                        body += proseHTML(b.x);
+    });
     flushCQ();
-    if (b.t === "p") {
-      const [lead, body] = splitLead(b.x);
-      html += lead ? `<p class="rc-p"><strong class="rc-lead">${esc(lead)}.</strong> ${esc(body)}</p>` : `<p class="rc-p">${esc(b.x)}</p>`;
-    } else if (b.t === "q") {
-      html += reflectHTML(n, lo.id, b.x, `${n}_${lo.id}_q${bi}`);
-    } else if (NOTE_META[b.t]) {
-      const m = NOTE_META[b.t];
-      html += `<aside class="rc-note rc-note-${m.cls}"><span class="rc-note-tag">${m.tag}</span><span class="rc-note-x">${esc(b.x)}</span></aside>`;
-    } else {
-      html += `<p class="rc-p">${esc(b.x)}</p>`;
-    }
   });
-  flushCQ();
+  let html = body;
+  if (recall) html += `<div class="rc-recall-zone"><div class="rc-recall-zone-h">🧠 Recall — test yourself</div>${recall}</div>`;
   return html;
 }
 
@@ -597,20 +622,18 @@ function renderReadingContent(n){
   const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
   if (!c) return `<div class="empty-state"><div class="icon">📖</div><h3>Reading content coming soon</h3><p>Jump into the questions instead.</p></div>`;
   let html = "";
-  if (c.tldr) html += `<p class="rc-standfirst">${esc(c.tldr)}</p>`;
+  if (c.tldr) html += `<p class="rc-standfirst">${emphEponyms(esc(c.tldr))}</p>`;
   if (c.mustKnows && c.mustKnows.length){
-    html += `<div class="rc-mustknows"><div class="rc-mk-head">⭐ Must-knows <span>— what your professors stress</span></div><ul>${c.mustKnows.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>`;
+    const lis = c.mustKnows.map(m => {
+      const [lead, rest, sep] = splitMustLead(m);
+      return `<li>${lead ? `<strong>${esc(lead)}</strong>${sep}` : ""}${emphEponyms(esc(rest))}</li>`;
+    }).join("");
+    html += `<div class="rc-mustknows"><div class="rc-mk-head">⭐ Must-knows <span>— what your professors stress</span></div><ul>${lis}</ul></div>`;
   }
   getChapters(n).forEach((ch, ci) => {
     html += `<section class="rc-chapter" id="ch-${n}-${ci}">
-      <h3 class="rc-chapter-h"><span class="rc-chapter-n">${ci+1}</span>${ch.icon?`<span class="rc-chapter-ic">${ch.icon}</span>`:""}<span class="rc-chapter-t">${esc(ch.title)}</span></h3>`;
-    ch.los.forEach(id => {
-      const lo = loById(n, id); if (!lo) return;
-      const dk = `${n}_${id}`;
-      if (typeof DIAGRAMS !== "undefined" && DIAGRAMS[dk]) html += `<div class="rc-diagram">${DIAGRAMS[dk]}</div>`;
-      html += renderLOFlow(n, lo);
-    });
-    html += `</section>`;
+      <h3 class="rc-chapter-h"><span class="rc-chapter-n">${ci+1}</span>${ch.icon?`<span class="rc-chapter-ic">${ch.icon}</span>`:""}<span class="rc-chapter-t">${esc(ch.title)}</span></h3>
+      ${renderChapterContent(n, ch.los)}</section>`;
   });
   return html;
 }
