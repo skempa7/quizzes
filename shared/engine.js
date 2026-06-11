@@ -516,7 +516,9 @@ function cleanStmt(s){
 function chapterTitleFromLO(lo){
   let s = cleanStmt(lo.statement);
   if (!s) return "";
-  s = s.replace(/^(Describe|Identify|Explain|List|Define|Discuss|Outline|Understand|Recognize|Compare|Review|Apply|Analyze|Summari[sz]e|State|Interpret)\s+(the\s+)?/i, "");
+  s = s.replace(/^(Describe|Identify|Explain|List|Define|Discuss|Outline|Understand|Recognize|Compare|Review|Apply|Analyze|Summari[sz]e|State|Interpret)\s+/i, "");
+  s = s.replace(/^and\s+contrast\s+/i, "");
+  s = s.replace(/^the\s+(?=[a-z])/i, "");
   s = s.replace(/\s+from a clinical perspective$/i, "");
   s = s.charAt(0).toUpperCase() + s.slice(1);
   if (s.length > 72) s = s.slice(0, 70).replace(/\s+\S*$/, "") + "…";
