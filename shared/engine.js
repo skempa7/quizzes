@@ -33,7 +33,8 @@ const KEYS = {
   bookmarks: SUBJ + "_bookmarks_v1", // { lec: {ci, label, ts} } 🔖 resume points
   notes: SUBJ + "_notes_v1",         // { lec: [ {id, text, ts} ] } freeform notes
   railCollapsed: SUBJ + "_rail_v1",
-  notesOpen: SUBJ + "_notesopen_v1"
+  notesOpen: SUBJ + "_notesopen_v1",
+  activity: SUBJ + "_activity_v1"    // { "YYYY-MM-DD": xpEarned } for the heatmap
 };
 
 const state = {
@@ -64,6 +65,7 @@ const state = {
   markStar: load(KEYS.markStar, {}),
   bookmarks: load(KEYS.bookmarks, {}), // { lec: {ci, label, ts} }
   notes: load(KEYS.notes, {}),         // { lec: [ {id, text, ts} ] }
+  activity: load(KEYS.activity, {}),   // { "YYYY-MM-DD": xpEarned }
   railCollapsed: load(KEYS.railCollapsed, false),
   notesOpen: load(KEYS.notesOpen, false),
   notesTab: "notes",
@@ -350,6 +352,11 @@ function addXP(amount, msg) {
   const before = rankFor(state.xp).cur.name;
   state.xp += amount;
   save(KEYS.xp, state.xp);
+  if (amount > 0) {   // record daily activity for the heatmap
+    const d = todayStr();
+    state.activity[d] = (state.activity[d] || 0) + amount;
+    save(KEYS.activity, state.activity);
+  }
   const after = rankFor(state.xp).cur;
   if (after.name !== before) {
     burstXP(`${after.icon} RANK UP! ${after.name}`);
@@ -2169,6 +2176,56 @@ function ttsBarClick(e){
 // DASHBOARD (home) + DRAWER + RANK CHIP
 // =============================================================
 function goHome(){ stopTTS(); state.viewMode="dashboard"; state.markupsMode=null; state.reviewIncorrectMode=state.reviewFlaggedMode=state.reviewConceptsMode=false; updateReviewButtons(); renderMain(); renderSidebar(); renderRSidebar(); window.scrollTo({top:0,behavior:"smooth"}); }
+// ---- activity heatmap (Anki-style) ----
+function dateStr(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
+function activityLevel(xp){ if(!xp) return 0; if(xp<10) return 1; if(xp<30) return 2; if(xp<60) return 3; return 4; }
+function currentStreak(){
+  const d = new Date(); d.setHours(0,0,0,0);
+  if(!(state.activity[dateStr(d)] > 0)) d.setDate(d.getDate()-1);   // today may still be incomplete
+  let s = 0;
+  while(state.activity[dateStr(d)] > 0){ s++; d.setDate(d.getDate()-1); }
+  return s;
+}
+function activityTotals(){
+  let days=0, xp=0, best=0;
+  Object.keys(state.activity).forEach(k => { if(state.activity[k]>0){ days++; xp+=state.activity[k]; } });
+  // longest streak
+  const dates = Object.keys(state.activity).filter(k=>state.activity[k]>0).sort();
+  let run=0, prev=null;
+  dates.forEach(ds=>{ const d=new Date(ds+"T00:00:00"); if(prev && (d-prev)===86400000) run++; else run=1; best=Math.max(best,run); prev=d; });
+  return { days, xp, best };
+}
+function renderHeatmap(){
+  const W = 18;                       // weeks shown
+  const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const now = new Date(); now.setHours(0,0,0,0);
+  const start = new Date(now); start.setDate(now.getDate() - ((W-1)*7 + now.getDay()));
+  let cols = "", labels = "", lastMonth = -1;
+  for(let c=0;c<W;c++){
+    let cells = "";
+    const colFirst = new Date(start); colFirst.setDate(start.getDate()+c*7);
+    const m = colFirst.getMonth();
+    labels += `<span class="hm-mlabel">${m!==lastMonth?MONTHS[m]:""}</span>`; lastMonth = m;
+    for(let r=0;r<7;r++){
+      const d = new Date(start); d.setDate(start.getDate()+c*7+r);
+      if(d > now){ cells += `<span class="hm-cell hm-future"></span>`; continue; }
+      const ds = dateStr(d); const xp = state.activity[ds]||0;
+      cells += `<span class="hm-cell hm-l${activityLevel(xp)}" title="${ds} · ${xp} XP"></span>`;
+    }
+    cols += `<div class="hm-col">${cells}</div>`;
+  }
+  const cur = currentStreak(); const t = activityTotals();
+  return `<div class="heatmap">
+    <div class="hm-top">
+      <span class="hm-streak">🔥 ${cur}<span> day${cur===1?"":"s"}</span></span>
+      <span class="hm-sub">${t.days} active · best ${t.best}</span>
+    </div>
+    <div class="hm-mlabels">${labels}</div>
+    <div class="hm-grid">${cols}</div>
+    <div class="hm-legend">Less<span class="hm-cell hm-l0"></span><span class="hm-cell hm-l1"></span><span class="hm-cell hm-l2"></span><span class="hm-cell hm-l3"></span><span class="hm-cell hm-l4"></span>More</div>
+  </div>`;
+}
+
 function renderDashboard(){
   const main=document.getElementById("main");
   showTray(false); hideAnnoPopup();
@@ -2199,6 +2256,7 @@ function renderDashboard(){
         <div class="dash-xp">${state.xp} XP ${rk.next?`· <b>${rk.next.min-state.xp}</b> to ${rk.next.name}`:"· max rank 👑"}</div>
         <button class="btn-continue" onclick="goToLec(${last})">▶ Continue · Lecture ${last}</button>
       </div>
+      <div class="dash-hero-heat">${renderHeatmap()}</div>
     </div>
     <div class="dash-stats">
       <div class="dstat"><div class="dstat-num">${readCount}<span>/30</span></div><div class="dstat-lab">📖 Read</div></div>

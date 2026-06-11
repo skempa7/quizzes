@@ -2369,3 +2369,27 @@ main { max-width: 1120px; padding-right: 56px; }
 .hub-item { text-decoration: none; color: var(--muted); font-size: .82rem; font-weight: 700; }
 .hub-item:hover { color: var(--primary); background: var(--surface-2); }
 .hub-item .lec-name { color: inherit; }
+
+/* =============================================================
+   ACTIVITY HEATMAP (Anki-style) — right side of the dashboard hero
+   ============================================================= */
+.dash-hero-heat { margin-left: auto; flex: 0 0 auto; }
+.heatmap { font-size: .7rem; }
+.hm-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 7px; }
+.hm-streak { font-size: 1rem; font-weight: 800; color: var(--text); }
+.hm-streak span { font-size: .72rem; font-weight: 600; color: var(--muted); margin-left: 2px; }
+.hm-sub { font-size: .7rem; color: var(--muted); }
+.hm-mlabels { display: flex; gap: 3px; margin-bottom: 3px; }
+.hm-mlabel { flex: 0 0 11px; width: 11px; font-size: .58rem; line-height: 1; color: var(--muted); white-space: nowrap; overflow: visible; }
+.hm-grid { display: flex; gap: 3px; }
+.hm-col { display: flex; flex-direction: column; gap: 3px; }
+.hm-cell { width: 11px; height: 11px; border-radius: 2px; background: var(--surface-2); }
+.hm-cell.hm-future { background: transparent; }
+.hm-l1 { background: color-mix(in srgb, var(--primary) 32%, var(--surface-2)); }
+.hm-l2 { background: color-mix(in srgb, var(--primary) 58%, var(--surface-2)); }
+.hm-l3 { background: color-mix(in srgb, var(--primary) 80%, var(--surface)); }
+.hm-l4 { background: var(--primary); }
+.hm-legend { display: flex; align-items: center; gap: 3px; justify-content: flex-end; margin-top: 7px; font-size: .62rem; color: var(--muted); }
+.hm-legend .hm-cell { width: 9px; height: 9px; }
+@media (max-width: 860px){ .dash-hero { flex-wrap: wrap; } .dash-hero-heat { margin-left: 0; } }
+@media (max-width: 560px){ .dash-hero-heat { display: none; } }
