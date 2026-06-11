@@ -2398,6 +2398,7 @@ main { max-width: 1120px; padding-right: 56px; }
    RESPONSIVE — tablet portrait + phone (must come last to win
    over the collapsible-rail grid rule)
    ============================================================= */
+.rail-scrim { display: none; }   /* only a grid/overlay element on mobile (below); never on desktop */
 @media (max-width: 980px){
   .shell { grid-template-columns: 1fr !important; }
   main { max-width: 100% !important; padding: 20px 16px 84px !important; }
