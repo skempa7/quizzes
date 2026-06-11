@@ -580,9 +580,17 @@ function proseHTML(text){
   if (lead) return `<p class="rc-p"><strong class="rc-lead">${esc(lead)}.</strong> ${emphEponyms(esc(body))}</p>`;
   return `<p class="rc-p">${emphEponyms(esc(text))}</p>`;
 }
-function noteHTML(b){
+function noteHTML(b, extra){
   const m = NOTE_META[b.t];
-  return `<p class="rc-note rc-note-${m.cls}"><strong class="rc-note-tag">${m.tag}</strong> ${emphEponyms(esc(b.x))}</p>`;
+  return `<p class="rc-note rc-note-${m.cls}"><strong class="rc-note-tag">${m.tag}</strong> ${emphEponyms(esc(b.x))}${extra||""}</p>`;
+}
+// curated "jump to the exact lecture slide" button (high-yield concepts only)
+function slideJumpBtn(n, jkey){
+  const sj = (typeof SLIDE_JUMPS !== "undefined") ? SLIDE_JUMPS[n] : null;
+  const s  = (typeof SLIDES !== "undefined") ? SLIDES[n] : null;
+  if (!sj || !s || !sj[jkey]) return "";
+  const pg = sj[jkey];
+  return ` <button class="slide-jump" onclick="event.stopPropagation(); openLightbox('${s.dir}',${s.count},${pg})" title="Show the lecture slide for this concept">📑 Slide</button>`;
 }
 
 // Render one chapter: continuous prose + light inline callouts, then a single
@@ -610,7 +618,7 @@ function renderChapterContent(n, losIds){
       flushCQ();
       if (b.t === "q")            recall += reflectHTML(n, lo.id, b.x, `${n}_${lo.id}_q${bi}`);
       else if (b.t === "p")       body += proseHTML(b.x);
-      else if (NOTE_META[b.t])    body += noteHTML(b);
+      else if (NOTE_META[b.t])    body += noteHTML(b, b.t === "key" ? slideJumpBtn(n, `key_${lo.id}_${bi}`) : "");
       else                        body += proseHTML(b.x);
     });
     flushCQ();
@@ -626,9 +634,9 @@ function renderReadingContent(n){
   let html = "";
   if (c.tldr) html += `<p class="rc-standfirst">${emphEponyms(esc(c.tldr))}</p>`;
   if (c.mustKnows && c.mustKnows.length){
-    const lis = c.mustKnows.map(m => {
+    const lis = c.mustKnows.map((m, i) => {
       const [lead, rest, sep] = splitMustLead(m);
-      return `<li>${lead ? `<strong>${esc(lead)}</strong>${sep}` : ""}${emphEponyms(esc(rest))}</li>`;
+      return `<li>${lead ? `<strong>${esc(lead)}</strong>${sep}` : ""}${emphEponyms(esc(rest))}${slideJumpBtn(n, `mk_${i}`)}</li>`;
     }).join("");
     html += `<div class="rc-mustknows"><div class="rc-mk-head">⭐ Must-knows <span>— what your professors stress</span></div><ul>${lis}</ul></div>`;
   }
