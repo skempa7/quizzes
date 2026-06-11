@@ -314,6 +314,7 @@ function renderMain() {
   if (state.reviewConceptsMode) return renderReviewConcepts();
   if (state.viewMode === "dashboard") return renderDashboard();
   if (state.viewMode === "learn") return renderLearnView();
+  if (state.viewMode === "master") return renderMasterView();
   return renderLecture();
 }
 
@@ -421,6 +422,8 @@ function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").rep
 function lectureModeBar(n) {
   const learnActive = state.viewMode === "learn" ? "active" : "";
   const practiceActive = state.viewMode === "practice" ? "active" : "";
+  const masterActive = state.viewMode === "master" ? "active" : "";
+  const weak = masterWeakCount(n);
   const tools = state.viewMode === "learn" ? `
     <div class="mode-tools">
       <button class="tool-btn" id="tts-btn" onclick="toggleTTS()" title="Listen">🔊 Listen</button>
@@ -428,6 +431,7 @@ function lectureModeBar(n) {
   return `<div class="mode-bar">
     <button class="mode-btn ${learnActive}" onclick="setView('learn')">📖 Learn</button>
     <button class="mode-btn ${practiceActive}" onclick="setView('practice')">✍️ Practice</button>
+    <button class="mode-btn ${masterActive}" onclick="setView('master')">🎯 Master${weak?`<span class="mode-badge">${weak}</span>`:""}</button>
     ${tools}
   </div>`;
 }
@@ -777,6 +781,67 @@ function renderLearnView() {
   renderChapterBadges(n);
   bindReadingAnnotations(n);
   showTray(true);
+}
+
+// =============================================================
+// MASTER — weak-spot drill (missed/flagged questions + ⚠️ review paragraphs)
+// =============================================================
+function masterWeakItems(n){
+  const out = [];
+  const lec = getLecture(n); if (!lec) return out;
+  lec[2].forEach(lo => {
+    getEffectiveQuestions(n, lo[0]).forEach(qe => {
+      const a = state.answers[qe.key];
+      const wrong = a && a.correct === false;
+      const flagged = !!state.flagged[qe.key];
+      if (wrong || flagged) out.push({ type:"q", qe, lo: lo[0], reason: wrong ? "missed" : "flagged" });
+    });
+  });
+  Object.keys(state.markReview).forEach(pb => { const t = state.markReview[pb]; if (t.lec === n) out.push({ type:"para", pb, text: t.text }); });
+  return out;
+}
+function masterWeakCount(n){ return masterWeakItems(n).length; }
+function masterClearPara(pb){ removeParaTag("review", pb); setView("master"); showToast("Cleared ✓"); }
+function renderMasterView(){
+  showTray(false); hideAnnoPopup();
+  const main = document.getElementById("main");
+  const lec = getLecture(state.currentLec);
+  if (!lec) { main.innerHTML = "<p>Lecture not found.</p>"; return; }
+  const [n, title] = lec;
+  const items = masterWeakItems(n);
+  const missed = items.filter(i => i.type==="q" && i.reason==="missed").length;
+  const flagged = items.filter(i => i.type==="q" && i.reason==="flagged").length;
+  const paras = items.filter(i => i.type==="para").length;
+  let html = `
+    <div class="lecture-header"><span class="lec-pill">Lecture ${n}</span><h2>${esc(title)}</h2></div>
+    ${lectureModeBar(n)}
+    <div class="master-intro">
+      <div class="master-intro-h">🎯 Master · drill your weak spots</div>
+      <div class="master-intro-sub">Everything you got wrong, flagged, or marked ⚠️ to review — gathered here to drill until it sticks.</div>
+    </div>`;
+  if (!items.length){
+    html += `<div class="empty-state"><div class="icon">🎯</div><h3>No weak spots here yet</h3>
+      <p>Miss a practice question, flag one with ⚑, or drag ⚠️ onto a paragraph while reading — they'll collect here automatically.</p>
+      <button class="btn-start-practice" onclick="setView('practice')">✍️ Go practice →</button></div>`;
+    main.innerHTML = html; return;
+  }
+  html += `<div class="master-stats">
+    ${missed?`<span class="master-chip miss">✗ ${missed} missed</span>`:""}
+    ${flagged?`<span class="master-chip flag">⚑ ${flagged} flagged</span>`:""}
+    ${paras?`<span class="master-chip rev">⚠️ ${paras} to review</span>`:""}</div>`;
+  items.forEach(it => {
+    if (it.type === "q"){
+      html += `<div class="master-item"><div class="master-item-tag ${it.reason}">${it.reason==="missed"?"✗ You missed this":"⚑ Flagged"}</div>${renderQuestionCard(it.qe, n, it.lo)}</div>`;
+    } else {
+      html += `<div class="master-item"><div class="master-item-tag rev">⚠️ Marked to review</div>
+        <div class="master-para">${esc(it.text)}</div>
+        <div class="master-para-actions">
+          <button class="btn btn-small" onclick="jumpToPara(${n},'${it.pb}',0)">Open in lecture</button>
+          <button class="btn-start-practice" onclick="masterClearPara('${it.pb}')">✓ Got it</button>
+        </div></div>`;
+    }
+  });
+  main.innerHTML = html;
 }
 
 function renderLecture() {

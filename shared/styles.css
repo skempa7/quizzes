@@ -2329,3 +2329,32 @@ main { max-width: 1120px; padding-right: 56px; }
 }
 .rc-point strong { color: var(--text); font-weight: 600; }
 .rc-point + .rc-point { margin-top: 3px; }
+
+/* =============================================================
+   MASTER — weak-spot drill
+   ============================================================= */
+.mode-badge {
+  display: inline-grid; place-items: center; min-width: 18px; height: 18px;
+  margin-left: 6px; padding: 0 5px; border-radius: 999px;
+  background: var(--wrong); color: #fff; font-size: .66rem; font-weight: 800;
+}
+.mode-btn.active .mode-badge { background: rgba(0,0,0,.25); }
+.master-intro { margin: 4px 0 18px; }
+.master-intro-h { font-size: 1.15rem; font-weight: 600; color: var(--text); }
+.master-intro-sub { font-size: .9rem; color: var(--muted); margin-top: 3px; line-height: 1.5; }
+.master-stats { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.master-chip { font-size: .8rem; font-weight: 700; padding: 5px 12px; border-radius: 999px; }
+.master-chip.miss { background: var(--wrong-bg); color: var(--wrong); }
+.master-chip.flag { background: var(--warning-bg); color: var(--warning); }
+.master-chip.rev  { background: rgba(189,167,221,0.16); color: var(--c-confuse); }
+.master-item { margin: 0 0 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+.master-item-tag { font-size: .72rem; font-weight: 800; letter-spacing: .03em; text-transform: uppercase; margin-bottom: 8px; }
+.master-item-tag.missed { color: var(--wrong); }
+.master-item-tag.flagged { color: var(--warning); }
+.master-item-tag.rev { color: var(--c-confuse); }
+.master-para {
+  font-size: 1rem; line-height: 1.55; color: var(--text);
+  background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--c-confuse);
+  border-radius: var(--radius-md); padding: 12px 15px;
+}
+.master-para-actions { display: flex; gap: 10px; margin-top: 10px; }
