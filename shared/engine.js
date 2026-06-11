@@ -25,7 +25,12 @@ const KEYS = {
   badges: SUBJ + "_badges_v1",
   conceptDone: SUBJ + "_cdone_v1",
   conceptFlag: SUBJ + "_cflag_v1",
-  recall: SUBJ + "_recall_v1"
+  recall: SUBJ + "_recall_v1",
+  cqReveal: SUBJ + "_cqreveal_v1",   // { revealKey: true } — drives reading progress
+  hl: SUBJ + "_hl_v1",               // { lec: [ {ch, text, color} ] } highlights
+  markReview: SUBJ + "_markrev_v1",  // { anchorKey: {lec, ch, text} } ⚠️ review-more tags
+  markStar: SUBJ + "_markstar_v1",   // { anchorKey: {lec, ch, text} } ⭐ important tags
+  bookmarks: SUBJ + "_bookmarks_v1"  // { lec: {ci, label, ts} } 🔖 resume points
 };
 
 const state = {
@@ -50,6 +55,11 @@ const state = {
   conceptDone: load(KEYS.conceptDone, {}),  // { "lec_lo_bi": true }
   conceptFlag: load(KEYS.conceptFlag, {}),  // { "lec_lo_bi": true }
   recallMode: load(KEYS.recall, false),
+  cqReveal: load(KEYS.cqReveal, {}),   // { revealKey: true }
+  hl: load(KEYS.hl, {}),               // { lec: [ {ch, text, color} ] }
+  markReview: load(KEYS.markReview, {}),
+  markStar: load(KEYS.markStar, {}),
+  bookmarks: load(KEYS.bookmarks, {}), // { lec: {ci, label, ts} }
   viewMode: "dashboard",           // "dashboard" | "learn" | "practice"
   reviewConceptsMode: false
 };
@@ -403,7 +413,6 @@ function lectureModeBar(n) {
   const practiceActive = state.viewMode === "practice" ? "active" : "";
   const tools = state.viewMode === "learn" ? `
     <div class="mode-tools">
-      <button class="tool-btn ${state.recallMode?'on':''}" onclick="toggleRecall()" title="Hide answers for active recall">🧠 Recall</button>
       <button class="tool-btn" id="tts-btn" onclick="toggleTTS()" title="Listen">🔊 Listen</button>
     </div>` : `<div class="mode-status">${lectureMastered(n)?'<span class="mode-dot master">★ mastered</span>':(state.read[n]?'<span class="mode-dot done">✓ read</span>':'')}</div>`;
   return `<div class="mode-bar">
@@ -464,32 +473,159 @@ function mustKnowCardHTML(text, key, i){
     ${ccFoot(key)}</div>`;
 }
 
-function microCheckHTML(n, loId){
+// =============================================================
+// ARTICLE READING MODEL — flowing chapters, inline callouts,
+// ClaudeCompares drills, ReClaude reflect prompts (reveal = progress)
+// =============================================================
+
+// Optional curated chapter grouping per lecture. Each entry groups LO ids
+// under a friendly title. Lectures without an entry fall back to one
+// chapter per LO (title derived from the LO statement).
+const LECTURE_CHAPTERS = {
+  1: [
+    { icon:"🔌", title:"How the gut is wired", los:[1] },
+    { icon:"🔬", title:"How GI disease gets started", los:[2] },
+    { icon:"🩺", title:"Diseases you'll actually see", los:[3] }
+  ]
+};
+
+const NOTE_META = {
+  key:       { tag:"🔑 Key",          cls:"key" },
+  pearl:     { tag:"💎 Pearl",        cls:"pearl" },
+  trap:      { tag:"⚠️ Trap",         cls:"trap" },
+  confusion: { tag:"🔀 Don't confuse", cls:"confusion" },
+  cue:       { tag:"🎯 Stem cue",     cls:"cue" }
+};
+
+function cleanStmt(s){
+  s = String(s || "").trim();
+  s = s.replace(/^[\s●○•◐◑▪◦·\-–—|]+/, "");          // strip leaked tier dots / bullets
+  s = s.replace(/^LO\s*[A-Za-z]*\.?\d*\s*[:.\-]?\s*/i, ""); // strip stray LO id
+  return s.trim();
+}
+function chapterTitleFromLO(lo){
+  let s = cleanStmt(lo.statement);
+  if (!s) return "";
+  s = s.replace(/^(Describe|Identify|Explain|List|Define|Discuss|Outline|Understand|Recognize|Compare|Review|Apply|Analyze|Summari[sz]e|State|Interpret)\s+(the\s+)?/i, "");
+  s = s.replace(/\s+from a clinical perspective$/i, "");
+  s = s.charAt(0).toUpperCase() + s.slice(1);
+  if (s.length > 72) s = s.slice(0, 70).replace(/\s+\S*$/, "") + "…";
+  return s;
+}
+function getChapters(n){
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  if (!c) return [];
+  if (LECTURE_CHAPTERS[n]) return LECTURE_CHAPTERS[n];
+  // fallback: one chapter per LO that has a usable title; fold title-less LOs
+  // into the previous chapter so we never spam "Overview".
+  const chapters = [];
+  (c.los || []).forEach(lo => {
+    const t = chapterTitleFromLO(lo);
+    if (t || chapters.length === 0) chapters.push({ icon:"", title: t || "Overview", los:[lo.id] });
+    else chapters[chapters.length - 1].los.push(lo.id);
+  });
+  return chapters;
+}
+function loById(n, id){
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  return (c && (c.los||[]).find(l => l.id === id)) || null;
+}
+
+// split a comparison block into individual items (parser leaves internal " CQ ")
+function cqItems(text){ return String(text).split(/\s+CQ\s+/).map(s => s.trim()).filter(Boolean); }
+// split a recall item into [prompt, answer] on its leading "Term: ..." colon
+function splitRecall(text){
+  const m = String(text).match(/^(.{3,70}?):\s+([\s\S]+)$/);
+  if (m) return [m[1].trim(), m[2].trim()];
+  const w = String(text).split(/\s+/);
+  if (w.length > 12) return [w.slice(0,8).join(" ") + "…", text];
+  return [null, text];
+}
+
+function recallRowHTML(item, key){
+  const [prompt, ans] = splitRecall(item);
+  const on = state.cqReveal[key] ? " revealed" : "";
+  const q = prompt ? esc(prompt) : "Recall this";
+  return `<div class="rc-recall${on}" data-key="${key}" onclick="revealItem('${key}',this)">
+    <span class="rc-recall-q">${q}</span>
+    <span class="rc-recall-a">${esc(ans)}</span>
+    <span class="rc-recall-hint">tap to reveal</span></div>`;
+}
+function reflectHTML(n, loId, qtext, key){
+  const on = state.cqReveal[key] ? " revealed" : "";
   const qs = getEffectiveQuestions(n, loId);
-  if (!qs.length) return "";
-  const un = qs.find(q => !state.answers[q.key]) || qs[0];
-  return `<div class="micro-check"><div class="micro-label">⚡ Quick check</div>${renderQuestionCard(un, n, loId)}</div>`;
+  const drill = qs.length ? `<button class="rc-drill" onclick="event.stopPropagation(); startReflectDrill(${n},${loId})">✍️ Drill ${qs.length} related question${qs.length===1?"":"s"} →</button>` : "";
+  return `<div class="rc-reflect${on}" data-key="${key}" onclick="revealItem('${key}',this)">
+    <div class="rc-reflect-q"><span class="rc-reflect-tag">🤔 Test yourself</span>${esc(qtext)}</div>
+    <div class="rc-reflect-a">Could you answer that from memory? The reasoning is in this section.${drill}</div>
+    <span class="rc-recall-hint">tap to check</span></div>`;
+}
+
+function renderLOFlow(n, lo){
+  const blocks = lo.blocks || [];
+  let html = "", cqRun = [];
+  const flushCQ = () => {
+    if (!cqRun.length) return;
+    const items = [];
+    cqRun.forEach(bi => cqItems(blocks[bi].x).forEach((it, ii) => items.push({ it, key:`${n}_${lo.id}_cc${bi}_${ii}` })));
+    if (items.length >= 2)
+      html += `<div class="rc-compare"><div class="rc-compare-head">⇄ ClaudeCompares <span>— recall each, then sort them apart</span></div>${items.map(o => recallRowHTML(o.it, o.key)).join("")}</div>`;
+    else if (items.length)
+      html += recallRowHTML(items[0].it, items[0].key);
+    cqRun = [];
+  };
+  blocks.forEach((b, bi) => {
+    if (b.t === "cq") { cqRun.push(bi); return; }
+    flushCQ();
+    if (b.t === "p") {
+      const [lead, body] = splitLead(b.x);
+      html += lead ? `<p class="rc-p"><strong class="rc-lead">${esc(lead)}.</strong> ${esc(body)}</p>` : `<p class="rc-p">${esc(b.x)}</p>`;
+    } else if (b.t === "q") {
+      html += reflectHTML(n, lo.id, b.x, `${n}_${lo.id}_q${bi}`);
+    } else if (NOTE_META[b.t]) {
+      const m = NOTE_META[b.t];
+      html += `<aside class="rc-note rc-note-${m.cls}"><span class="rc-note-tag">${m.tag}</span><span class="rc-note-x">${esc(b.x)}</span></aside>`;
+    } else {
+      html += `<p class="rc-p">${esc(b.x)}</p>`;
+    }
+  });
+  flushCQ();
+  return html;
 }
 
 function renderReadingContent(n){
   const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
   if (!c) return `<div class="empty-state"><div class="icon">📖</div><h3>Reading content coming soon</h3><p>Jump into the questions instead.</p></div>`;
   let html = "";
-  if (c.tldr) html += `<div class="rc-tldr"><span class="rc-tldr-label">TL;DR</span>${esc(c.tldr)}</div>`;
+  if (c.tldr) html += `<p class="rc-standfirst">${esc(c.tldr)}</p>`;
   if (c.mustKnows && c.mustKnows.length){
-    html += `<div class="rc-section"><h3 class="rc-h">⭐ Must-Knows <span class="rc-sub">— what your professors stress</span></h3>
-      <div class="cc-grid">${c.mustKnows.map((m,i)=>mustKnowCardHTML(m, `${n}_mk_${i}`, i)).join("")}</div></div>`;
+    html += `<div class="rc-mustknows"><div class="rc-mk-head">⭐ Must-knows <span>— what your professors stress</span></div><ul>${c.mustKnows.map(m=>`<li>${esc(m)}</li>`).join("")}</ul></div>`;
   }
-  (c.los || []).forEach(lo => {
-    const diag = (typeof DIAGRAMS !== "undefined" && DIAGRAMS[`${n}_${lo.id}`]) ? `<div class="rc-diagram">${DIAGRAMS[`${n}_${lo.id}`]}</div>` : "";
-    html += `<div class="rc-lo">
-      <h3 class="rc-h"><span class="lo-num">LO ${lo.id}</span>${esc(lo.statement || "")}</h3>
-      ${diag}
-      <div class="cc-grid">${(lo.blocks||[]).map((b,bi)=>conceptCardHTML(b, `${n}_${lo.id}_${bi}`)).join("")}</div>
-      ${microCheckHTML(n, lo.id)}
-    </div>`;
+  getChapters(n).forEach((ch, ci) => {
+    html += `<section class="rc-chapter" id="ch-${n}-${ci}">
+      <h3 class="rc-chapter-h"><span class="rc-chapter-n">${ci+1}</span>${ch.icon?`<span class="rc-chapter-ic">${ch.icon}</span>`:""}<span class="rc-chapter-t">${esc(ch.title)}</span></h3>`;
+    ch.los.forEach(id => {
+      const lo = loById(n, id); if (!lo) return;
+      const dk = `${n}_${id}`;
+      if (typeof DIAGRAMS !== "undefined" && DIAGRAMS[dk]) html += `<div class="rc-diagram">${DIAGRAMS[dk]}</div>`;
+      html += renderLOFlow(n, lo);
+    });
+    html += `</section>`;
   });
   return html;
+}
+
+function revealItem(key, el){
+  if (!state.cqReveal[key]) { state.cqReveal[key] = true; save(KEYS.cqReveal, state.cqReveal); addXP(1); }
+  if (el) el.classList.add("revealed");
+  updateReadingProgress();
+  const n = state.currentLec, rs = lectureReadingStats(n);
+  if (rs.total > 0 && rs.done === rs.total && !state.read[n]) { burstXP("📖 Lecture complete! +20 XP"); markRead(n); checkMastery(n); renderSidebar(); }
+}
+function startReflectDrill(n, loId){
+  goToLec(n);
+  setView("practice");
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function renderLearnView() {
@@ -514,9 +650,9 @@ function renderLearnView() {
     ${lectureModeBar(n)}
     <div class="reading-prog">
       <div class="reading-prog-bar"><div class="reading-prog-fill" id="reading-prog-fill" style="width:${rs.pct}%"></div></div>
-      <span class="reading-prog-txt" id="reading-prog-txt">${rs.done}/${rs.total} concepts</span>
+      <span class="reading-prog-txt" id="reading-prog-txt">${rs.total?`${rs.done}/${rs.total} revealed`:"Read through"}</span>
     </div>
-    <div class="reading${recallCls}" id="reading">${renderReadingContent(n)}</div>
+    <div class="reading" id="reading">${renderReadingContent(n)}</div>
     ${slidesPanelHTML(n)}
     <div class="learn-cta">
       <div class="learn-cta-text">Done reading? Lock it in with ${qCount} practice question${qCount===1?"":"s"}.</div>
@@ -1625,15 +1761,25 @@ function lectureConceptKeys(n){
   (c.los||[]).forEach(lo=>(lo.blocks||[]).forEach((b,bi)=>keys.push(`${n}_${lo.id}_${bi}`)));
   return keys;
 }
+// reveal items (ClaudeCompares rows + ReClaude prompts) drive reading progress
+function lectureRevealKeys(n){
+  const c=(typeof LECTURE_CONTENT!=="undefined")?LECTURE_CONTENT[n]:null; if(!c) return [];
+  const keys=[];
+  (c.los||[]).forEach(lo=>(lo.blocks||[]).forEach((b,bi)=>{
+    if(b.t==="cq") cqItems(b.x).forEach((_,ii)=>keys.push(`${n}_${lo.id}_cc${bi}_${ii}`));
+    else if(b.t==="q") keys.push(`${n}_${lo.id}_q${bi}`);
+  }));
+  return keys;
+}
 function lectureReadingStats(n){
-  const keys=lectureConceptKeys(n);
-  const done=keys.filter(k=>state.conceptDone[k]).length;
+  const keys=lectureRevealKeys(n);
+  const done=keys.filter(k=>state.cqReveal[k]).length;
   return {total:keys.length, done, pct: keys.length?Math.round(100*done/keys.length):0};
 }
 function updateReadingProgress(){
   const rs=lectureReadingStats(state.currentLec);
   const f=document.getElementById("reading-prog-fill"); if(f) f.style.width=rs.pct+"%";
-  const t=document.getElementById("reading-prog-txt"); if(t) t.textContent=`${rs.done}/${rs.total} concepts`;
+  const t=document.getElementById("reading-prog-txt"); if(t) t.textContent=rs.total?`${rs.done}/${rs.total} revealed`:`Read through`;
 }
 function toggleConceptDone(key, el){
   const card=el.closest(".cc");

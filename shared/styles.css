@@ -1828,3 +1828,159 @@ main { padding:34px 40px 80px; max-width:860px; width:100%; margin:0 auto; }
 .lb-prev { left:18px; } .lb-next { right:18px; }
 .lb-nav:hover, .lb-close:hover { background:rgba(255,255,255,.24); }
 .lb-counter { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); color:#fff; font-weight:700; font-size:.9rem; background:rgba(0,0,0,.4); padding:5px 14px; border-radius:999px; }
+
+/* =============================================================
+   ARTICLE READING VIEW (book-like): chapters, prose, callouts,
+   ClaudeCompares + ReClaude reveal rows. Slate+Amber, low-key.
+   ============================================================= */
+.reading {
+  max-width: 720px;
+  font-family: Georgia, "Source Serif 4", "Times New Roman", serif;
+}
+.rc-standfirst {
+  font-size: 1.16rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+  font-style: italic;
+  margin: 0 0 26px;
+  padding-left: 16px;
+  border-left: 3px solid var(--primary);
+}
+/* Must-knows intro box */
+.rc-mustknows {
+  background: var(--primary-softer);
+  border: 1px solid var(--primary-light);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px 18px;
+  margin: 0 0 30px;
+}
+.rc-mk-head {
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: .96rem; font-weight: 700; color: var(--text);
+  margin-bottom: 10px;
+}
+.rc-mk-head span { font-weight: 500; color: var(--muted); font-size: .82rem; }
+.rc-mustknows ul { margin: 0; padding: 0; list-style: none; }
+.rc-mustknows li {
+  position: relative; padding: 5px 0 5px 26px;
+  font-size: .9rem; line-height: 1.5; color: var(--text-soft);
+  border-top: 1px solid var(--primary-light);
+}
+.rc-mustknows li:first-child { border-top: none; }
+.rc-mustknows li::before {
+  content: "★"; position: absolute; left: 4px; top: 5px;
+  color: var(--primary); font-size: .8rem;
+}
+/* Chapters */
+.rc-chapter { margin: 0 0 38px; scroll-margin-top: 80px; }
+.rc-chapter-h {
+  display: flex; align-items: center; gap: 11px;
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--text); margin: 0 0 16px;
+  padding-bottom: 12px; border-bottom: 2px solid var(--border);
+}
+.rc-chapter-n {
+  flex: none; width: 30px; height: 30px; border-radius: 9px;
+  background: var(--primary); color: #fff;
+  display: grid; place-items: center;
+  font-size: .92rem; font-weight: 700;
+}
+.rc-chapter-ic { font-size: 1.15rem; }
+.rc-chapter-t { flex: 1; }
+/* Prose */
+.rc-p {
+  font-size: 1.04rem; line-height: 1.78; color: var(--text);
+  margin: 0 0 16px;
+}
+.rc-lead { color: var(--text); font-weight: 700; }
+body.dark .rc-p { color: var(--text-soft); }
+/* Inline callouts — subtle, not loud */
+.rc-note {
+  display: block; position: relative;
+  margin: 16px 0; padding: 12px 15px 12px 15px;
+  border-left: 3px solid var(--muted);
+  background: var(--surface-2);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-family: Inter, sans-serif;
+}
+.rc-note-tag {
+  display: inline-block; font-size: .68rem; font-weight: 800;
+  letter-spacing: .03em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 4px;
+}
+.rc-note-x { display: block; font-size: .9rem; line-height: 1.58; color: var(--text-soft); }
+.rc-note-key       { border-left-color: var(--primary); background: var(--primary-softer); }
+.rc-note-key .rc-note-tag { color: var(--primary-hover); }
+.rc-note-pearl     { border-left-color: #0d9488; background: rgba(13,148,136,0.08); }
+.rc-note-pearl .rc-note-tag { color: #0d9488; }
+.rc-note-trap      { border-left-color: var(--wrong); background: var(--wrong-bg); }
+.rc-note-trap .rc-note-tag { color: var(--wrong); }
+.rc-note-confusion { border-left-color: #7c3aed; background: rgba(124,58,237,0.08); }
+.rc-note-confusion .rc-note-tag { color: #7c3aed; }
+.rc-note-cue       { border-left-color: var(--warning); background: var(--warning-bg); }
+.rc-note-cue .rc-note-tag { color: var(--warning); }
+/* ClaudeCompares drill */
+.rc-compare {
+  margin: 18px 0; padding: 14px 14px 6px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.rc-compare-head {
+  font-family: "Space Grotesk", Inter, sans-serif;
+  font-size: .82rem; font-weight: 700; color: var(--text);
+  margin-bottom: 10px;
+}
+.rc-compare-head span { font-weight: 500; color: var(--muted); }
+/* Reveal row (recall) */
+.rc-recall {
+  margin: 8px 0; padding: 12px 14px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+  font-family: Inter, sans-serif;
+}
+.rc-compare .rc-recall { margin: 0 0 8px; }
+.rc-recall:hover { border-color: var(--primary); }
+.rc-recall-q { display: block; font-size: .93rem; font-weight: 700; color: var(--text); }
+.rc-recall-a {
+  display: none; font-size: .9rem; line-height: 1.58;
+  color: var(--text-soft); margin-top: 7px;
+}
+.rc-recall.revealed { cursor: default; border-color: var(--border); }
+.rc-recall.revealed .rc-recall-a { display: block; animation: rc-fade .25s ease; }
+.rc-recall-hint {
+  display: inline-block; margin-top: 6px;
+  font-size: .68rem; font-weight: 700; letter-spacing: .03em;
+  text-transform: uppercase; color: var(--primary);
+}
+.rc-recall.revealed .rc-recall-hint { display: none; }
+@keyframes rc-fade { from { opacity: 0; transform: translateY(-3px); } to { opacity: 1; transform: none; } }
+/* ReClaude reflect prompt */
+.rc-reflect {
+  margin: 18px 0; padding: 14px 16px;
+  background: var(--warning-bg); border: 1px solid var(--warning);
+  border-radius: var(--radius-lg); cursor: pointer;
+  font-family: Inter, sans-serif;
+}
+.rc-reflect-tag {
+  display: inline-block; font-size: .68rem; font-weight: 800;
+  letter-spacing: .03em; text-transform: uppercase;
+  color: var(--warning); margin-right: 8px;
+}
+.rc-reflect-q { font-size: .96rem; font-weight: 600; line-height: 1.5; color: var(--text); }
+.rc-reflect-a {
+  display: none; font-size: .88rem; line-height: 1.55;
+  color: var(--text-soft); margin-top: 9px;
+}
+.rc-reflect.revealed .rc-reflect-a { display: block; animation: rc-fade .25s ease; }
+.rc-reflect.revealed .rc-recall-hint { display: none; }
+.rc-drill {
+  display: block; margin-top: 10px;
+  background: var(--primary); color: #fff; border: none;
+  padding: 8px 14px; border-radius: var(--radius-md);
+  font-size: .82rem; font-weight: 700; cursor: pointer;
+  font-family: Inter, sans-serif;
+}
+.rc-drill:hover { background: var(--primary-hover); }
+.rc-diagram { margin: 18px 0; }
