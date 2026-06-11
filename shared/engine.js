@@ -527,6 +527,9 @@ function chapterTitleFromLO(lo){
 function getChapters(n){
   const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
   if (!c) return [];
+  // prefer generated section clustering when available
+  if (typeof FLASHCARDS !== "undefined" && FLASHCARDS[n] && FLASHCARDS[n].sections && FLASHCARDS[n].sections.length)
+    return FLASHCARDS[n].sections.map(s => ({ icon:"", title:s.title, los:s.los }));
   if (LECTURE_CHAPTERS[n]) return LECTURE_CHAPTERS[n];
   // fallback: one chapter per LO that has a usable title; fold title-less LOs
   // into the previous chapter so we never spam "Overview".
@@ -605,37 +608,73 @@ function slideJumpBtn(n, jkey){
   return ` <button class="slide-jump" onclick="event.stopPropagation(); openLightbox('${s.dir}',${s.count},${pg})" title="Show the lecture slide for this concept">📑 Slide</button>`;
 }
 
-// Render one chapter: continuous prose + light inline callouts, then a single
-// end-of-chapter "Recall" zone holding all ClaudeCompares + ReClaude reveals.
+// ---- flashcards (generated Q&A; fall back to label/fact cues) ----
+function fcLookup(n){
+  if (typeof FLASHCARDS === "undefined" || !FLASHCARDS[n]) return null;
+  if (!FLASHCARDS[n]._idx){
+    const m = {}; (FLASHCARDS[n].cards || []).forEach(c => m[c.key] = c);
+    try { Object.defineProperty(FLASHCARDS[n], "_idx", { value:m, enumerable:false }); } catch(e){ FLASHCARDS[n]._idx = m; }
+  }
+  return FLASHCARDS[n]._idx;
+}
+function flashcardHTML(n, key, fbFront, fbBack){
+  const idx = fcLookup(n); const c = idx && idx[key];
+  const front = c ? c.front : fbFront;
+  const back  = c ? c.back  : fbBack;
+  const on = state.cqReveal[key] ? " flipped" : "";
+  return `<div class="fc${on}" data-key="${key}" onclick="flipCard('${key}',this)">
+    <div class="fc-inner">
+      <div class="fc-face fc-front"><span class="fc-q">${esc(front)}</span><span class="fc-hint">tap to flip ⟲</span></div>
+      <div class="fc-face fc-back"><span class="fc-a">${esc(back)}</span></div>
+    </div></div>`;
+}
+function flipCard(key, el){
+  el.classList.toggle("flipped");
+  if (!state.cqReveal[key]){ state.cqReveal[key] = true; save(KEYS.cqReveal, state.cqReveal); addXP(1); }
+  updateReadingProgress();
+  const n = state.currentLec, rs = lectureReadingStats(n);
+  if (rs.total > 0 && rs.done === rs.total && !state.read[n]){ burstXP("📖 Lecture complete! +20 XP"); markRead(n); checkMastery(n); renderSidebar(); }
+}
+function slidePageFor(n, jkey){ return (typeof SLIDE_JUMPS !== "undefined" && SLIDE_JUMPS[n] && SLIDE_JUMPS[n][jkey]) || null; }
+function inlineSlideHTML(n, pg){
+  const s = (typeof SLIDES !== "undefined") ? SLIDES[n] : null; if (!s) return "";
+  const num = String(pg).padStart(2, "0");
+  return `<figure class="rc-inline-slide" onclick="openLightbox('${s.dir}',${s.count},${pg})" title="Open slide ${pg}">
+    <img loading="lazy" src="slides/${s.dir}/${num}.jpg" alt="slide ${pg}"><figcaption>📑 Slide ${pg}</figcaption></figure>`;
+}
+
+// Render one chapter/section: continuous prose with inline colored callouts and
+// curated inline slides, then a flip-card recall grid at the end.
 function renderChapterContent(n, losIds){
-  let body = "", recall = "";
+  let body = "", cards = [];
   losIds.forEach(id => {
     const lo = loById(n, id); if (!lo) return;
     const blocks = lo.blocks || [];
     const dk = `${n}_${id}`;
     if (typeof DIAGRAMS !== "undefined" && DIAGRAMS[dk]) body += `<div class="rc-diagram">${DIAGRAMS[dk]}</div>`;
-    let cqRun = [], topic = chapterTitleFromLO(lo) || "";
-    const flushCQ = () => {
-      if (!cqRun.length) return;
-      const items = [];
-      cqRun.forEach(bi => cqItems(blocks[bi].x).forEach((it, ii) => items.push({ it, key:`${n}_${lo.id}_cc${bi}_${ii}` })));
-      const title = topic ? esc(topic) : "Recall";
-      recall += `<div class="rc-recall-group"><div class="rc-recall-group-h">${title}</div>${items.map(o => recallRowHTML(o.it, o.key)).join("")}</div>`;
-      cqRun = [];
-    };
+    let topic = chapterTitleFromLO(lo) || "";
     blocks.forEach((b, bi) => {
-      if (b.t === "cq") { cqRun.push(bi); return; }
-      flushCQ();
       const pid = `${n}_${lo.id}_${bi}`;
-      if (b.t === "q")            recall += reflectHTML(n, lo.id, b.x, `${n}_${lo.id}_q${bi}`);
-      else if (b.t === "p")       { const [lead] = splitLead(b.x); if (lead) topic = lead; body += proseHTML(b.x, pid); }
-      else if (NOTE_META[b.t])    body += noteHTML(b, b.t === "key" ? slideJumpBtn(n, `key_${lo.id}_${bi}`) : "", pid);
-      else                        body += proseHTML(b.x, pid);
+      if (b.t === "cq"){
+        cqItems(b.x).forEach((it, ii) => {
+          const key = `${n}_${lo.id}_cc${bi}_${ii}`;
+          const [pr, an] = splitRecall(it);
+          cards.push(flashcardHTML(n, key, topic ? `${topic} — ${pr || "recall this"}` : (pr || "Recall this"), an));
+        });
+      } else if (b.t === "q"){
+        cards.push(flashcardHTML(n, `${n}_${lo.id}_q${bi}`, b.x, "Think it through — the reasoning is in this section."));
+      } else if (b.t === "p"){
+        const [lead] = splitLead(b.x); if (lead) topic = lead; body += proseHTML(b.x, pid);
+      } else if (NOTE_META[b.t]){
+        const jkey = b.t === "key" ? `key_${lo.id}_${bi}` : null;
+        const pg = jkey ? slidePageFor(n, jkey) : null;
+        if (pg) body += `<div class="rc-para-slide" data-pb="${pid}">${noteHTML(b, "", null)}${inlineSlideHTML(n, pg)}</div>`;
+        else    body += noteHTML(b, "", pid);
+      } else body += proseHTML(b.x, pid);
     });
-    flushCQ();
   });
   let html = body;
-  if (recall) html += `<div class="rc-recall-zone"><div class="rc-recall-zone-h">🧠 Recall — test yourself</div>${recall}</div>`;
+  if (cards.length) html += `<div class="rc-recall-zone"><div class="rc-recall-zone-h">🧠 Recall — tap a card to flip</div><div class="fc-grid">${cards.join("")}</div></div>`;
   return html;
 }
 
