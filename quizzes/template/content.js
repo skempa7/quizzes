@@ -1,6 +1,6 @@
 // ============================================================
 //  CONTENT FILE  —  this is the ONLY file you edit to make a quiz.
-//  Copy this whole _template folder, rename it, and edit below.
+//  Copy this whole template folder, rename it, and edit below.
 // ============================================================
 
 // ---- 1) Quiz settings -------------------------------------------------
