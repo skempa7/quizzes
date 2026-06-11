@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Quizzes</title>
+<style>
+  :root { --pink:#db2777; --pink-dark:#be185d; --bg:#fdf2f8; --card:#ffffff; --border:#fbcfe8; --text:#1a0e16; --muted:#7c6070; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding:48px 20px; }
+  .wrap { max-width:760px; margin:0 auto; }
+  h1 { color:var(--pink); font-size:2rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:6px; }
+  .sub { color:var(--muted); margin-bottom:32px; font-size:0.95rem; }
+  .grid { display:grid; gap:16px; }
+  a.quiz-card { display:flex; align-items:center; gap:16px; text-decoration:none; color:inherit;
+    background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px 22px;
+    box-shadow:0 1px 3px rgba(219,39,119,0.08); transition:all .18s ease; }
+  a.quiz-card:hover { border-color:var(--pink); transform:translateY(-2px); box-shadow:0 8px 22px rgba(219,39,119,0.16); }
+  .emoji { font-size:2rem; }
+  .quiz-name { font-size:1.15rem; font-weight:700; }
+  .quiz-desc { color:var(--muted); font-size:0.85rem; margin-top:2px; }
+  .arrow { margin-left:auto; color:var(--pink); font-size:1.4rem; }
+  footer { margin-top:40px; color:var(--muted); font-size:0.82rem; line-height:1.6; }
+  code { background:#fce7f3; padding:1px 6px; border-radius:5px; font-size:0.85em; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>📚 My Quizzes</h1>
+    <p class="sub">Click a quiz to start studying. Your progress saves automatically in your browser.</p>
+
+    <div class="grid">
+
+      <a class="quiz-card" href="quizzes/gi-exam-1/index.html">
+        <span class="emoji">🩺</span>
+        <span>
+          <div class="quiz-name">GI Exam 1</div>
+          <div class="quiz-desc">Gastrointestinal — 30 lectures, full question bank</div>
+        </span>
+        <span class="arrow">→</span>
+      </a>
+
+      <!-- TO ADD A NEW QUIZ:
+           1. Copy the quizzes/_template folder, rename it (e.g. quizzes/cardio-exam).
+           2. Edit that folder's content.js (settings + questions).
+           3. Copy the block below, change the href + name to match. -->
+
+    </div>
+
+    <footer>
+      <strong>Add a new quiz:</strong> duplicate the <code>quizzes/_template</code> folder,
+      rename it, edit its <code>content.js</code>, then add a link above. That's it —
+      the app engine and styling are shared, so you never touch code.
+    </footer>
+  </div>
+</body>
+</html>

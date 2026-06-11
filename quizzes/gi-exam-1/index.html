@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Question Bank</title>
+<link rel="stylesheet" href="../../shared/styles.css">
+</head>
+<body>
+
+<header>
+  <h1 id="quiz-title"><span class="emoji">🩺</span>Quiz</h1>
+  <span class="head-stat" id="head-stat-overall">0 / 0 answered</span>
+
+  <div class="head-spacer"></div>
+
+  <button class="btn btn-fast" id="btn-fast">⚡ Fast Mode</button>
+  <button class="btn theme-toggle" id="btn-theme" title="Toggle dark mode">🌙</button>
+  <button class="btn" id="btn-hide-sidebar">Hide Stats</button>
+  <button class="btn" id="btn-editmode">Enter Edit Mode</button>
+  <button class="btn editmode-only" id="btn-commit">Commit Changes</button>
+  <button class="btn editmode-only" id="btn-download">Download Changes</button>
+  <button class="btn" id="btn-review-incorrect">Review Incorrect</button>
+  <button class="btn btn-flag-head" id="btn-review-flagged">⚑ Review Flagged</button>
+  <button class="btn" id="btn-reset">Reset</button>
+</header>
+
+<div class="layout" id="layout">
+  <nav class="sidebar" id="sidebar"></nav>
+  <main id="main"></main>
+  <aside class="rsidebar" id="rsidebar"></aside>
+</div>
+
+<!-- Reset modal -->
+<div class="modal-overlay" id="reset-modal">
+  <div class="modal">
+    <h2>Reset Options</h2>
+    <p class="sub">Pick what you want to reset. This only affects your browser — your file is untouched until you click <em>Download Changes</em>.</p>
+    <div class="option-row" onclick="confirmReset('progress')">
+      <strong>Reset Question Progress Only</strong>
+      <span>Clears answers, streak, flags, and today's count. Keeps any edits/additions/deletions you've made.</span>
+    </div>
+    <div class="option-row" onclick="confirmReset('everything')">
+      <strong>Reset Everything to Original</strong>
+      <span>Wipes everything back to the file's baseline — edits, additions, deletions, snapshots, and stats.</span>
+    </div>
+    <div class="footer-row">
+      <button class="btn" onclick="document.getElementById('reset-modal').classList.remove('show')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Fast Mode -->
+<div class="fast-overlay" id="fast-overlay">
+  <div class="fast-head">
+    <h2>⚡ Fast Mode</h2>
+    <button class="close-fast" onclick="closeFast()">Close</button>
+  </div>
+  <div class="fast-timer-bar" id="fast-timer-bar" style="display:none"><div class="fast-timer-fill" id="fast-timer-fill"></div></div>
+  <div class="fast-hud" id="fast-hud" style="display:none">
+    <div class="hud-stat"><div class="hud-label">Score</div><div class="hud-val" id="fast-score">0</div></div>
+    <div class="hud-stat"><div class="hud-label">Streak</div><div class="hud-val" id="fast-streak">0</div></div>
+    <div class="hud-stat"><div class="hud-label">Lives</div><div class="hud-val plain" id="fast-lives">❤️❤️❤️</div></div>
+    <div class="hud-stat"><div class="hud-label">% Correct</div><div class="hud-val" id="fast-pct">—</div></div>
+    <div class="hud-stat"><div class="hud-label">Q#</div><div class="hud-val plain" id="fast-qnum">0 / 0</div></div>
+  </div>
+  <div class="fast-body" id="fast-body"></div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+
+<!-- 1) content.js defines QUIZ_CONFIG + the questions for THIS quiz -->
+<script src="content.js"></script>
+<!-- 2) the shared engine renders everything (never edit per-quiz) -->
+<script src="../../shared/engine.js"></script>
+
+</body>
+</html>
