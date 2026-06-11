@@ -61,7 +61,8 @@ const state = {
   markStar: load(KEYS.markStar, {}),
   bookmarks: load(KEYS.bookmarks, {}), // { lec: {ci, label, ts} }
   viewMode: "dashboard",           // "dashboard" | "learn" | "practice"
-  reviewConceptsMode: false
+  reviewConceptsMode: false,
+  markupsMode: null                // null | "highlight" | "review" | "important" | "bookmark"
 };
 
 function load(key, fallback) {
@@ -300,6 +301,7 @@ function renderRSidebar() {
 // RENDER: MAIN
 // =============================================================
 function renderMain() {
+  if (state.markupsMode) return renderMarkups();
   if (state.reviewIncorrectMode) return renderReviewIncorrect();
   if (state.reviewFlaggedMode) return renderReviewFlagged();
   if (state.reviewConceptsMode) return renderReviewConcepts();
@@ -685,9 +687,16 @@ function renderLearnView() {
       ${prev !== null ? `<button class="btn" onclick="goToLec(${prev})">← Lecture ${prev}</button>` : `<span></span>`}
       ${next !== null ? `<button class="btn" onclick="goToLec(${next})">Lecture ${next} →</button>` : `<span></span>`}
     </div>`;
+
+  // annotations: re-apply highlights, draw chapter badges, wire selection + tray
+  reapplyAnnotations(n);
+  renderChapterBadges(n);
+  bindReadingAnnotations(n);
+  showTray(true);
 }
 
 function renderLecture() {
+  showTray(false); hideAnnoPopup();
   const main = document.getElementById("main");
   const lec = getLecture(state.currentLec);
   if (!lec) { main.innerHTML = "<p>Lecture not found.</p>"; return; }
@@ -944,6 +953,7 @@ function goToLec(n) {
   state.reviewIncorrectMode = false;
   state.reviewFlaggedMode = false;
   state.reviewConceptsMode = false;
+  state.markupsMode = null;
   state.viewMode = "learn";
   updateReviewButtons();
   renderMain();
@@ -1877,10 +1887,12 @@ function toggleTTS(){
 // =============================================================
 // DASHBOARD (home) + DRAWER + RANK CHIP
 // =============================================================
-function goHome(){ stopTTS(); state.viewMode="dashboard"; state.reviewIncorrectMode=state.reviewFlaggedMode=state.reviewConceptsMode=false; updateReviewButtons(); renderMain(); renderSidebar(); renderRSidebar(); window.scrollTo({top:0,behavior:"smooth"}); }
+function goHome(){ stopTTS(); state.viewMode="dashboard"; state.markupsMode=null; state.reviewIncorrectMode=state.reviewFlaggedMode=state.reviewConceptsMode=false; updateReviewButtons(); renderMain(); renderSidebar(); renderRSidebar(); window.scrollTo({top:0,behavior:"smooth"}); }
 function renderDashboard(){
   const main=document.getElementById("main");
+  showTray(false); hideAnnoPopup();
   const rk=rankFor(state.xp); const o=overallStats();
+  const bm=mostRecentBookmark();
   const readCount=Object.keys(state.read).filter(k=>state.read[k]).length;
   const masterCount=QUIZ.filter(L=>lectureMastered(L[0])).length;
   const acc=o.answered?Math.round(100*o.correct/o.answered):0;
@@ -1918,6 +1930,10 @@ function renderDashboard(){
       <div class="dash-goal-top"><span>🎯 Daily goal</span><span>${todayN}/${goal} questions</span></div>
       <div class="dash-goal-bar"><div class="dash-goal-fill" style="width:${goalPct}%"></div></div>
     </div>
+    ${bm ? `<button class="dash-resume" onclick="resumeReading(${bm.lec})">
+      <span class="dash-resume-ic">🔖</span>
+      <span class="dash-resume-tx"><b>Pick up where you left off</b><span>Lecture ${bm.lec}${bm.label?` · ${esc(bm.label).slice(0,60)}`:""}</span></span>
+      <span class="dash-resume-go">Resume →</span></button>` : ""}
     <h3 class="dash-h">Lectures</h3>
     <div class="map-grid">${tiles}</div>
   </div>`;
@@ -1985,6 +2001,243 @@ const DIAGRAMS = {
 };
 
 // =============================================================
+// ANNOTATIONS — highlight + ⚠️ review + ⭐ important (text),
+// 🔖 bookmark (resume), draggable tray (chapter-level), review pages
+// =============================================================
+const ANNO_META = {
+  highlight: { cls:"hl",  icon:"🖊️", label:"Highlight" },
+  review:    { cls:"rev", icon:"⚠️", label:"To review" },
+  important: { cls:"imp", icon:"⭐", label:"Important" }
+};
+function annoId(){ return "a" + Date.now().toString(36) + Math.floor(Math.random()*1e4).toString(36); }
+
+// ---- selection popup ----
+let _selRange = null;
+function readingHasSel(sel){
+  if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
+  const r = document.getElementById("reading");
+  return r && sel.anchorNode && sel.focusNode && r.contains(sel.anchorNode) && r.contains(sel.focusNode);
+}
+function onReadingSelect(){
+  const sel = window.getSelection();
+  if (!readingHasSel(sel)) { hideAnnoPopup(); return; }
+  _selRange = sel.getRangeAt(0).cloneRange();
+  const rect = _selRange.getBoundingClientRect();
+  const p = document.getElementById("anno-popup"); if (!p) return;
+  p.style.display = "flex";
+  const pw = p.offsetWidth || 168;
+  let left = window.scrollX + rect.left + rect.width/2 - pw/2;
+  left = Math.max(8, Math.min(left, window.scrollX + window.innerWidth - pw - 8));
+  p.style.top  = (window.scrollY + rect.top - p.offsetHeight - 8) + "px";
+  p.style.left = left + "px";
+}
+function hideAnnoPopup(){ const p = document.getElementById("anno-popup"); if (p) p.style.display = "none"; }
+
+function chapterIndexOfNode(node){
+  let el = node && node.nodeType === 3 ? node.parentElement : node;
+  const ch = el && el.closest ? el.closest(".rc-chapter") : null;
+  if (ch && ch.id){ const m = ch.id.match(/ch-\d+-(\d+)/); if (m) return parseInt(m[1]); }
+  return 0;
+}
+function wrapRange(range, cls, id){
+  const span = document.createElement("mark");
+  span.className = "anno anno-" + cls; span.dataset.annoId = id;
+  try { range.surroundContents(span); return true; }
+  catch(e){
+    try { const frag = range.extractContents(); span.appendChild(frag); range.insertNode(span); return true; }
+    catch(e2){ return false; }
+  }
+}
+function annoFromSelection(type){
+  const n = state.currentLec;
+  if (!_selRange) { hideAnnoPopup(); return; }
+  const ci = chapterIndexOfNode(_selRange.startContainer);
+  const text = _selRange.toString().trim().replace(/\s+/g, " ");
+  if (type === "bookmark"){ setBookmark(n, ci, text); cleanupSelection(); return; }
+  const id = annoId();
+  wrapRange(_selRange, ANNO_META[type].cls, id);
+  (state.hl[n] = state.hl[n] || []).push({ id, ci, text, type });
+  save(KEYS.hl, state.hl);
+  showToast(ANNO_META[type].icon + " " + ANNO_META[type].label + " saved");
+  updateMarkupCount();
+  cleanupSelection();
+}
+function cleanupSelection(){ hideAnnoPopup(); const s = window.getSelection(); if (s) s.removeAllRanges(); _selRange = null; }
+
+// ---- re-apply stored highlights after a render ----
+function reapplyAnnotations(n){
+  (state.hl[n] || []).forEach(a => {
+    const ch = document.getElementById(`ch-${n}-${a.ci}`); if (!ch) return;
+    highlightFirstOccurrence(ch, a.text, ANNO_META[a.type].cls, a.id);
+  });
+}
+function highlightFirstOccurrence(container, text, cls, id){
+  if (!text) return false;
+  const tw = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, null);
+  let node;
+  while ((node = tw.nextNode())){
+    if (node.parentElement && node.parentElement.closest(".anno")) continue;
+    const idx = node.nodeValue.indexOf(text);
+    if (idx >= 0){
+      const range = document.createRange();
+      range.setStart(node, idx); range.setEnd(node, idx + text.length);
+      wrapRange(range, cls, id);
+      return true;
+    }
+  }
+  return false;
+}
+// click an existing highlight to remove it
+function onReadingClick(e){
+  const m = e.target.closest && e.target.closest(".anno");
+  if (!m) return;
+  const id = m.dataset.annoId, n = state.currentLec;
+  state.hl[n] = (state.hl[n] || []).filter(a => a.id !== id);
+  save(KEYS.hl, state.hl);
+  const parent = m.parentNode;
+  while (m.firstChild) parent.insertBefore(m.firstChild, m);
+  parent.removeChild(m); parent.normalize();
+  updateMarkupCount(); showToast("Removed");
+}
+
+// ---- bookmarks (resume) ----
+function setBookmark(n, ci, label){
+  state.bookmarks[n] = { ci, label: (label || "").slice(0, 90), ts: Date.now() };
+  save(KEYS.bookmarks, state.bookmarks);
+  renderChapterBadges(n);
+  showToast("🔖 Bookmarked — your spot is saved");
+  updateMarkupCount();
+}
+function mostRecentBookmark(){
+  let best = null;
+  Object.keys(state.bookmarks).forEach(k => { const b = state.bookmarks[k]; if (b && (!best || b.ts > best.ts)) best = Object.assign({ lec: parseInt(k) }, b); });
+  return best;
+}
+function resumeReading(lec){
+  const b = lec != null ? Object.assign({ lec }, state.bookmarks[lec]) : mostRecentBookmark();
+  if (!b || b.ci == null) return;
+  goToLec(b.lec); setView("learn");
+  setTimeout(() => { const el = document.getElementById(`ch-${b.lec}-${b.ci}`); if (el) el.scrollIntoView({ behavior:"smooth", block:"start" }); }, 80);
+}
+
+// ---- chapter-level tags (from draggable tray) ----
+function chapterKey(n, ci){ return `${n}_${ci}`; }
+function tagChapter(type, n, ci){
+  const lec = getLecture(n); const chapters = getChapters(n);
+  const title = (chapters[ci] && chapters[ci].title) || (lec ? lec[1] : "");
+  if (type === "bookmark"){ setBookmark(n, ci, "Chapter: " + title); return; }
+  const store = type === "review" ? state.markReview : state.markStar;
+  const key = chapterKey(n, ci);
+  if (store[key]) delete store[key]; else store[key] = { lec:n, ci, title };
+  save(type === "review" ? KEYS.markReview : KEYS.markStar, store);
+  renderChapterBadges(n); updateMarkupCount();
+  showToast(ANNO_META[type].icon + " " + ANNO_META[type].label + (store[key] ? " — chapter tagged" : " removed"));
+}
+function renderChapterBadges(n){
+  document.querySelectorAll("#reading .rc-chapter").forEach(ch => {
+    const m = ch.id.match(/ch-\d+-(\d+)/); if (!m) return;
+    const ci = parseInt(m[1]); const key = chapterKey(n, ci);
+    const h = ch.querySelector(".rc-chapter-h"); if (!h) return;
+    let badge = h.querySelector(".rc-chapter-badges");
+    if (!badge){ badge = document.createElement("span"); badge.className = "rc-chapter-badges"; h.appendChild(badge); }
+    let s = "";
+    if (state.markReview[key]) s += `<span class="rc-cbadge rev" title="Marked to review">⚠️</span>`;
+    if (state.markStar[key])   s += `<span class="rc-cbadge imp" title="Marked important">⭐</span>`;
+    if (state.bookmarks[n] && state.bookmarks[n].ci === ci) s += `<span class="rc-cbadge bm" title="Your bookmark">🔖</span>`;
+    badge.innerHTML = s;
+  });
+}
+
+// ---- draggable tray ----
+function showTray(on){ const t = document.getElementById("anno-tray"); if (t) t.style.display = on ? "flex" : "none"; }
+function bindReadingAnnotations(n){
+  const r = document.getElementById("reading"); if (!r) return;
+  r.onmouseup = onReadingSelect;
+  r.ontouchend = () => setTimeout(onReadingSelect, 10);
+  r.onclick = onReadingClick;
+  r.ondragover = (e) => { if (_dragType) { e.preventDefault(); const ch = e.target.closest && e.target.closest(".rc-chapter"); document.querySelectorAll("#reading .rc-chapter.drop-on").forEach(c=>c.classList.remove("drop-on")); if (ch) ch.classList.add("drop-on"); } };
+  r.ondragleave = (e) => { const ch = e.target.closest && e.target.closest(".rc-chapter"); if (ch) ch.classList.remove("drop-on"); };
+  r.ondrop = (e) => {
+    if (!_dragType) return;
+    e.preventDefault();
+    const ch = e.target.closest && e.target.closest(".rc-chapter");
+    document.querySelectorAll("#reading .rc-chapter.drop-on").forEach(c=>c.classList.remove("drop-on"));
+    if (ch){ const m = ch.id.match(/ch-\d+-(\d+)/); if (m) tagChapter(_dragType, n, parseInt(m[1])); }
+    _dragType = null;
+  };
+}
+let _dragType = null;
+function initTray(){
+  document.querySelectorAll("#anno-tray .anno-tray-chip").forEach(chip => {
+    chip.addEventListener("dragstart", () => { _dragType = chip.dataset.type; });
+    chip.addEventListener("dragend",   () => { _dragType = null; document.querySelectorAll("#reading .rc-chapter.drop-on").forEach(c=>c.classList.remove("drop-on")); });
+  });
+}
+
+// ---- "My Markups" review pages ----
+function openMarkups(kind){
+  state.markupsMode = kind || "highlight";
+  state.viewMode = "dashboard";
+  state.reviewIncorrectMode = state.reviewFlaggedMode = state.reviewConceptsMode = false;
+  const mm = document.getElementById("more-menu"); if (mm) mm.classList.remove("show");
+  closeDrawer(); hideAnnoPopup(); showTray(false);
+  renderMain(); renderSidebar();
+}
+function closeMarkups(){ state.markupsMode = null; goHome(); }
+function markupCounts(){
+  let hl=0, rev=0, imp=0;
+  Object.keys(state.hl).forEach(n => (state.hl[n]||[]).forEach(a => { if (a.type==="highlight") hl++; else if (a.type==="review") rev++; else if (a.type==="important") imp++; }));
+  rev += Object.keys(state.markReview).length;
+  imp += Object.keys(state.markStar).length;
+  const bm = Object.keys(state.bookmarks).filter(k=>state.bookmarks[k]).length;
+  return { highlight:hl, review:rev, important:imp, bookmark:bm };
+}
+function updateMarkupCount(){
+  const c = markupCounts(); const el = document.getElementById("markups-count");
+  if (el) el.textContent = (c.highlight + c.review + c.important + c.bookmark) || "";
+}
+function markupItems(kind){
+  // returns [{lec, ci, text, isChapter}]
+  const out = [];
+  if (kind === "bookmark"){
+    Object.keys(state.bookmarks).forEach(k => { const b = state.bookmarks[k]; if (b) out.push({ lec:parseInt(k), ci:b.ci, text:b.label || "Bookmarked spot", ts:b.ts, isChapter:true }); });
+    out.sort((a,b)=>(b.ts||0)-(a.ts||0)); return out;
+  }
+  Object.keys(state.hl).forEach(n => (state.hl[n]||[]).forEach(a => { if (a.type === kind) out.push({ lec:parseInt(n), ci:a.ci, text:a.text, isChapter:false }); }));
+  const store = kind === "review" ? state.markReview : (kind === "important" ? state.markStar : null);
+  if (store) Object.keys(store).forEach(k => { const t = store[k]; out.push({ lec:t.lec, ci:t.ci, text:"Whole chapter: " + t.title, isChapter:true }); });
+  return out;
+}
+function renderMarkups(){
+  const main = document.getElementById("main");
+  const kind = state.markupsMode; const meta = ANNO_META[kind] || { icon:"🔖", label:"Bookmarks" };
+  const c = markupCounts();
+  const tab = (k, ic, lbl) => `<button class="mk-tab ${state.markupsMode===k?'on':''}" onclick="openMarkups('${k}')">${ic} ${lbl} <span class="mk-tab-n">${c[k]||0}</span></button>`;
+  let html = `<div class="review-banner"><div><h2>📌 My Markups</h2><div class="review-sub">Everything you've flagged while reading</div></div><button onclick="closeMarkups()">Exit</button></div>
+    <div class="mk-tabs">${tab("highlight","🖊️","Highlights")}${tab("review","⚠️","To review")}${tab("important","⭐","Important")}${tab("bookmark","🔖","Bookmarks")}</div>`;
+  const items = markupItems(kind);
+  if (!items.length){
+    html += `<div class="empty-state"><div class="icon">${meta.icon}</div><h3>Nothing here yet</h3><p>Select text while reading and choose ${meta.icon} ${meta.label}, or drag the icon onto a chapter.</p></div>`;
+    main.innerHTML = html; return;
+  }
+  const byLec = {}; items.forEach(it => (byLec[it.lec] = byLec[it.lec] || []).push(it));
+  Object.keys(byLec).map(Number).sort((a,b)=>a-b).forEach(n => {
+    const lec = getLecture(n);
+    html += `<h3 class="review-lec-header">Lecture ${n}. ${lec?esc(lec[1]):""}</h3>`;
+    byLec[n].forEach(it => {
+      html += `<div class="mk-item ${it.isChapter?'chap':''}" onclick="${kind==='bookmark'?`resumeReading(${n})`:`jumpToMarkup(${n},${it.ci})`}">
+        <span class="mk-item-ic">${meta.icon}</span><span class="mk-item-tx">${esc(it.text)}</span><span class="mk-item-go">Go →</span></div>`;
+    });
+  });
+  main.innerHTML = html;
+}
+function jumpToMarkup(n, ci){
+  state.markupsMode = null;
+  goToLec(n); setView("learn");
+  setTimeout(() => { const el = document.getElementById(`ch-${n}-${ci}`); if (el) el.scrollIntoView({ behavior:"smooth", block:"start" }); }, 80);
+}
+
+// =============================================================
 // INITIAL HOOK-UP
 // =============================================================
 function bind(id, fn){ const el=document.getElementById(id); if(el) el.onclick=fn; }
@@ -1996,8 +2249,13 @@ bind("btn-commit", commitChanges);
 bind("btn-download", downloadChanges);
 bind("btn-review-incorrect", toggleReviewIncorrect);
 bind("btn-review-flagged", toggleReviewFlagged);
+bind("btn-markups", () => openMarkups("highlight"));
 bind("btn-reset", () => document.getElementById("reset-modal").classList.add("show"));
-document.addEventListener("keydown", (e)=>{ if(e.key==="Escape"){ closeLightbox(); closeDrawer(); const mm=document.getElementById("more-menu"); if(mm) mm.classList.remove("show"); } });
+initTray();
+updateMarkupCount();
+// hide the selection popup when clicking outside of it
+document.addEventListener("mousedown", (e)=>{ const p=document.getElementById("anno-popup"); if(p && p.style.display!=="none" && !p.contains(e.target)) { /* allow button clicks */ if(!e.target.closest(".anno-popup")) setTimeout(()=>{ const s=window.getSelection(); if(!s||s.isCollapsed) hideAnnoPopup(); }, 0); } });
+document.addEventListener("keydown", (e)=>{ if(e.key==="Escape"){ closeLightbox(); closeDrawer(); hideAnnoPopup(); const mm=document.getElementById("more-menu"); if(mm) mm.classList.remove("show"); } });
 
 document.getElementById("reset-modal").addEventListener("click", (e) => {
   if (e.target.id === "reset-modal") e.target.classList.remove("show");

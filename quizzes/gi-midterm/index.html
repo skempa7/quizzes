@@ -33,7 +33,7 @@
     <div class="tb-dropdown" id="more-menu">
       <button id="btn-review-incorrect">Review Incorrect</button>
       <button class="btn-flag-head" id="btn-review-flagged">⚑ Review Flagged</button>
-      <button id="btn-review-concepts" onclick="toggleReviewConcepts()">🚩 Review Flagged Concepts</button>
+      <button id="btn-markups">📌 My Markups <span class="menu-count" id="markups-count"></span></button>
       <div class="tb-divider"></div>
       <button id="btn-editmode">Enter Edit Mode</button>
       <button class="editmode-only" id="btn-commit">Commit Changes</button>
@@ -101,6 +101,22 @@
     <div class="hud-stat"><div class="hud-label">Q#</div><div class="hud-val plain" id="fast-qnum">0 / 0</div></div>
   </div>
   <div class="fast-body" id="fast-body"></div>
+</div>
+
+<!-- Annotation selection popup -->
+<div class="anno-popup" id="anno-popup" style="display:none">
+  <button onclick="annoFromSelection('highlight')" title="Highlight">🖊️</button>
+  <button onclick="annoFromSelection('review')" title="Mark to review">⚠️</button>
+  <button onclick="annoFromSelection('important')" title="Mark important">⭐</button>
+  <button onclick="annoFromSelection('bookmark')" title="Bookmark this spot">🔖</button>
+</div>
+
+<!-- Draggable annotation tray (Learn view) -->
+<div class="anno-tray" id="anno-tray" style="display:none">
+  <div class="anno-tray-label">Drag onto a chapter</div>
+  <div class="anno-tray-chip" draggable="true" data-type="review" title="Mark chapter to review">⚠️</div>
+  <div class="anno-tray-chip" draggable="true" data-type="important" title="Mark chapter important">⭐</div>
+  <div class="anno-tray-chip" draggable="true" data-type="bookmark" title="Bookmark this chapter">🔖</div>
 </div>
 
 <!-- Toast -->
