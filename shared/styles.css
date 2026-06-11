@@ -34,20 +34,20 @@
 }
 
 body.dark {
-  /* Dark mode — Claude (warm grey stone + Claude orange) */
-  --bg: #232220;
-  --bg-soft: #2a2926;
-  --surface: #2e2d2a;
-  --surface-2: #383733;
-  --border: #423f3a;
-  --border-soft: #2e2d2a;
+  /* Dark mode — Claude (neutral warm-grey stone + Claude orange) */
+  --bg: #262624;
+  --bg-soft: #2c2c2a;
+  --surface: #30302e;
+  --surface-2: #3a3a38;
+  --border: #46453f;
+  --border-soft: #30302e;
   --text: #faf9f5;
-  --text-soft: #c8c5bb;
-  --muted: #9b988e;
+  --text-soft: #c8c6bd;
+  --muted: #9a988f;
   --primary: #d97757;
   --primary-hover: #e2906f;
-  --primary-light: #3c2a22;
-  --primary-softer: #2e2622;
+  --primary-light: #3a2a21;
+  --primary-softer: #2c2b28;
   --primary-glow: rgba(217, 119, 87, 0.26);
   --correct: #8abf9a;
   --correct-bg: #25342c;
@@ -1700,7 +1700,7 @@ main { padding:34px 40px 80px; max-width:860px; width:100%; margin:0 auto; }
 @keyframes fade-in { from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 .dash-hero {
   display:flex; align-items:center; gap:24px; padding:26px; border-radius:var(--radius-lg);
-  background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, var(--surface)), var(--surface));
+  background:linear-gradient(135deg, color-mix(in srgb, var(--primary) 9%, var(--surface)), var(--surface));
   border:1px solid var(--border); box-shadow:var(--shadow-sm); margin-bottom:18px;
 }
 .rank-ring { width:92px; height:92px; border-radius:50%; flex:0 0 auto;
