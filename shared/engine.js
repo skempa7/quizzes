@@ -1134,6 +1134,7 @@ function goToLec(n) {
   state.reviewConceptsMode = false;
   state.markupsMode = null;
   state.viewMode = "learn";
+  closeRail();
   updateReviewButtons();
   renderMain();
   renderSidebar();
@@ -2175,7 +2176,7 @@ function ttsBarClick(e){
 // =============================================================
 // DASHBOARD (home) + DRAWER + RANK CHIP
 // =============================================================
-function goHome(){ stopTTS(); state.viewMode="dashboard"; state.markupsMode=null; state.reviewIncorrectMode=state.reviewFlaggedMode=state.reviewConceptsMode=false; updateReviewButtons(); renderMain(); renderSidebar(); renderRSidebar(); window.scrollTo({top:0,behavior:"smooth"}); }
+function goHome(){ stopTTS(); closeRail(); state.viewMode="dashboard"; state.markupsMode=null; state.reviewIncorrectMode=state.reviewFlaggedMode=state.reviewConceptsMode=false; updateReviewButtons(); renderMain(); renderSidebar(); renderRSidebar(); window.scrollTo({top:0,behavior:"smooth"}); }
 // ---- activity heatmap (Anki-style) ----
 function dateStr(d){ return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0"); }
 function activityLevel(xp){ if(!xp) return 0; if(xp<10) return 1; if(xp<30) return 2; if(xp<60) return 3; return 4; }
@@ -2622,10 +2623,16 @@ function jumpToPara(n, pb, ci){
 // LEFT RAIL COLLAPSE + RIGHT NOTES PANEL (Notes/Highlights/Important/Review)
 // =============================================================
 function toggleRail(){
+  const layout = document.getElementById("layout");
+  if (window.innerWidth <= 980){           // mobile/tablet: rail is a slide-in overlay
+    layout.classList.toggle("rail-open");
+    return;
+  }
   state.railCollapsed = !state.railCollapsed;
   save(KEYS.railCollapsed, state.railCollapsed);
-  document.getElementById("layout").classList.toggle("rail-collapsed", state.railCollapsed);
+  layout.classList.toggle("rail-collapsed", state.railCollapsed);
 }
+function closeRail(){ const l = document.getElementById("layout"); if (l) l.classList.remove("rail-open"); }
 function applyNotesPanel(){
   save(KEYS.notesOpen, state.notesOpen);
   document.getElementById("layout").classList.toggle("notes-open", state.notesOpen);

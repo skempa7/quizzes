@@ -2393,3 +2393,52 @@ main { max-width: 1120px; padding-right: 56px; }
 .hm-legend .hm-cell { width: 9px; height: 9px; }
 @media (max-width: 860px){ .dash-hero { flex-wrap: wrap; } .dash-hero-heat { margin-left: 0; } }
 @media (max-width: 560px){ .dash-hero-heat { display: none; } }
+
+/* =============================================================
+   RESPONSIVE — tablet portrait + phone (must come last to win
+   over the collapsible-rail grid rule)
+   ============================================================= */
+@media (max-width: 980px){
+  .shell { grid-template-columns: 1fr !important; }
+  main { max-width: 100% !important; padding: 20px 16px 84px !important; }
+  .anno-tray { display: none !important; }              /* drag-tray is desktop-only */
+
+  /* rail becomes a slide-in overlay toggled by the ☰ button */
+  .rail {
+    display: block; position: fixed; top: 60px; left: 0; bottom: 0;
+    width: 270px; max-width: 84vw; background: var(--bg);
+    border-right: 1px solid var(--border); z-index: 1160;
+    transform: translateX(-100%); transition: transform .22s ease; overflow-y: auto;
+  }
+  .shell.rail-open .rail { transform: translateX(0); box-shadow: var(--shadow-lg); }
+  .rail-scrim { display: none; position: fixed; inset: 60px 0 0 0; background: rgba(0,0,0,.45); z-index: 1155; }
+  .shell.rail-open .rail-scrim { display: block; }
+
+  /* dashboard: stack hero, wrap stats/map */
+  .dash-hero { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .dash-hero-heat { margin-left: 0; width: 100%; overflow-x: auto; }
+  .dash-stats { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+  .map-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; }
+
+  /* reading + recall full width */
+  .reading { max-width: 100%; }
+  .fc-grid { grid-template-columns: repeat(auto-fill, minmax(180px,1fr)); }
+  .rc-section-slide { float: none; width: 100%; max-width: 340px; margin: 8px 0 12px; }
+}
+@media (max-width: 600px){
+  .dash-stats { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  .map-grid { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+  .fc-grid { grid-template-columns: 1fr !important; }
+  .rc-para-slide { flex-direction: column; }
+  .rc-para-slide .rc-inline-slide { width: 100%; max-width: 320px; }
+  .dash-hero-heat { display: block; }                 /* heatmap fits on a phone */
+  /* topbar: keep it to a single row */
+  .topbar { padding-left: 10px; padding-right: 10px; gap: 3px; flex-wrap: nowrap; }
+  .brand-name { display: none; }
+  #btn-home { display: none; }                         /* brand mark already goes home */
+  .rank-chip { padding: 4px 8px; }
+  .rank-chip .rc-meta { display: none; }               /* keep just the rank icon */
+  .head-spacer { min-width: 0; }
+  .lecture-header h2 { font-size: 1.5rem; }
+  .rc-chapter-h { font-size: 1.2rem; }
+}
