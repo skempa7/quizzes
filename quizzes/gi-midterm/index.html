@@ -132,11 +132,24 @@
   <div class="anno-tray-chip" draggable="true" data-type="bookmark" title="Drag onto a paragraph: bookmark">🔖</div>
 </div>
 
+<!-- Mini audio player -->
+<div class="aplayer" id="aplayer">
+  <button class="ap-btn" onclick="ttsSkip(-10)" title="Back 10 seconds"><span class="ap-skip">⏴10</span></button>
+  <button class="ap-btn ap-play" id="ap-play" onclick="ttsPlayPause()" title="Play / Pause">⏸</button>
+  <button class="ap-btn" onclick="ttsSkip(10)" title="Forward 10 seconds"><span class="ap-skip">10⏵</span></button>
+  <div class="ap-bar" id="ap-bar" onclick="ttsBarClick(event)">
+    <div class="ap-fill" id="ap-fill"></div>
+    <div class="ap-dot" id="ap-dot"></div>
+  </div>
+  <div class="ap-time"><span id="ap-cur">0:00</span>/<span id="ap-tot">0:00</span></div>
+  <button class="ap-btn ap-close" onclick="stopTTS()" title="Stop">✕</button>
+</div>
+
 <!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<script src="content.js?v=5"></script>
-<script src="../../shared/engine.js?v=5"></script>
+<script src="content.js?v=6"></script>
+<script src="../../shared/engine.js?v=6"></script>
 
 </body>
 </html>

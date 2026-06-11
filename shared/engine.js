@@ -1921,9 +1921,10 @@ function lbStep(d){ LB.idx=Math.max(1,Math.min(LB.count,LB.idx+d)); lbShow(); }
 function closeLightbox(){ document.getElementById("lightbox").classList.remove("show"); }
 
 // =============================================================
-// TEXT-TO-SPEECH (listen mode)
+// TEXT-TO-SPEECH (listen mode) — mini audio player with seek
 // =============================================================
-let TTS={on:false};
+let TTS = { on:false, playing:false, chunks:[], durs:[], cum:[], total:0, idx:0, lec:null, voice:null, tickStart:0, timer:null };
+const TTS_CPS = 14.5; // approx chars/sec spoken at rate 0.95 (for the time bar)
 // expand abbreviations + symbols so the voice reads naturally, not like code
 const SAY = [
   [/→|->/g, " leads to "], [/[⇄↔]/g, " versus "], [/&/g, " and "],
@@ -1971,27 +1972,73 @@ function pickVoice(){
       || byName("joelle") || byName("tom") || byName("daniel")
       || vs.find(v=>v.lang==="en-US") || vs[0];
 }
-function stopTTS(){ if("speechSynthesis" in window) window.speechSynthesis.cancel(); TTS.on=false; const b=document.getElementById("tts-btn"); if(b){b.classList.remove("on"); b.innerHTML="🔊 Listen";} }
-function speakQueue(chunks, voice, i){
-  if(!TTS.on || i>=chunks.length){ stopTTS(); return; }
-  const u=new SpeechSynthesisUtterance(chunks[i]);
-  if(voice) u.voice=voice;
-  u.rate=0.95; u.pitch=1.0;
-  u.onend=()=>speakQueue(chunks, voice, i+1);
-  u.onerror=()=>stopTTS();
-  window.speechSynthesis.speak(u);
+function fmtTime(s){ s=Math.max(0,Math.round(s)); const m=Math.floor(s/60); return m + ":" + String(s%60).padStart(2,"0"); }
+function ttsBuild(n){
+  const chunks = ttsChunks(n);
+  const durs = chunks.map(c => Math.max(1.0, c.length / TTS_CPS));
+  const cum = [0]; durs.forEach(d => cum.push(cum[cum.length-1] + d));
+  TTS.chunks = chunks; TTS.durs = durs; TTS.cum = cum; TTS.total = cum[cum.length-1]; TTS.lec = n;
 }
-function toggleTTS(){
-  if(!("speechSynthesis" in window)){ showToast("Speech not supported here"); return; }
-  const btn=document.getElementById("tts-btn");
-  if(TTS.on){ stopTTS(); return; }
-  const chunks=ttsChunks(state.currentLec);
-  if(!chunks.length){ showToast("Nothing to read here"); return; }
+function ttsSpeakCurrent(){
+  if(!("speechSynthesis" in window)) return;
+  if(!TTS.playing || TTS.idx >= TTS.chunks.length){ if(TTS.idx >= TTS.chunks.length) ttsEnd(); return; }
+  const u = new SpeechSynthesisUtterance(TTS.chunks[TTS.idx]);
+  if(TTS.voice) u.voice = TTS.voice; u.rate = 0.95; u.pitch = 1.0;
+  u.onend = () => { if(TTS.playing){ TTS.idx++; TTS.tickStart = performance.now(); ttsSpeakCurrent(); ttsRenderPlayer(); } };
+  u.onerror = () => {};
   window.speechSynthesis.cancel();
-  TTS.on=true; if(btn){btn.classList.add("on"); btn.innerHTML="⏸ Stop";}
-  const start=()=>speakQueue(chunks, pickVoice(), 0);
-  if(speechSynthesis.getVoices().length){ start(); }
-  else { speechSynthesis.onvoiceschanged=()=>{ speechSynthesis.onvoiceschanged=null; if(TTS.on) start(); }; setTimeout(()=>{ if(TTS.on && !speechSynthesis.speaking) start(); }, 250); }
+  window.speechSynthesis.speak(u);
+  TTS.tickStart = performance.now();
+}
+function ttsStartTicker(){ if(TTS.timer) return; TTS.timer = setInterval(ttsTick, 200); }
+function ttsStopTicker(){ if(TTS.timer){ clearInterval(TTS.timer); TTS.timer = null; } }
+function ttsTick(){ if(!TTS.playing) return; ttsRenderPlayer(); }
+function ttsCurTime(){
+  let t = TTS.cum[TTS.idx] || 0;
+  if(TTS.playing) t += Math.min((performance.now() - TTS.tickStart)/1000, TTS.durs[TTS.idx] || 0);
+  return Math.min(t, TTS.total);
+}
+function ttsRenderPlayer(){
+  const fill = document.getElementById("ap-fill"), dot = document.getElementById("ap-dot");
+  const cur = document.getElementById("ap-cur"), tot = document.getElementById("ap-tot");
+  if(!fill) return;
+  const t = ttsCurTime(), pct = TTS.total ? (t/TTS.total*100) : 0;
+  fill.style.width = pct + "%"; if(dot) dot.style.left = pct + "%";
+  if(cur) cur.textContent = fmtTime(t); if(tot) tot.textContent = fmtTime(TTS.total);
+  const pb = document.getElementById("ap-play"); if(pb) pb.textContent = TTS.playing ? "⏸" : "▶";
+}
+function showPlayer(on){ const p = document.getElementById("aplayer"); if(p) p.classList.toggle("show", on); }
+function ttsPlayBtnLabel(){ const b=document.getElementById("tts-btn"); if(b){ b.classList.toggle("on", TTS.on); b.innerHTML = TTS.on ? "🔊 Playing" : "🔊 Listen"; } }
+
+function startTTS(){
+  if(!("speechSynthesis" in window)){ showToast("Speech not supported here"); return; }
+  if(TTS.lec !== state.currentLec || !TTS.chunks.length){ ttsBuild(state.currentLec); TTS.idx = 0; }
+  if(!TTS.chunks.length){ showToast("Nothing to read here"); return; }
+  TTS.voice = pickVoice();
+  TTS.on = true; TTS.playing = true;
+  showPlayer(true); ttsPlayBtnLabel(); ttsStartTicker();
+  const go = () => { TTS.voice = pickVoice(); ttsSpeakCurrent(); ttsRenderPlayer(); };
+  if(speechSynthesis.getVoices().length){ go(); }
+  else { speechSynthesis.onvoiceschanged = () => { speechSynthesis.onvoiceschanged = null; if(TTS.playing) go(); }; setTimeout(()=>{ if(TTS.playing && !speechSynthesis.speaking) go(); }, 250); }
+}
+function ttsPause(){ TTS.playing = false; if("speechSynthesis" in window) window.speechSynthesis.cancel(); ttsStopTicker(); ttsRenderPlayer(); ttsPlayBtnLabel(); }
+function ttsResume(){ if(!TTS.chunks.length){ startTTS(); return; } TTS.playing = true; ttsStartTicker(); ttsSpeakCurrent(); ttsRenderPlayer(); ttsPlayBtnLabel(); }
+function ttsPlayPause(){ if(TTS.playing) ttsPause(); else ttsResume(); }
+function toggleTTS(){ if(!TTS.on){ startTTS(); } else { ttsPlayPause(); } }   // Listen button
+function ttsEnd(){ ttsStop(); }
+function stopTTS(){ TTS.on = false; TTS.playing = false; if("speechSynthesis" in window) window.speechSynthesis.cancel(); ttsStopTicker(); showPlayer(false); ttsPlayBtnLabel(); }
+function ttsSeekTime(t){
+  t = Math.max(0, Math.min(TTS.total, t));
+  let i = 0; while(i < TTS.chunks.length && TTS.cum[i+1] <= t) i++;
+  TTS.idx = Math.min(i, TTS.chunks.length-1); TTS.tickStart = performance.now();
+  if(TTS.playing) ttsSpeakCurrent();
+  ttsRenderPlayer();
+}
+function ttsSkip(delta){ ttsSeekTime(ttsCurTime() + delta); }
+function ttsBarClick(e){
+  const bar = document.getElementById("ap-bar"); if(!bar) return;
+  const r = bar.getBoundingClientRect();
+  ttsSeekTime(((e.clientX - r.left)/r.width) * TTS.total);
 }
 
 // =============================================================
@@ -2461,6 +2508,20 @@ bind("btn-markups", () => openNotes("highlight"));
 bind("btn-reset", () => document.getElementById("reset-modal").classList.add("show"));
 initTray();
 updateMarkupCount();
+// audio player scrub-dot dragging
+(function(){
+  const dot = document.getElementById("ap-dot"), bar = document.getElementById("ap-bar");
+  if (!dot || !bar) return;
+  let dragging = false;
+  const ratioAt = x => { const r = bar.getBoundingClientRect(); return Math.max(0, Math.min(1, (x - r.left)/r.width)); };
+  const preview = rt => { const f = document.getElementById("ap-fill"); if (f) f.style.width = (rt*100)+"%"; dot.style.left = (rt*100)+"%"; };
+  const move = e => { if (!dragging) return; preview(ratioAt(e.touches ? e.touches[0].clientX : e.clientX)); };
+  const up = e => { if (!dragging) return; dragging = false; const x = e.changedTouches ? e.changedTouches[0].clientX : e.clientX; ttsSeekTime(ratioAt(x) * TTS.total); };
+  dot.addEventListener("mousedown", e => { e.stopPropagation(); dragging = true; });
+  dot.addEventListener("touchstart", () => { dragging = true; }, {passive:true});
+  document.addEventListener("mousemove", move); document.addEventListener("touchmove", move, {passive:true});
+  document.addEventListener("mouseup", up); document.addEventListener("touchend", up);
+})();
 if (state.railCollapsed) document.getElementById("layout").classList.add("rail-collapsed");
 if (state.notesOpen) applyNotesPanel();
 // hide the selection popup when clicking outside of it
