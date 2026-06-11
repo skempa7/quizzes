@@ -873,6 +873,18 @@ const QUIZ = [
             0,
             "Without the gallbladder there is no concentrated bile bolus to release with a meal, so large fat loads can outpace continuous bile delivery, producing mild steatorrhea. The liver still synthesizes bile acids. Pancreatic lipase is unaffected. Vagal stimulation is intact.",
             "advanced"
+          ],
+          [
+            "CCK is the key hormone of digestion, released from duodenal I-cells by luminal fat and protein. Which set of actions is correct?",
+            [
+              "Contracts the gallbladder, relaxes the sphincter of Oddi, stimulates pancreatic enzymes, and slows gastric emptying",
+              "Relaxes the gallbladder, contracts the sphincter of Oddi, and speeds gastric emptying",
+              "Stimulates pancreatic bicarbonate from duct cells and raises gastric acid",
+              "Triggers the migrating motor complex during fasting"
+            ],
+            0,
+            "CCK (I-cells, triggered by fat/protein) contracts the gallbladder, relaxes the sphincter of Oddi, stimulates pancreatic acinar enzyme release, and slows gastric emptying — coordinating bile + enzymes with a fatty meal. Bicarbonate is secretin's job; MMC is motilin's.",
+            "basic"
           ]
         ]
       ],
@@ -927,6 +939,30 @@ const QUIZ = [
             0,
             "CF damages the exocrine pancreas, reducing lipase and bicarbonate output and producing steatorrhea with fat-soluble vitamin loss. Lactase loss causes osmotic diarrhea, not steatorrhea. Bile acid sequestration causes secretory diarrhea. GLUT5 loss causes fructose malabsorption.",
             "advanced"
+          ],
+          [
+            "At the apical (luminal) brush-border membrane, glucose and galactose are absorbed by SGLT1. What is the classic exam trap about this pathway?",
+            [
+              "Placing GLUT2 on the apical side — GLUT2 is basolateral (it exports sugars into blood)",
+              "SGLT1 also handles fructose absorption",
+              "SGLT1 is the kidney isoform and SGLT2 is the gut isoform",
+              "Glucose is absorbed by simple diffusion, not a transporter"
+            ],
+            0,
+            "Apical uptake of glucose/galactose is Na⁺-coupled via SGLT1; fructose uses GLUT5. All three exit basolaterally via GLUT2. The trap is putting GLUT2 apically. Also note SGLT1 = gut isoform, SGLT2 = kidney.",
+            "advanced"
+          ],
+          [
+            "Why does lactase deficiency, unlike most disaccharidase issues, reliably cause osmotic diarrhea?",
+            [
+              "Lactose is split by only one enzyme (lactase), so its loss leaves lactose undigested and osmotically active",
+              "Lactose is absorbed intact and pulls water into the blood",
+              "Lactase deficiency destroys the entire brush border",
+              "Lactose is a monosaccharide that cannot be transported"
+            ],
+            0,
+            "Lactose depends on a single brush-border enzyme (lactase). When it's lost, unsplit lactose stays in the lumen, is osmotically active, and draws water → osmotic diarrhea that stops with fasting. Other sugars have backup pathways.",
+            "basic"
           ]
         ]
       ],
@@ -1034,6 +1070,18 @@ const QUIZ = [
             ],
             0,
             "VIPoma constitutively raises cAMP through VIP receptors on enterocytes, producing secretory diarrhea even without oral intake — the hallmark of secretory diarrhea. Fasting cures osmotic diarrhea, so option 2 is ruled out. Bile acid malabsorption and motilin do not produce this picture.",
+            "advanced"
+          ],
+          [
+            "Intestinal fluid secretion ultimately depends on which apical event, and which channel?",
+            [
+              "A rise in cAMP or Ca²⁺ opens the apical chloride channel (CFTR); Cl⁻ exits and Na⁺ + water follow",
+              "Na⁺/K⁺-ATPase pumping Na⁺ into the lumen",
+              "GLUT2 exporting glucose into the lumen",
+              "Closure of CFTR, trapping chloride in the cell"
+            ],
+            0,
+            "A receptor raises cAMP or Ca²⁺, which opens apical CFTR; Cl⁻ flows to the lumen and Na⁺/water follow. Cholera toxin and VIP hijack the cAMP arm to cause massive secretory diarrhea.",
             "advanced"
           ]
         ]
@@ -1311,6 +1359,18 @@ const QUIZ = [
             0,
             "ICC destruction abolishes slow waves and disorganizes coordinated motility. It does not increase tonic contraction or selectively impair LES relaxation. Without slow waves, spike potentials cannot be normally entrained, so peristalsis would not be preserved.",
             "advanced"
+          ],
+          [
+            "How do slow waves differ from spike potentials in GI smooth muscle?",
+            [
+              "Slow waves are sub-threshold pacemaking oscillations (not action potentials); spikes are true action potentials that ride on them and trigger contraction",
+              "Slow waves are action potentials; spikes are resting oscillations",
+              "Slow waves are generated by nerves; spikes by hormones",
+              "Both are identical and always cause contraction"
+            ],
+            0,
+            "Slow waves are regular sub-threshold oscillations — pacemaking only, NOT action potentials, and not directly driven by nerves/hormones. A spike potential is the true action potential that fires when a slow wave crosses threshold, producing contraction.",
+            "advanced"
           ]
         ]
       ],
@@ -1365,6 +1425,18 @@ const QUIZ = [
             0,
             "Opioids suppress the MMC and slow small bowel transit through mu-receptor inhibition of enteric neurons, predisposing to SIBO. They do not hyperstimulate motilin. ICC are not destroyed by opioids. Meissner plexus is not selectively damaged.",
             "advanced"
+          ],
+          [
+            "The migrating motor complex (MMC) is best described as:",
+            [
+              "The fasting-only 'housekeeper' (~every 90 min) that sweeps the small intestine and keeps it relatively sterile; stopped by enteral (not IV) nutrients",
+              "The postprandial mixing pattern that grinds food",
+              "A continuous contraction present only after meals",
+              "Driven by CCK during digestion"
+            ],
+            0,
+            "The MMC is the interdigestive housekeeper firing ~every 90 minutes in fasting, sweeping residue distally and limiting bacterial overgrowth. It is halted by the physical presence of enteral nutrients (IV feeding doesn't stop it) and is driven by motilin.",
+            "basic"
           ]
         ]
       ],
@@ -1695,6 +1767,18 @@ const QUIZ = [
             0,
             "Loss of ICC produces dysrhythmic and reduced slow wave activity, contributing to gastroparesis. Frequency is not increased, spike potentials are not increased in isolation, and tissue type does not switch.",
             "advanced"
+          ],
+          [
+            "Interstitial cells of Cajal (ICCs) are critical because they:",
+            [
+              "Are the pacemakers generating slow waves spontaneously; losing them (e.g., diabetic gastroparesis) impairs coordinated motility",
+              "Are the main absorptive cells of the small intestine",
+              "Secrete motilin to drive the MMC",
+              "Form the striated muscle of the upper esophagus"
+            ],
+            0,
+            "ICCs spontaneously generate slow waves and must be intact (with smooth muscle) for coordinated contraction. ICC loss — classically in diabetic gastroparesis — produces delayed emptying.",
+            "basic"
           ]
         ]
       ],
@@ -1911,6 +1995,18 @@ const QUIZ = [
             0,
             "Chronic vomiting and repeated gastric distention can produce functional gastroparesis with delayed emptying and bloating. Cholera, Hirschsprung disease, and mesenteric occlusion do not match this clinical picture.",
             "advanced"
+          ],
+          [
+            "A diabetic with delayed gastric emptying (gastroparesis) and a patient with achalasia both have motility failure. Which contrast is correct?",
+            [
+              "Gastroparesis = ICC loss → delayed emptying; achalasia = LES won't relax + lost peristalsis → dysphagia to solids AND liquids with a bird-beak",
+              "Both are caused by ICC loss in the stomach",
+              "Achalasia causes rapid gastric emptying; gastroparesis causes a bird-beak esophagus",
+              "Gastroparesis is an esophageal disorder; achalasia is a gastric one"
+            ],
+            0,
+            "Achalasia is loss of esophageal myenteric inhibitory neurons → non-relaxing LES + aperistalsis (solids AND liquids, bird-beak). Gastroparesis is ICC/vagal failure → delayed gastric emptying. Different segments, different broken links.",
+            "advanced"
           ]
         ]
       ]
@@ -1971,6 +2067,18 @@ const QUIZ = [
             0,
             "PPIs irreversibly inhibit the H+/K+ ATPase, the final common pathway of acid secretion, providing deeper and more sustained suppression than H2 blockers, which only block one stimulatory input. PPIs are not muscarinic blockers or antacids, and H2 blockers do not worsen LES tone.",
             "advanced"
+          ],
+          [
+            "What is the counterintuitive effect of Helicobacter pylori on GERD?",
+            [
+              "It DECREASES GERD risk by reducing parietal-cell mass and acid — but still drives MALT lymphoma and gastric cancer",
+              "It increases acid output and directly causes Barrett esophagus",
+              "It has no effect on acid and only causes duodenal ulcers",
+              "It raises LES pressure, preventing reflux mechanically"
+            ],
+            0,
+            "By reducing parietal-cell mass and acid, H. pylori can lower GERD risk, so eradication may unmask reflux. Despite this, it remains a driver of MALT lymphoma and gastric adenocarcinoma — so it's still treated.",
+            "advanced"
           ]
         ]
       ],
@@ -2024,6 +2132,18 @@ const QUIZ = [
             ],
             0,
             "Supine posture eliminates gravity-aided clearance, reduces swallowing frequency and salivary bicarbonate buffering during sleep, and prolongs acid contact time. LES tone is not increased while sleeping, acid secretion can be high overnight, and supine position does not speed gastric emptying.",
+            "advanced"
+          ],
+          [
+            "Normal lower-esophageal-sphincter (LES) resting pressure is 10–35 mmHg. Reflux requires which condition?",
+            [
+              "An incompetent LES (<10 mmHg) AND intragastric pressure exceeding esophageal pressure",
+              "A hypertensive LES (>35 mmHg) that fails to relax",
+              "Normal LES pressure with high gastric acidity alone",
+              "Loss of esophageal peristalsis only"
+            ],
+            0,
+            "Reflux needs both a weak barrier (LES <10 mmHg) and a favorable pressure gradient (intragastric > esophageal). A hypertensive, non-relaxing LES describes achalasia, not GERD.",
             "advanced"
           ]
         ]
@@ -2187,6 +2307,18 @@ const QUIZ = [
             0,
             "Barrett esophagus with confirmed dysplasia is best managed at a center offering endoscopic eradication (radiofrequency ablation or EMR) with close surveillance. Continued PPI alone is insufficient. Immediate esophagectomy is reserved for higher-stage disease. H. pylori eradication is not the issue here.",
             "advanced"
+          ],
+          [
+            "For a patient with typical, uncomplicated GERD and no alarm features, the recommended initial approach is:",
+            [
+              "An empiric acid-suppression (PPI) trial, which is both diagnostic and therapeutic",
+              "Immediate upper endoscopy with biopsy",
+              "Esophageal manometry first",
+              "24-hour pH monitoring before any treatment"
+            ],
+            0,
+            "Typical GERD without alarm features needs no upfront testing — an empiric PPI trial is diagnostic and therapeutic. Endoscopy is reserved for alarm features (dysphagia, weight loss, bleeding, anemia) or refractory disease.",
+            "basic"
           ]
         ]
       ]
@@ -2247,6 +2379,30 @@ const QUIZ = [
             0,
             "Greasy steatorrheic diarrhea after a wilderness water source is classic for giardiasis; stool antigen or PCR is the modern diagnostic test. Salmonella culture, malaria smear, and H. pylori endoscopy do not fit this presentation.",
             "advanced"
+          ],
+          [
+            "A child develops bloody diarrhea, then hemolytic anemia, thrombocytopenia, and acute kidney injury after undercooked beef. The organism and syndrome are:",
+            [
+              "EHEC O157:H7 (Shiga toxin) causing hemolytic uremic syndrome",
+              "Vibrio cholerae causing secretory diarrhea",
+              "Bacillus cereus from reheated rice",
+              "Clostridioides difficile pseudomembranous colitis"
+            ],
+            0,
+            "Shiga-toxin–producing E. coli O157:H7 causes bloody diarrhea and HUS — the triad of microangiopathic hemolytic anemia, thrombocytopenia, and acute kidney injury. Classic exposure is undercooked beef.",
+            "basic"
+          ],
+          [
+            "Rapid-onset vomiting within ~1–6 hours of eating reheated fried rice (or room-temperature food) is classic for:",
+            [
+              "Preformed-toxin food poisoning (Bacillus cereus; Staphylococcus aureus)",
+              "Invasive Salmonella infection",
+              "Rotavirus gastroenteritis",
+              "Giardiasis"
+            ],
+            0,
+            "Preformed toxins (B. cereus from rice; S. aureus from room-temp food) cause vomiting within hours — too fast for an infection that must first replicate. Invasive/viral causes have longer incubations.",
+            "basic"
           ]
         ]
       ],
@@ -2300,6 +2456,18 @@ const QUIZ = [
             ],
             0,
             "Chronic biliary carriage requires prolonged antibiotics and, in persistent cases, cholecystectomy. Loperamide, probiotics alone, and enzymes do not eradicate biliary carriage.",
+            "advanced"
+          ],
+          [
+            "Why are antibiotics generally AVOIDED in suspected EHEC O157:H7 infection, while fluids remain first-line for nearly all the others?",
+            [
+              "Antibiotics can increase Shiga-toxin release and the risk of hemolytic uremic syndrome",
+              "EHEC is always resistant to every antibiotic",
+              "Antibiotics block oral rehydration absorption",
+              "EHEC resolves only with antiviral therapy"
+            ],
+            0,
+            "Fluid/electrolyte repletion is the default for these infections (cholera needs aggressive rehydration). The EHEC exception: antibiotics may boost Shiga-toxin release and precipitate HUS, so they're avoided.",
             "advanced"
           ]
         ]
@@ -2355,6 +2523,18 @@ const QUIZ = [
             0,
             "Rotavirus is diagnosed by stool antigen testing or PCR. Bacterial cultures, AFB smears, and endoscopy are not appropriate first-line tests for rotavirus.",
             "advanced"
+          ],
+          [
+            "Which description matches rotavirus among the viral causes of gastroenteritis?",
+            [
+              "Double-stranded RNA; young children; winter; vomiting precedes diarrhea; vaccine-preventable",
+              "Single-stranded RNA; adults on cruise ships; no vaccine",
+              "DNA virus causing owl-eye inclusions in the immunocompromised",
+              "A preformed toxin causing vomiting within hours"
+            ],
+            0,
+            "Rotavirus = dsRNA, young children, winter, vomiting before diarrhea, and the only vaccine-preventable one (live attenuated). Norovirus = ssRNA, adults/cruise-ship outbreaks, no vaccine; CMV = owl-eye inclusions in immunocompromised hosts.",
+            "basic"
           ]
         ]
       ],
@@ -2469,6 +2649,18 @@ const QUIZ = [
             0,
             "Thyroid hormone raises BMR, as do fever, catecholamines, and greater lean body mass. Starvation lowers BMR adaptively, sleep lowers it, and neuromuscular paralysis removes muscle thermogenesis.",
             "advanced"
+          ],
+          [
+            "Using the metabolic naming convention, which decoding is correct?",
+            [
+              "'-genesis/-sis' = synthesis (building); '-lysis' = breakdown — so glycogenesis builds glycogen and glycogenolysis breaks it down",
+              "'-lysis' means building and '-genesis' means breakdown",
+              "Lipogenesis means breaking down triglyceride",
+              "Glycogenolysis means making new glucose from amino acids"
+            ],
+            0,
+            "'-genesis/-sis' = build; '-lysis' = break. Glycogenesis builds glycogen, glycogenolysis breaks it; lipogenesis builds triglyceride; gluconeogenesis makes new glucose from non-carbohydrate substrates.",
+            "basic"
           ]
         ]
       ],
@@ -2577,6 +2769,18 @@ const QUIZ = [
             0,
             "Insulin deficiency with relative glucagon excess unleashes lipolysis and hepatic ketogenesis, producing diabetic ketoacidosis. Adequate insulin would suppress these, and GLP-1 and leptin are not the drivers.",
             "advanced"
+          ],
+          [
+            "Carbohydrate, fat, and protein all funnel toward which shared intermediate, and what is the key one-way limitation?",
+            [
+              "Acetyl-CoA — and acetyl-CoA cannot be converted to net glucose, so even-chain fatty acids cannot make glucose",
+              "Pyruvate — which freely becomes any macronutrient",
+              "Lactate — which is a dietary carbohydrate",
+              "Glycogen — the universal fuel currency"
+            ],
+            0,
+            "All three macronutrients route toward acetyl-CoA feeding the TCA cycle. Because pyruvate dehydrogenase is irreversible, acetyl-CoA can't form net glucose — so fat (even-chain) can't be turned into glucose, but lactate (Cori cycle) and glycerol can.",
+            "advanced"
           ]
         ]
       ],
@@ -2631,6 +2835,18 @@ const QUIZ = [
             0,
             "GLP-1 from L cells augments glucose-dependent insulin secretion, slows gastric emptying, and promotes satiety, which GLP-1 receptor agonists exploit. Motilin drives the migrating motor complex, gastrin drives acid, and secretin drives bicarbonate.",
             "advanced"
+          ],
+          [
+            "Which grouping of appetite hormones is correct?",
+            [
+              "Orexigenic (stimulate eating): ghrelin, NPY, AgRP, cortisol. Anorexigenic (suppress): leptin, insulin, GLP-1, CCK, α-MSH",
+              "Leptin and insulin stimulate eating; ghrelin suppresses it",
+              "Ghrelin and GLP-1 both suppress appetite",
+              "CCK stimulates appetite while ghrelin suppresses it"
+            ],
+            0,
+            "Ghrelin (the hunger hormone), NPY, AgRP, and cortisol drive eating; leptin, insulin, GLP-1, CCK, and α-MSH suppress it. Ghrelin rises before meals; leptin signals long-term fat stores.",
+            "basic"
           ]
         ]
       ],
@@ -2793,6 +3009,18 @@ const QUIZ = [
             0,
             "Sulfonylureas close K-ATP channels to release insulin independent of glucose, hence the hypoglycemia risk. Metformin reduces hepatic glucose output, GLP-1 agonists augment glucose-dependent insulin, and SGLT2 inhibitors increase urinary glucose loss.",
             "advanced"
+          ],
+          [
+            "After a pure-protein meal, why are BOTH insulin and glucagon released?",
+            [
+              "The glucagon rise prevents the hypoglycemia that a lone insulin spike would cause when little carbohydrate is present",
+              "Insulin and glucagon never rise together",
+              "Protein blocks insulin entirely, so only glucagon rises",
+              "Both rise to maximize fat storage"
+            ],
+            0,
+            "Amino acids stimulate insulin (to store them) and glucagon together; the glucagon counter-response prevents insulin-induced hypoglycemia when dietary carbohydrate is low. Insulin and glucagon are otherwise reciprocal.",
+            "advanced"
           ]
         ]
       ],
@@ -2910,6 +3138,18 @@ const QUIZ = [
             "Candidiasis scrapes off and shows pseudohyphae, whereas leukoplakia is an adherent premalignant white patch that cannot be wiped off. An aphthous ulcer is an erosion, a mucocele is a mucus-filled cyst, and a torus is a bony exostosis.",
             "advanced",
             "candidiasis"
+          ],
+          [
+            "The single bedside test that best separates pseudomembranous candidiasis (thrush) from leukoplakia is:",
+            [
+              "The wipe-off test — thrush wipes off with gauze leaving a red base; leukoplakia cannot be scraped off",
+              "Tzanck smear for multinucleated giant cells",
+              "Biopsy for koilocytes",
+              "Response to topical corticosteroids"
+            ],
+            0,
+            "Thrush (pseudomembranous candidiasis) wipes off, revealing an erythematous base; leukoplakia and hyperplastic candidiasis cannot be scraped off. The wipe-off test is the fast discriminator.",
+            "basic"
           ]
         ]
       ],
@@ -2964,6 +3204,18 @@ const QUIZ = [
             ],
             0,
             "Dysplasia requires cytologic atypia such as nuclear enlargement, hyperchromasia, and increased mitoses together with architectural disorder; thickened keratin without atypia is only hyperkeratosis.",
+            "advanced"
+          ],
+          [
+            "Comparing the two oral precursor lesions, which statement about malignant potential is correct?",
+            [
+              "Erythroplakia (red, velvety) is worse — >50% undergo malignant transformation — vs leukoplakia (white) at ~5–25% dysplasia",
+              "Leukoplakia is far more dangerous than erythroplakia",
+              "Both have negligible malignant potential",
+              "Erythroplakia always wipes off, confirming it is benign"
+            ],
+            0,
+            "Erythroplakia carries the higher risk (>50% malignant transformation) than leukoplakia (~5–25% dysplastic). A non-scrapable red velvety patch is the more ominous lesion and warrants biopsy.",
             "advanced"
           ]
         ]
@@ -3073,6 +3325,18 @@ const QUIZ = [
             0,
             "Pulp necrosis from caries or trauma incites periapical inflammation that stimulates the epithelial rests of Malassez, forming a radicular cyst at the apex. The other mechanisms describe different lesions.",
             "advanced"
+          ],
+          [
+            "A multilocular, aggressive jaw cyst lined by parakeratinized epithelium with ~60% recurrence — and multiples suggesting Gorlin syndrome — is the:",
+            [
+              "Odontogenic keratocyst",
+              "Dentigerous cyst",
+              "Periapical (radicular) cyst",
+              "Pleomorphic adenoma"
+            ],
+            0,
+            "The odontogenic keratocyst is aggressive, parakeratinized, and recurs (~60%); multiple OKCs suggest Gorlin (nevoid basal cell carcinoma) syndrome. Dentigerous cysts surround an unerupted crown; periapical cysts follow pulp necrosis.",
+            "advanced"
           ]
         ]
       ],
@@ -3128,6 +3392,18 @@ const QUIZ = [
             0,
             "Adenoid cystic carcinoma classically tracks along nerves, causing pain and facial nerve palsy, shows a cribriform Swiss-cheese pattern, and recurs late in the lungs. The others are benign or non-neoplastic.",
             "advanced"
+          ],
+          [
+            "The most common salivary gland neoplasm overall, and the second most common, are:",
+            [
+              "Pleomorphic adenoma (most common; chondromyxoid stroma; recurs if capsule incompletely excised), then Warthin tumor (smokers, lymphoid stroma with germinal centers)",
+              "Warthin tumor, then mucoepidermoid carcinoma",
+              "Mucoepidermoid carcinoma, then adenoid cystic carcinoma",
+              "Adenoid cystic carcinoma, then pleomorphic adenoma"
+            ],
+            0,
+            "Pleomorphic adenoma is the most common (benign, chondromyxoid stroma, recurs from incomplete capsule); Warthin tumor is second (strongly tied to smoking, lymphoid stroma with germinal centers). Mucoepidermoid is the most common malignant one.",
+            "basic"
           ]
         ]
       ],
@@ -3370,6 +3646,30 @@ const QUIZ = [
             0,
             "HSV esophagitis causes small punched-out ulcers with Cowdry intranuclear inclusions and multinucleated cells. CMV instead causes large linear ulcers with intranuclear and cytoplasmic inclusions in stromal cells, and Candida shows white plaques with pseudohyphae.",
             "advanced"
+          ],
+          [
+            "HSV and CMV esophagitis are distinguished histologically by:",
+            [
+              "HSV = punched-out ulcers with nuclear inclusions in intact squamous cells; CMV = inclusions in endothelial cells/fibroblasts (not squamous), with linear ulcers",
+              "HSV infects endothelial cells; CMV infects squamous cells",
+              "Both produce identical owl-eye inclusions in squamous cells",
+              "Neither produces inclusion bodies"
+            ],
+            0,
+            "HSV produces small punched-out ulcers with intranuclear inclusions in squamous epithelial cells; CMV produces large/linear ulcers with intranuclear + cytoplasmic inclusions in endothelial cells and fibroblasts (not squamous). The infected cell type is the key.",
+            "advanced"
+          ],
+          [
+            "A young atopic patient with food impaction has concentric rings ('trachealization') and >15 intraepithelial eosinophils/HPF, unresponsive to acid suppression. The diagnosis is:",
+            [
+              "Eosinophilic esophagitis",
+              "Barrett esophagus",
+              "Reflux (GERD) esophagitis",
+              "Candida esophagitis"
+            ],
+            0,
+            "Eosinophilic esophagitis: allergic, solid-food dysphagia/impaction, concentric rings (trachealization/felinization), >15 eosinophils/HPF, and PPI-nonresponsive. Barrett shows goblet-cell metaplasia; Candida shows plaques with pseudohyphae.",
+            "basic"
           ]
         ]
       ],
@@ -3479,6 +3779,18 @@ const QUIZ = [
             0,
             "Upper endoscopy with biopsy provides tissue diagnosis, after which EUS and CT or PET stage the tumor. Barium swallow may show the lesion but cannot biopsy it, and manometry evaluates motility disorders.",
             "advanced"
+          ],
+          [
+            "Which pairing of esophageal carcinoma to its profile is correct?",
+            [
+              "Adenocarcinoma = distal third, Barrett/GERD, N. America/Europe, Caucasian males; SCC = upper/middle third, alcohol/tobacco, ~90% worldwide",
+              "Adenocarcinoma = upper third, alcohol/tobacco; SCC = distal third, Barrett",
+              "Both arise only from Barrett metaplasia",
+              "SCC arises distally from chronic reflux; adenocarcinoma is smoking-related"
+            ],
+            0,
+            "Adenocarcinoma arises distally from Barrett/GERD (Western, Caucasian males); squamous cell carcinoma is upper/middle third, alcohol/tobacco-driven, and the most common type worldwide.",
+            "advanced"
           ]
         ]
       ]
@@ -3538,6 +3850,18 @@ const QUIZ = [
             ],
             0,
             "The upper esophageal sphincter (cricopharyngeus) is skeletal muscle under somatic control, and the upper third of the esophagus is skeletal while the lower two-thirds is smooth muscle. This matters in stroke, myasthenia, and Zenker diverticulum.",
+            "advanced"
+          ],
+          [
+            "The diagnostic triad for reflux/esophageal disease matches each test to a component. Which mapping is correct?",
+            [
+              "Barium = anatomy; endoscopy + biopsy = mucosa; manometry = physiology (the LES high-pressure zone and peristalsis)",
+              "Barium = mucosa; endoscopy = physiology; manometry = anatomy",
+              "Manometry = mucosa; endoscopy = anatomy; barium = physiology",
+              "All three measure acid exposure"
+            ],
+            0,
+            "Match the test to the question: barium outlines anatomy (strictures, hernia, bird-beak), endoscopy + biopsy assesses mucosa (Barrett, esophagitis), and manometry measures physiology (LES pressure, peristalsis). pH testing quantifies acid.",
             "advanced"
           ]
         ]
@@ -3647,6 +3971,18 @@ const QUIZ = [
             0,
             "A Zenker diverticulum is a pulsion (false) diverticulum through Killian triangle caused by cricopharyngeal dysfunction, giving halitosis, regurgitation of old food, and aspiration. It is a coordination problem of the upper sphincter rather than a disorder of the esophageal body.",
             "advanced"
+          ],
+          [
+            "A Zenker (pulsion) diverticulum differs from a traction diverticulum in mechanism and treatment. Which is correct?",
+            [
+              "Zenker = cervical, from cricopharyngeal dysfunction; treated by excision + cricopharyngeal myotomy. Traction = mid/distal, pulled by external scarring (treat the underlying cause)",
+              "Zenker is caused by external scarring; traction by cricopharyngeal dysfunction",
+              "Both are treated by simple excision without myotomy",
+              "Zenker is a true diverticulum containing all wall layers"
+            ],
+            0,
+            "Zenker is a pulsion (false) diverticulum from cricopharyngeal dysfunction (Killian triangle); repair adds a cricopharyngeal myotomy or the recurrence persists. Traction diverticula are pulled outward by mediastinal scarring/inflammation — treat the cause.",
+            "advanced"
           ]
         ]
       ],
@@ -3755,6 +4091,18 @@ const QUIZ = [
             0,
             "A water-soluble (gastrografin) contrast study is preferred when perforation is suspected because extravasated barium causes severe mediastinitis; CT also helps, and manometry is contraindicated.",
             "advanced"
+          ],
+          [
+            "When esophageal perforation (e.g., Boerhaave) is suspected, the contrast study of choice is:",
+            [
+              "A water-soluble (Gastrografin) study — barium is avoided because, with no serosa, leakage spreads fast and barium causes severe mediastinitis",
+              "A barium swallow for best mucosal detail",
+              "Esophageal manometry",
+              "24-hour pH monitoring"
+            ],
+            0,
+            "Suspected perforation → water-soluble (Gastrografin) contrast, since the esophagus has no serosa and a leak spreads rapidly; extravasated barium causes severe mediastinitis. Manometry is contraindicated during suspected perforation.",
+            "basic"
           ]
         ]
       ]
@@ -3827,6 +4175,18 @@ const QUIZ = [
             0,
             "Pill esophagitis occurs when caustic medications such as doxycycline, bisphosphonates, potassium chloride, or NSAIDs lodge against the mucosa (often near the aortic arch) with too little water or while recumbent, producing focal ulcers.",
             "advanced"
+          ],
+          [
+            "Dysphagia that begins with solids and only later includes liquids most strongly suggests:",
+            [
+              "A mechanical, narrowing lesion (stricture or carcinoma)",
+              "A motility disorder such as achalasia",
+              "A purely functional (globus) sensation",
+              "Diffuse esophageal spasm"
+            ],
+            0,
+            "Solids-first, progressive dysphagia = a narrowing lumen (peptic stricture, carcinoma). Dysphagia to solids AND liquids from the start points to a motility disorder (achalasia, scleroderma).",
+            "basic"
           ]
         ]
       ],
@@ -3893,6 +4253,18 @@ const QUIZ = [
             0,
             "New reflux after middle age with anemia and early satiety are alarm features that mandate endoscopy to exclude gastric or esophageal cancer. The other conditions do not explain iron-deficiency anemia.",
             "advanced"
+          ],
+          [
+            "A patient develops sudden odynophagia hours after taking doxycycline (or a bisphosphonate) with little water at bedtime, with a discrete mid-esophageal ulcer. The management is:",
+            [
+              "Stop the offending pill and correct the technique (upright, plenty of water)",
+              "Start lifelong proton pump inhibitor and biopsy for Barrett",
+              "Begin empiric antifungal therapy",
+              "Urgent surgery for perforation"
+            ],
+            0,
+            "Pill esophagitis (tetracyclines, doxycycline, NSAIDs, bisphosphonates, KCl) causes focal ulcers when a caustic pill lodges against the mucosa. Treatment is stopping the pill and fixing the technique.",
+            "basic"
           ]
         ]
       ],
@@ -3958,6 +4330,18 @@ const QUIZ = [
             ],
             0,
             "Impedance detects bolus movement regardless of pH, so a pH-impedance study captures acid and nonacid (weakly acidic or gaseous) reflux, useful in PPI-refractory symptoms. It does not biopsy tissue or stage tumors.",
+            "advanced"
+          ],
+          [
+            "Which reflux presentation is an alarm feature mandating endoscopy regardless of an empiric therapy trial?",
+            [
+              "New-onset reflux after ~60 with dysphagia, weight loss, or iron-deficiency anemia/GI bleeding",
+              "Occasional heartburn relieved by antacids",
+              "Symptoms worse after large fatty meals",
+              "Mild reflux for a few weeks in a 25-year-old"
+            ],
+            0,
+            "Alarm features — onset after ~60, dysphagia, odynophagia, weight loss, anemia or bleeding, persistent vomiting — bypass empiric therapy and require endoscopy to exclude cancer/stricture.",
             "advanced"
           ]
         ]
@@ -4127,6 +4511,18 @@ const QUIZ = [
             0,
             "Peritoneal signs such as involuntary guarding, rebound, and rigidity indicate surgical peritonitis. Position-dependent relief, cramping with diarrhea, and food-related relief suggest non-surgical causes.",
             "advanced"
+          ],
+          [
+            "Free air under the diaphragm (pneumoperitoneum) on an upright film indicates:",
+            [
+              "A perforated hollow viscus — a surgical emergency",
+              "Simple constipation",
+              "A normal post-meal finding",
+              "Fatty infiltration of the liver"
+            ],
+            0,
+            "Free air under the diaphragm on an upright film is proof of a perforated viscus and a surgical emergency.",
+            "basic"
           ]
         ]
       ],
@@ -4234,6 +4630,18 @@ const QUIZ = [
             ],
             0,
             "Delayed appendicitis can perforate, spilling pus and causing generalized peritonitis or a localized abscess. Resolution would relieve pain, and the others do not explain new peritonitis.",
+            "advanced"
+          ],
+          [
+            "Which physical sign most suggests a RETROCECAL appendix?",
+            [
+              "A positive psoas sign (RLQ pain on right hip extension)",
+              "A positive obturator sign (pain on internal rotation of the flexed hip)",
+              "A positive Murphy sign",
+              "A positive Rovsing sign"
+            ],
+            0,
+            "Psoas sign (pain on hip extension) points to a retrocecal appendix irritating the psoas. The obturator sign suggests a pelvic appendix; Murphy is cholecystitis.",
             "advanced"
           ]
         ]
@@ -4343,6 +4751,18 @@ const QUIZ = [
             0,
             "A rising lactate with metabolic acidosis suggests tissue ischemia or necrosis, as in mesenteric ischemia or strangulation. A mild leukocytosis is nonspecific, and the other findings argue against ischemia.",
             "advanced"
+          ],
+          [
+            "In any reproductive-age patient presenting with abdominal pain, the first test to obtain is:",
+            [
+              "A pregnancy test (β-hCG) — before imaging and before other workup",
+              "An upright chest radiograph",
+              "Serum lipase",
+              "A CT of the abdomen and pelvis"
+            ],
+            0,
+            "β-hCG comes first in a reproductive-age abdomen to exclude ectopic pregnancy and to guide safe imaging. It precedes CT and other tests.",
+            "basic"
           ]
         ]
       ],
@@ -4565,6 +4985,18 @@ const QUIZ = [
             0,
             "A rigid, board-like abdomen with absent bowel sounds indicates generalized peritonitis from perforation or hemorrhage. Hyperactive sounds suggest obstruction or gastroenteritis, and the other features are non-peritonitic.",
             "advanced"
+          ],
+          [
+            "Which group lists the four causes of an acute abdomen that mandate immediate surgery?",
+            [
+              "Ruptured AAA, perforated viscus, ischemic (dead) bowel, and major hemorrhage",
+              "Gastroenteritis, mesenteric adenitis, mittelschmerz, and constipation",
+              "Cholelithiasis, mild pancreatitis, PID, and early appendicitis",
+              "Hiatal hernia, GERD, IBS, and functional dyspepsia"
+            ],
+            0,
+            "The four 'operate now' causes are ruptured AAA, perforated viscus, ischemic bowel, and major hemorrhage. The second group are observe-and-reassess causes.",
+            "basic"
           ]
         ]
       ],
@@ -4726,6 +5158,18 @@ const QUIZ = [
             ],
             0,
             "Ureteric colic gives colicky flank-to-groin pain with hematuria and restlessness, whereas appendicitis gives migratory RLQ pain with anorexia and peritoneal signs.",
+            "advanced"
+          ],
+          [
+            "A positive Rovsing sign in suspected appendicitis is:",
+            [
+              "RLQ pain elicited by palpating the LLQ",
+              "RUQ pain on arrested inspiration",
+              "Flank pain on hip extension",
+              "Pain on internal rotation of the flexed hip"
+            ],
+            0,
+            "Rovsing sign = RLQ pain when the LLQ is palpated (referred rebound). Inspiratory arrest is Murphy; hip extension is psoas; internal rotation is obturator.",
             "advanced"
           ]
         ]
@@ -4937,6 +5381,18 @@ const QUIZ = [
             0,
             "IBS-D is loose or watery types 6 and 7, IBS-C is hard types 1 and 2, and types 3 to 5 are normal.",
             "basic"
+          ],
+          [
+            "Your professor flagged it three times: which single history feature is the classic 'tell' for IBS?",
+            [
+              "Abdominal pain that is relieved by (or improves with) defecation",
+              "Nocturnal pain that wakes the patient",
+              "Unintentional weight loss",
+              "Iron-deficiency anemia"
+            ],
+            0,
+            "Pain relieved by defecation is the IBS board tell and one of the Rome IV anchors (pain ≥1 day/week for 3 months, plus 2 of: related to defecation, change in stool frequency, change in form). The others are alarm features that argue AGAINST IBS.",
+            "basic"
           ]
         ]
       ],
@@ -4966,6 +5422,18 @@ const QUIZ = [
             ],
             0,
             "Positive celiac serology should be confirmed by duodenal biopsy before lifelong dietary change, because celiac, not IBS, is then the diagnosis. The other options miss treatable celiac disease.",
+            "advanced"
+          ],
+          [
+            "Because it closely mimics IBS-D, which condition should be screened for, and with what first-line test?",
+            [
+              "Celiac disease — anti-tissue transglutaminase IgA (tTG-IgA)",
+              "Zollinger-Ellison syndrome — fasting gastrin",
+              "Lactose intolerance — hydrogen breath test, before anything else",
+              "Colon cancer — CEA level"
+            ],
+            0,
+            "Celiac disease mimics IBS-D, so tTG-IgA (with total IgA) is the recommended first-line screen; a positive result is confirmed by duodenal biopsy.",
             "advanced"
           ]
         ]
@@ -5008,6 +5476,18 @@ const QUIZ = [
             ],
             0,
             "Celiac disease, lactose intolerance, inflammatory bowel disease, and microscopic colitis mimic IBS. Appendicitis is acute, achalasia is esophageal, and hiatal hernia causes reflux.",
+            "basic"
+          ],
+          [
+            "Which feature distinguishes IBS from inflammatory bowel disease (IBD)?",
+            [
+              "IBS is functional with normal labs/endoscopy; IBD has objective inflammation (elevated CRP/calprotectin, endoscopic findings)",
+              "IBS shows crypt abscesses on biopsy",
+              "IBD never causes weight loss or bleeding",
+              "IBS is diagnosed by elevated fecal calprotectin"
+            ],
+            0,
+            "IBS is functional — normal labs and endoscopy. IBD (Crohn/UC) is inflammatory with objective findings. The professor specifically warned not to confuse IBS and IBD.",
             "basic"
           ]
         ]
@@ -5099,6 +5579,18 @@ const QUIZ = [
             0,
             "Posterior first-part duodenal ulcers erode the gastroduodenal artery. The left gastric supplies the lesser curve, the short gastrics the fundus, and the superior mesenteric vein is venous.",
             "advanced"
+          ],
+          [
+            "Which pain pattern fits a DUODENAL ulcer?",
+            [
+              "Pain relieved by food and worse with fasting, classically waking the patient at night",
+              "Pain worsened by eating, with weight loss",
+              "Constant pain unrelated to meals",
+              "Pain only immediately after vomiting"
+            ],
+            0,
+            "Duodenal ulcer pain improves with food and worsens when fasting (often nocturnal) → weight gain. Gastric ulcer pain worsens with eating → weight loss, and carries malignant potential.",
+            "basic"
           ]
         ]
       ],
@@ -5183,6 +5675,18 @@ const QUIZ = [
             0,
             "Hypergastrinemia maximally stimulates parietal cells, so basal acid is very high and rises little with further stimulation. It is not low or absent, and secretin raises rather than lowers gastrin.",
             "advanced"
+          ],
+          [
+            "Refractory ulcers in unusual locations plus diarrhea raise suspicion for Zollinger-Ellison syndrome. The confirmatory labs are:",
+            [
+              "Basal acid output ~10x normal, high fasting gastrin, and a paradoxical gastrin rise on the secretin stimulation test",
+              "Low basal acid output and low fasting gastrin",
+              "A positive urea breath test alone",
+              "Elevated lipase with a normal gastrin"
+            ],
+            0,
+            "ZES (gastrinoma) shows very high basal acid output, elevated fasting gastrin, and a paradoxical gastrin surge after IV secretin (normal G-cells are suppressed).",
+            "advanced"
           ]
         ]
       ],
@@ -5255,6 +5759,18 @@ const QUIZ = [
             0,
             "Bilateral ovarian metastases with signet-ring cells are Krukenberg tumors. Virchow is a supraclavicular node, Blumer shelf is rectal-pouch, and Sister Mary Joseph is umbilical.",
             "advanced"
+          ],
+          [
+            "Match the eponymous gastric-carcinoma metastasis: a firm LEFT supraclavicular node is:",
+            [
+              "Virchow node",
+              "Krukenberg tumor",
+              "Blumer shelf",
+              "Sister Mary Joseph nodule"
+            ],
+            0,
+            "Virchow = left supraclavicular node. Krukenberg = bilateral ovarian (signet-ring) mets; Blumer shelf = rectouterine pouch deposit on rectal exam; Sister Mary Joseph = periumbilical nodule.",
+            "basic"
           ]
         ]
       ],
@@ -5531,6 +6047,18 @@ const QUIZ = [
             0,
             "Trichobezoars are masses of ingested hair, often in trichotillomania. Phytobezoars are vegetable fiber, pharmacobezoars are medications, and diospyrobezoars are persimmon tannin.",
             "basic"
+          ],
+          [
+            "Which condition is premalignant for gastric adenocarcinoma, with roughly 40% progression?",
+            [
+              "Pernicious anemia / autoimmune atrophic gastritis",
+              "Acute dumping syndrome",
+              "A gastric phytobezoar",
+              "Hypertrophic pyloric stenosis"
+            ],
+            0,
+            "Pernicious anemia with autoimmune atrophic gastritis (achlorhydria) is premalignant (~40% progress), along with adenomatous polyps and chronic gastritis — so these patients get surveillance endoscopy.",
+            "advanced"
           ]
         ]
       ],
@@ -5657,6 +6185,18 @@ const QUIZ = [
             0,
             "The lap-band restricts solid intake by narrowing the proximal stomach. Duodenal bypass is Roux-en-Y, stomach resection is sleeve gastrectomy, and shortening the common channel is malabsorptive bypass.",
             "basic"
+          ],
+          [
+            "Two years after a Roux-en-Y gastric bypass, a patient has fatigue and microcytic anemia. The mechanism is:",
+            [
+              "The duodenum is bypassed, cutting iron (and calcium/B12) absorption",
+              "Excess gastric acid eroding the mucosa",
+              "Overproduction of pancreatic enzymes",
+              "Bacterial overgrowth consuming folate"
+            ],
+            0,
+            "Roux-en-Y bypasses the duodenum (the iron and calcium absorption site), causing iron-deficiency microcytic anemia plus B12 and calcium deficiency. Sleeve gastrectomy is the newer gold standard; candidacy is BMI ≥40 (or ≥100 lb over ideal).",
+            "advanced"
           ]
         ]
       ]
@@ -5705,6 +6245,18 @@ const QUIZ = [
             0,
             "A Meckel diverticulum with ectopic gastric mucosa secretes acid that ulcerates adjacent ileum, causing painless bleeding; a technetium scan detects the gastric mucosa. The others are not the classic mechanism.",
             "advanced"
+          ],
+          [
+            "A newborn with Down syndrome has bilious vomiting and a 'double-bubble' sign. The diagnosis is:",
+            [
+              "Duodenal atresia",
+              "Meckel diverticulum",
+              "Meconium ileus",
+              "Hypertrophic pyloric stenosis"
+            ],
+            0,
+            "Duodenal atresia (failure of canalization, associated with Down syndrome) gives early bilious vomiting and a double-bubble. Pyloric stenosis causes nonbilious vomiting; Meckel causes painless bleeding.",
+            "basic"
           ]
         ]
       ],
@@ -5788,6 +6340,18 @@ const QUIZ = [
             ],
             0,
             "Non-occlusive mesenteric ischemia arises from splanchnic vasoconstriction and low output (shock, pressors) without a fixed blockage. Embolism and venous thrombosis involve occlusion, and celiac atherosclerosis underlies chronic ischemia.",
+            "advanced"
+          ],
+          [
+            "An older patient with atrial fibrillation develops sudden severe abdominal pain 'out of proportion' to a benign exam, with a rising lactate. The most likely diagnosis is:",
+            [
+              "Acute mesenteric ischemia (SMA embolus)",
+              "Chronic mesenteric ischemia (intestinal angina)",
+              "Acute appendicitis",
+              "Large bowel obstruction"
+            ],
+            0,
+            "Acute SMA embolism (cardiogenic, e.g., atrial fibrillation) causes pain out of proportion to exam with rising lactate/acidosis. Chronic mesenteric ischemia presents as postprandial angina.",
             "advanced"
           ]
         ]
@@ -5904,6 +6468,18 @@ const QUIZ = [
             ],
             0,
             "Mediterranean-type intestinal T-cell lymphoma complicates longstanding celiac disease, while metastases are the most common malignant small-bowel tumors overall. The others are not precursors.",
+            "advanced"
+          ],
+          [
+            "A KIT (CD117)-positive spindle-cell small-bowel tumor arising from the interstitial cells of Cajal is a:",
+            [
+              "Gastrointestinal stromal tumor (GIST)",
+              "Carcinoid (neuroendocrine) tumor",
+              "Adenocarcinoma",
+              "MALT lymphoma"
+            ],
+            0,
+            "GISTs arise from interstitial cells of Cajal and are KIT/CD117 (and DOG1) positive; <2 cm low-risk, >5 cm aggressive. Carcinoids show salt-and-pepper chromatin and chromogranin A.",
             "advanced"
           ]
         ]
@@ -6146,6 +6722,30 @@ const QUIZ = [
             0,
             "Continuous rectal-based inflammation with crypt abscesses and no granulomas is ulcerative colitis. Crohn shows skip lesions and granulomas, ischemic colitis affects watershed areas, and tuberculosis shows caseating granulomas.",
             "advanced"
+          ],
+          [
+            "Which contrast between Crohn disease and ulcerative colitis is correct?",
+            [
+              "Crohn = transmural (→ fistulas, strictures) with skip lesions and non-caseating granulomas; UC = mucosa-only, continuous from the rectum, with crypt abscesses",
+              "Crohn is mucosa-only; UC is transmural",
+              "Both show non-caseating granulomas",
+              "UC causes fistulas and skip lesions"
+            ],
+            0,
+            "Crohn is transmural and patchy (skip lesions, cobblestoning, fistulas, non-caseating granulomas), mouth-to-anus, favoring the terminal ileum. UC is continuous mucosal disease from the rectum with crypt abscesses.",
+            "basic"
+          ],
+          [
+            "Which statement about IBD and smoking/surgery is correct?",
+            [
+              "Smoking is protective in UC but worsens Crohn; colectomy cures UC (colon-confined) but not Crohn (recurs anywhere)",
+              "Smoking worsens UC and protects against Crohn",
+              "Colectomy cures Crohn but not UC",
+              "Smoking has no effect on either disease"
+            ],
+            0,
+            "The paradox: smoking is protective in UC yet worsens Crohn. Because UC is colon-confined, colectomy is curative; Crohn recurs anywhere along the gut, so surgery is not curative.",
+            "advanced"
           ]
         ]
       ]
@@ -6194,6 +6794,18 @@ const QUIZ = [
             0,
             "Omphalocele has herniated organs covered by peritoneum and amnion (a sealed sac), whereas gastroschisis is an uncovered paraumbilical defect. Pyloric and diaphragmatic defects are separate entities.",
             "advanced"
+          ],
+          [
+            "A 4-week-old has projectile nonbilious vomiting and a palpable 'olive.' The expected metabolic disturbance is:",
+            [
+              "Hypochloremic, hypokalemic metabolic alkalosis",
+              "Anion-gap metabolic acidosis",
+              "Respiratory acidosis",
+              "Hyperkalemic acidosis"
+            ],
+            0,
+            "Hypertrophic pyloric stenosis (3–5x males, 3–6 weeks) loses gastric HCl via projectile vomiting → hypochloremic, hypokalemic metabolic alkalosis. Treatment is pyloromyotomy.",
+            "basic"
           ]
         ]
       ],
@@ -6236,6 +6848,18 @@ const QUIZ = [
             0,
             "Gastropathy from NSAIDs, alcohol, or bile shows epithelial injury with little inflammation, while gastritis has neutrophils infiltrating glands. Granulomas and exclusive H. pylori causation do not define gastropathy.",
             "basic"
+          ],
+          [
+            "Match the stress ulcer: a patient with a severe burn develops a gastric ulcer. This is a:",
+            [
+              "Curling ulcer (burns/trauma → hypovolemic mucosal ischemia)",
+              "Cushing ulcer (raised intracranial pressure → vagal acid)",
+              "Marjolin ulcer",
+              "Dieulafoy lesion"
+            ],
+            0,
+            "Curling ulcer follows burns/trauma (ischemia). Cushing ulcer follows raised intracranial pressure (vagal stimulation → acid). Memory: Curling = Cooking (burns); Cushing = Cranium.",
+            "advanced"
           ]
         ]
       ],
@@ -6374,6 +6998,18 @@ const QUIZ = [
             0,
             "GISTs are KIT and DOG1 positive mesenchymal tumors from the interstitial cells of Cajal, the gut pacemaker cells. Chief, G, and goblet cells give rise to other lesions.",
             "advanced"
+          ],
+          [
+            "Diffuse-type gastric adenocarcinoma is characterized by:",
+            [
+              "Signet-ring cells with CDH1/E-cadherin loss and a thickened, rigid wall (linitis plastica)",
+              "Glandular intestinal-type growth with APC mutation",
+              "A KIT-positive spindle-cell tumor",
+              "Dense lymphoid stroma with germinal centers"
+            ],
+            0,
+            "Diffuse-type shows signet-ring cells, CDH1 (E-cadherin) loss, and linitis plastica. Intestinal-type (~90%) is glandular, APC-associated, and distal. MALToma is H. pylori-driven lymphoma.",
+            "advanced"
           ]
         ]
       ]
@@ -6433,6 +7069,30 @@ const QUIZ = [
             ],
             0,
             "Diphyllobothrium latum (fish tapeworm) competes for B12, causing macrocytic anemia. Taenia saginata is the beef tapeworm, Echinococcus causes hydatid cysts, and Enterobius is the pinworm.",
+            "advanced"
+          ],
+          [
+            "A traveler has bloody, mucoid dysentery and later a right-lobe 'anchovy-paste' liver abscess. The organism and treatment are:",
+            [
+              "Entamoeba histolytica — metronidazole (plus a luminal agent)",
+              "Cryptosporidium parvum — supportive care only",
+              "Giardia lamblia — albendazole",
+              "Vibrio cholerae — rehydration"
+            ],
+            0,
+            "Entamoeba histolytica causes flask-shaped ulcers, bloody dysentery, and an anchovy-paste amebic liver abscess; treat with metronidazole plus a luminal agent (e.g., paromomycin).",
+            "basic"
+          ],
+          [
+            "Match the helminth complication: a fish tapeworm (Diphyllobothrium latum) classically causes:",
+            [
+              "Vitamin B12 deficiency (macrocytic anemia)",
+              "Iron-deficiency anemia",
+              "Rectal prolapse",
+              "Biliary cholangiocarcinoma"
+            ],
+            0,
+            "Diphyllobothrium competes for B12 → deficiency. Hookworm → iron deficiency; whipworm → rectal prolapse; Clonorchis → cholangiocarcinoma; pinworm → perianal itch (tape test).",
             "advanced"
           ]
         ]
@@ -6518,6 +7178,18 @@ const QUIZ = [
             0,
             "Candida shows pseudohyphae and budding yeast on KOH. Acid-fast oocysts are coccidian protozoa, broad-based budding is Blastomyces, and spore-forming rods are bacteria.",
             "basic"
+          ],
+          [
+            "A patient from the Mississippi/Ohio River Valley with bird/bat exposure has lung calcifications and intracellular yeast in macrophages. The organism is:",
+            [
+              "Histoplasma capsulatum (dimorphic) — treat with itraconazole, amphotericin B if severe",
+              "Candida albicans — fluconazole",
+              "Cryptosporidium — supportive",
+              "Aspergillus flavus — voriconazole"
+            ],
+            0,
+            "Histoplasma is a dimorphic fungus (bird/bat droppings) with intracellular yeast in macrophages; itraconazole for mild disease, amphotericin B for severe/disseminated. Candida shows pseudohyphae and is treated with fluconazole.",
+            "advanced"
           ]
         ]
       ],
@@ -6638,6 +7310,18 @@ const QUIZ = [
             0,
             "Fever, tachycardia, hypotension, bloody stools, or air in the bowel wall indicate strangulation and ischemia needing surgery. Hyperactive sounds, mild bloating, and transient relief are not strangulation signs.",
             "advanced"
+          ],
+          [
+            "A patient with prior abdominal surgery presents with a small-bowel obstruction. Until proven otherwise, the cause is:",
+            [
+              "Adhesions",
+              "An incarcerated hernia",
+              "Colorectal carcinoma",
+              "Volvulus"
+            ],
+            0,
+            "SBO with a prior operation = adhesions until proven otherwise; SBO with NO prior surgery = hernia until proven otherwise. Adhesions are the most common adult SBO cause overall.",
+            "basic"
           ]
         ]
       ],
@@ -6679,6 +7363,18 @@ const QUIZ = [
             ],
             0,
             "A cecal diameter over about 12 cm signals high perforation risk and prompts urgent decompression. 3 and 6 cm are within or near normal, and 20 cm is well beyond the threshold.",
+            "advanced"
+          ],
+          [
+            "The most common cause of large bowel obstruction, with a classic 'apple-core' lesion, is:",
+            [
+              "Colorectal carcinoma",
+              "Adhesions",
+              "Sigmoid volvulus",
+              "Diverticulitis"
+            ],
+            0,
+            "Colorectal carcinoma is the #1 cause of LBO (apple-core/napkin-ring lesion); diverticulitis is #2. Management of obstruction: resuscitate (NPO, NG, fluids) before the OR unless the bowel is compromised.",
             "advanced"
           ]
         ]
@@ -6866,6 +7562,18 @@ const QUIZ = [
             0,
             "Onset after fifty, nocturnal diarrhea, bleeding, weight loss, or fever are alarm features needing workup. Mild lactose bloating, flatulence, and floating stool are common benign findings.",
             "advanced"
+          ],
+          [
+            "Maldigestion differs from malabsorption in that maldigestion is:",
+            [
+              "Failure to break food down (e.g., pancreatic insufficiency, lactase loss)",
+              "Failure of the enterocyte to transport already-digested nutrients",
+              "Loss of bile from the gallbladder only",
+              "Bacterial overgrowth of the colon"
+            ],
+            0,
+            "Maldigestion = impaired luminal/brush-border breakdown (pancreatic insufficiency, lactase deficiency). Malabsorption = impaired enterocyte uptake/transport. Both are clinically grouped as 'malabsorption.'",
+            "basic"
           ]
         ]
       ],
@@ -6975,6 +7683,18 @@ const QUIZ = [
             0,
             "Vitamin A deficiency causes night blindness, xerophthalmia, and Bitot spots. Vitamin D causes osteomalacia and rickets, vitamin E causes ataxia and loss of proprioception, and vitamin K causes bleeding with an elevated PT/INR.",
             "advanced"
+          ],
+          [
+            "After ileal resection, macrocytic anemia with BOTH elevated methylmalonic acid AND homocysteine indicates deficiency of:",
+            [
+              "Vitamin B12 (absorbed in the distal ileum)",
+              "Folate (absorbed in the jejunum)",
+              "Iron (absorbed in the duodenum)",
+              "Vitamin K"
+            ],
+            0,
+            "B12 (distal ileum, needs intrinsic factor) deficiency raises BOTH MMA and homocysteine with neurologic signs. Folate deficiency raises only homocysteine. Iron is absorbed in the duodenum.",
+            "advanced"
           ]
         ]
       ]
@@ -7022,6 +7742,18 @@ const QUIZ = [
             ],
             0,
             "CT of the abdomen and pelvis evaluates solid organs, stages tumors, and detects appendicitis, obstruction, and perforation. Plain films and barium are limited, and the scotch tape test detects pinworm.",
+            "advanced"
+          ],
+          [
+            "A patient with RUQ pain and a positive Murphy sign should first get which imaging, and what HIDA finding confirms acute cholecystitis?",
+            [
+              "Ultrasound first; a non-visualized gallbladder on HIDA (cystic duct obstruction) confirms acute cholecystitis",
+              "CT first; a visualized gallbladder on HIDA confirms it",
+              "MRCP first; pneumobilia confirms it",
+              "Plain film first; free air confirms it"
+            ],
+            0,
+            "RUQ pain + Murphy → ultrasound first. On a HIDA scan, non-visualization of the gallbladder indicates cystic duct obstruction = acute cholecystitis. (Air-fluid levels are a classic distractor — they don't prove obstruction.)",
             "advanced"
           ]
         ]
@@ -7149,6 +7881,18 @@ const QUIZ = [
             0,
             "Normal small bowel is under 3 cm, colon under 6 cm, and cecum under 9 cm. A small-bowel diameter over 3 cm suggests dilatation or obstruction.",
             "basic"
+          ],
+          [
+            "By the radiographic 'Rule of 3s,' the normal upper limit of small-bowel diameter is, and free air means:",
+            [
+              "Small bowel <3 cm; free air (best seen on an upright view) = perforation until proven otherwise",
+              "Small bowel <9 cm; free air = normal swallowed gas",
+              "Small bowel <6 cm; free air = fatty liver",
+              "Small bowel <12 cm; free air = ileus"
+            ],
+            0,
+            "Rule of 3s: small bowel <3 cm, colon <6 cm, cecum <9 cm. Free air (pneumoperitoneum), best seen upright, means GI perforation until proven otherwise.",
+            "basic"
           ]
         ]
       ]
@@ -7239,6 +7983,18 @@ const QUIZ = [
             0,
             "Cross-sectional CT, CT angiography, and MR enterography have largely replaced the barium small bowel series. The other tests assess unrelated problems.",
             "advanced"
+          ],
+          [
+            "On imaging of bowel obstruction, the finding that specifically indicates a MECHANICAL obstruction is:",
+            [
+              "A transition point — dilated proximal bowel, collapsed distal bowel, with a caliber change at one spot",
+              "Air-fluid levels alone",
+              "Diffuse gas throughout small and large bowel",
+              "Pneumobilia"
+            ],
+            0,
+            "A transition point (dilated proximal, collapsed distal, caliber change) signals mechanical obstruction. Air-fluid levels are a distractor; diffuse gas suggests ileus.",
+            "advanced"
           ]
         ]
       ],
@@ -7280,6 +8036,18 @@ const QUIZ = [
             ],
             0,
             "Pneumobilia is air within the biliary tree. Free intraperitoneal air is pneumoperitoneum, bowel-wall air is pneumatosis, and pericholecystic fluid surrounds the gallbladder.",
+            "basic"
+          ],
+          [
+            "Match the imaging sign: an 'apple-core' (napkin-ring) annular lesion indicates ___, while an arterial-phase hypervascular liver lesion suggests ___.",
+            [
+              "Colon cancer; hepatocellular carcinoma (HCC)",
+              "Diverticulitis; hemangioma",
+              "Volvulus; simple cyst",
+              "Appendicitis; abscess"
+            ],
+            0,
+            "Apple-core/napkin-ring = annular colon cancer. Arterial-phase hypervascular liver lesion = HCC. Multiple rim-enhancing liver lesions suggest abscesses.",
             "basic"
           ]
         ]
@@ -7389,6 +8157,18 @@ const QUIZ = [
             0,
             "Angiodysplasia shows ectatic tortuous veins and capillaries separated from the lumen by thin walls, so minor injury bleeds. The others belong to tuberculosis, diffuse gastric carcinoma, and ulcerative colitis.",
             "advanced"
+          ],
+          [
+            "Painless hematochezia from a vascular ectasia of the cecum/right colon in an older adult is:",
+            [
+              "Angiodysplasia",
+              "Diverticulitis",
+              "Ischemic colitis",
+              "An anal fissure"
+            ],
+            0,
+            "Angiodysplasia (cecum/right colon) causes ~20–25% of major lower-GI bleeds after the 6th decade — painless hematochezia from ectatic thin-walled vessels.",
+            "advanced"
           ]
         ]
       ],
@@ -7430,6 +8210,18 @@ const QUIZ = [
             ],
             0,
             "HNPCC (Lynch) results from DNA mismatch repair mutations, often MSH2, with colorectal plus endometrial, ovarian, and pancreatic cancers. APC drives FAP, and the others are unrelated.",
+            "advanced"
+          ],
+          [
+            "Familial adenomatous polyposis (FAP) and Lynch syndrome (HNPCC) differ genetically as:",
+            [
+              "FAP = germline APC (5q21), hundreds–thousands of polyps; Lynch = mismatch-repair loss (MSH2/MLH1), few polyps but early cancer plus endometrial/other tumors",
+              "FAP = mismatch-repair loss; Lynch = APC mutation",
+              "Both are caused by the same APC mutation",
+              "FAP = KRAS; Lynch = TP53"
+            ],
+            0,
+            "FAP is germline APC with hundreds–thousands of polyps (prophylactic colectomy). Lynch/HNPCC is mismatch-repair (MSH2/MLH1) with fewer polyps but early colorectal plus endometrial and other cancers. The adenoma-carcinoma sequence starts with APC.",
             "advanced"
           ]
         ]
@@ -7528,6 +8320,18 @@ const QUIZ = [
             0,
             "Pseudomyxoma peritonei is the gelatinous peritoneal mass from a ruptured mucinous appendiceal or ovarian tumor. Linitis plastica is diffuse gastric carcinoma, and the others are unrelated.",
             "advanced"
+          ],
+          [
+            "Rupture of a mucinous appendiceal neoplasm spreading gelatinous mucin through the peritoneum ('jelly belly') is:",
+            [
+              "Pseudomyxoma peritonei",
+              "Linitis plastica",
+              "Toxic megacolon",
+              "Krukenberg tumor"
+            ],
+            0,
+            "A ruptured appendiceal (or ovarian) mucinous tumor seeds the peritoneum with mucin = pseudomyxoma peritonei. The most common appendiceal tumor overall is the carcinoid (neuroendocrine) tumor.",
+            "basic"
           ]
         ]
       ],
@@ -7720,6 +8524,18 @@ const QUIZ = [
             0,
             "Calcium channel blockers, along with anticholinergics, iron, tricyclics, and ondansetron, commonly cause constipation. Magnesium antacids, polyethylene glycol, and senna are laxatives.",
             "basic"
+          ],
+          [
+            "Which drug class is a classic cause of constipation via decreased motility/secretion plus increased sphincter tone?",
+            [
+              "Opioids",
+              "Osmotic laxatives",
+              "Prokinetic agents",
+              "Stimulant laxatives"
+            ],
+            0,
+            "Opioids (opioid-induced constipation, with its own Rome IV criteria) reduce motility and secretion and raise sphincter tone; anticholinergics, TCAs, iron, and calcium channel blockers also constipate.",
+            "basic"
           ]
         ]
       ],
@@ -7762,6 +8578,18 @@ const QUIZ = [
             0,
             "Colonic transit studies measure how long stool takes to pass and are indicated for refractory constipation with infrequent stools. They are not used for diverticulitis, perforation, or biliary evaluation.",
             "advanced"
+          ],
+          [
+            "The most useful confirmatory test for a dyssynergic (defecatory) disorder is:",
+            [
+              "Anorectal manometry with the balloon expulsion test",
+              "A colonic transit (marker) study",
+              "Serum gastrin",
+              "A hydrogen breath test"
+            ],
+            0,
+            "Dyssynergic defecation → anorectal manometry + balloon expulsion. Slow-transit constipation → colon-transit (marker) study.",
+            "advanced"
           ]
         ]
       ],
@@ -7803,6 +8631,18 @@ const QUIZ = [
             ],
             0,
             "With no alarm features and a normal exam, first-line is lifestyle measures starting with fiber and fluids. Colonoscopy, manometry, and defecography are for alarm features or refractory cases.",
+            "basic"
+          ],
+          [
+            "First-line non-pharmacologic management of constipation, and the preferred treatment for confirmed dyssynergic defecation, are:",
+            [
+              "Fiber + fluids + behavior first; biofeedback is first-line for dyssynergic/refractory disease",
+              "Immediate colectomy; then lifelong opioids",
+              "Stimulant laxatives only; then surgery",
+              "Prolonged fasting; then antibiotics"
+            ],
+            0,
+            "Start with fiber, fluids, and behavioral measures. Biofeedback is first-line for dyssynergic/refractory disease once anorectal testing confirms pelvic-floor dysfunction.",
             "basic"
           ]
         ]
@@ -7851,6 +8691,18 @@ const QUIZ = [
             ],
             0,
             "A femoral hernia protrudes through the femoral canal below the inguinal ligament onto the anterior thigh, is more common in women, and has high strangulation risk. Scrotal extension is indirect inguinal, umbilical at the navel, and incisional at prior incisions.",
+            "advanced"
+          ],
+          [
+            "An indirect inguinal hernia is distinguished from a direct one by its relationship to the inferior epigastric vessels:",
+            [
+              "Indirect = LATERAL to the vessels (through the internal ring, congenital); direct = MEDIAL (through Hesselbach's triangle, acquired)",
+              "Indirect = medial to the vessels; direct = lateral",
+              "Both pass medial to the vessels",
+              "Both pass below the inguinal ligament"
+            ],
+            0,
+            "Indirect hernias pass lateral to the inferior epigastric vessels through the internal ring (congenital, patent processus vaginalis). Direct hernias push through Hesselbach's triangle, medial to the vessels (acquired).",
             "advanced"
           ]
         ]
@@ -7912,6 +8764,18 @@ const QUIZ = [
             0,
             "Direct hernias are acquired hernias of older men over 50 that appear and reduce slowly and rarely strangulate. Indirect hernias appear in younger patients, can be scrotal, and strangulate more often.",
             "advanced"
+          ],
+          [
+            "What is the classic frequency trap about hernias?",
+            [
+              "'Femoral = most common in women' is FALSE — the indirect inguinal hernia is the most common in BOTH sexes",
+              "Direct inguinal hernia is the most common in both sexes",
+              "Femoral hernias are the most common hernia overall",
+              "Umbilical hernias are the most common in men"
+            ],
+            0,
+            "The indirect inguinal hernia is the most common hernia in both men and women. Femoral hernias are relatively more common in women but are not the most common overall — that's the trap.",
+            "basic"
           ]
         ]
       ],
@@ -8026,6 +8890,18 @@ const QUIZ = [
             0,
             "Strangulation risks necrosis, so it demands emergent surgical repair. Observation, reassurance, and dietary measures are inappropriate.",
             "basic"
+          ],
+          [
+            "A Richter hernia is dangerous because it:",
+            [
+              "Traps only part of the bowel-wall circumference, so it can strangulate and necrose with a still-patent lumen (no obstruction)",
+              "Always traps the entire bowel loop, causing early obstruction",
+              "Can never undergo strangulation",
+              "Only occurs at the umbilicus"
+            ],
+            0,
+            "A Richter hernia entraps only part of the bowel wall, so it can strangulate (ischemia/necrosis) without luminal obstruction — delaying diagnosis. Incarceration = irreducible; strangulation = compromised blood supply.",
+            "advanced"
           ]
         ]
       ],
@@ -8122,6 +8998,18 @@ const QUIZ = [
             0,
             "Above the dentate line the tissue has visceral innervation insensitive to touch, so banding causes little pain; below, the somatic anoderm makes external thrombosis painful and procedures need anesthesia.",
             "advanced"
+          ],
+          [
+            "The dentate (pectinate) line is the key anal landmark because it marks:",
+            [
+              "The squamocolumnar junction AND the boundary between insensate rectal mucosa (above) and sensate anoderm (below)",
+              "The junction between the sigmoid colon and rectum",
+              "The level of the anal sphincter complex only",
+              "The transition from small to large bowel"
+            ],
+            0,
+            "The dentate line is the squamocolumnar junction and the somatic/visceral boundary: above = insensate columnar rectal mucosa (visceral); below = sensate squamous anoderm (somatic). It explains why internal hemorrhoids are painless and external ones hurt.",
+            "basic"
           ]
         ]
       ],
@@ -8194,6 +9082,18 @@ const QUIZ = [
             0,
             "A painful thrombosed hemorrhoid is external, below the dentate line, where the highly innervated anoderm makes it very painful and procedures need anesthesia. Internal hemorrhoids above the line are insensitive and bleed painlessly.",
             "advanced"
+          ],
+          [
+            "Internal hemorrhoids differ from external hemorrhoids in that internal ones:",
+            [
+              "Arise ABOVE the dentate line (insensate mucosa) → painless bleeding/prolapse",
+              "Arise below the dentate line and are painful when thrombosed",
+              "Are covered by sensate anoderm",
+              "Always require anesthesia to treat"
+            ],
+            0,
+            "Internal hemorrhoids are above the dentate line (insensate) → painless bleeding/prolapse; graded by reducibility (1st none → 4th irreducible). External hemorrhoids are below the line (sensate) → painful when thrombosed.",
+            "basic"
           ]
         ]
       ],
@@ -8265,6 +9165,18 @@ const QUIZ = [
             ],
             0,
             "Combined chemoradiation (the Nigro approach) is preferred for anal squamous cell carcinoma, sparing the sphincter with comparable survival; abdominoperineal resection was the older approach. Observation and antibiotics are not curative.",
+            "advanced"
+          ],
+          [
+            "The current preferred treatment of anal canal squamous cell (epidermoid) carcinoma is:",
+            [
+              "Combined chemoradiation (the Nigro protocol), sparing the sphincter",
+              "Immediate abdominoperineal resection",
+              "Observation alone",
+              "Lifelong antibiotics"
+            ],
+            0,
+            "Anal squamous cell (epidermoid) carcinoma is treated with sphincter-sparing chemoradiation (Nigro protocol) rather than surgery-first. It is strongly HPV-associated.",
             "advanced"
           ]
         ]
