@@ -3,3 +3,5 @@
 add_questions.py
 parse_content.py
 _content.json
+render_slides.py
+_slides.json
