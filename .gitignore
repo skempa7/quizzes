@@ -1,3 +1,5 @@
 .DS_Store
 *.log
 add_questions.py
+parse_content.py
+_content.json

@@ -19,7 +19,10 @@ const KEYS = {
   streak: SUBJ + "_streak_v1",
   currentLec: SUBJ + "_curlec_v1",
   reviewIncorrect: SUBJ + "_rev_inc_v1",
-  reviewFlagged: SUBJ + "_rev_flag_v1"
+  reviewFlagged: SUBJ + "_rev_flag_v1",
+  xp: SUBJ + "_xp_v1",
+  read: SUBJ + "_read_v1",
+  badges: SUBJ + "_badges_v1"
 };
 
 const state = {
@@ -37,7 +40,11 @@ const state = {
   reviewIncorrectMode: false,
   reviewFlaggedMode: false,
   reviewSnapshot: null,
-  shuffleCache: {}
+  shuffleCache: {},
+  xp: load(KEYS.xp, 0),
+  read: load(KEYS.read, {}),       // { lecNum: true }
+  badges: load(KEYS.badges, {}),   // { badgeId: true }
+  viewMode: "learn"                // "learn" | "practice"
 };
 
 function load(key, fallback) {
@@ -147,13 +154,16 @@ function overallStats() {
 // =============================================================
 function renderSidebar() {
   const el = document.getElementById("sidebar");
-  let html = `<h3>Lectures (Exam 1)</h3>`;
+  let html = `<h3>Lectures</h3>`;
   QUIZ.forEach(([n, title, los]) => {
     const s = lectureStats(n);
     const active = n === state.currentLec ? "active" : "";
-    const shortTitle = title.length > 28 ? title.substring(0, 26) + "…" : title;
+    const shortTitle = title.length > 26 ? title.substring(0, 24) + "…" : title;
+    const mastered = lectureMastered(n);
+    const status = mastered ? `<span class="lec-status master" title="Mastered">★</span>`
+                 : state.read[n] ? `<span class="lec-status read" title="Read">✓</span>` : "";
     html += `<div class="lec-item ${active}" onclick="goToLec(${n})">
-      <span class="lec-name"><strong>${n}.</strong> ${shortTitle}</span>
+      <span class="lec-name">${status}<strong>${n}.</strong> ${shortTitle}</span>
       <span class="count">${s.answered}/${s.total}</span>
     </div>`;
   });
@@ -195,7 +205,39 @@ function renderRSidebar() {
     }
   });
 
+  const rk = rankFor(state.xp);
+  const readCount = Object.keys(state.read).filter(k => state.read[k]).length;
+  const masterCount = QUIZ.filter(L => lectureMastered(L[0])).length;
+  const earned = Object.keys(BADGES).filter(b => state.badges[b]);
+  const badgesHtml = Object.keys(BADGES).map(b => {
+    const got = !!state.badges[b];
+    const icon = BADGES[b].split(" ")[0];
+    return `<span class="badge ${got ? "got" : "locked"}" title="${BADGES[b]}">${got ? icon : "🔒"}</span>`;
+  }).join("");
+
   el.innerHTML = `
+    <div class="rank-card">
+      <div class="rank-top">
+        <span class="rank-icon">${rk.cur.icon}</span>
+        <div>
+          <div class="rank-name">${rk.cur.name}</div>
+          <div class="rank-xp">${state.xp} XP${rk.next ? ` · ${rk.next.min - state.xp} to ${rk.next.name}` : " · max rank!"}</div>
+        </div>
+      </div>
+      <div class="rank-bar"><div class="rank-bar-fill" style="width:${rk.pct}%"></div></div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Progress</div>
+      <div class="stat-row"><span class="label">📖 Lectures read</span><span class="val">${readCount}/30</span></div>
+      <div class="stat-row"><span class="label">★ Lectures mastered</span><span class="val">${masterCount}/30</span></div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Badges · ${earned.length}/${Object.keys(BADGES).length}</div>
+      <div class="badge-grid">${badgesHtml}</div>
+    </div>
+
     <h3>Your Stats</h3>
 
     <div class="stat-card gradient">
@@ -242,7 +284,181 @@ function renderRSidebar() {
 function renderMain() {
   if (state.reviewIncorrectMode) return renderReviewIncorrect();
   if (state.reviewFlaggedMode) return renderReviewFlagged();
+  if (state.viewMode === "learn") return renderLearnView();
   return renderLecture();
+}
+
+// =============================================================
+// GAMIFICATION
+// =============================================================
+const RANKS = [
+  { name: "Pre-Med", min: 0, icon: "🧬" },
+  { name: "MS-1", min: 60, icon: "📋" },
+  { name: "MS-2", min: 180, icon: "🩻" },
+  { name: "MS-3", min: 400, icon: "🩺" },
+  { name: "MS-4", min: 750, icon: "💉" },
+  { name: "Intern", min: 1200, icon: "🧑‍⚕️" },
+  { name: "Resident", min: 1800, icon: "🏥" },
+  { name: "Senior Resident", min: 2600, icon: "📈" },
+  { name: "Chief Resident", min: 3500, icon: "⭐" },
+  { name: "Fellow", min: 4600, icon: "🔬" },
+  { name: "Attending", min: 6000, icon: "👨‍⚕️" },
+  { name: "Chief of Medicine", min: 7800, icon: "👑" }
+];
+function rankFor(xp) {
+  let cur = RANKS[0], next = null;
+  for (let i = 0; i < RANKS.length; i++) {
+    if (xp >= RANKS[i].min) { cur = RANKS[i]; next = RANKS[i + 1] || null; }
+  }
+  const span = next ? next.min - cur.min : 1;
+  const into = next ? xp - cur.min : 1;
+  const pct = next ? Math.min(100, Math.round(100 * into / span)) : 100;
+  return { cur, next, pct };
+}
+function addXP(amount, msg) {
+  const before = rankFor(state.xp).cur.name;
+  state.xp += amount;
+  save(KEYS.xp, state.xp);
+  const after = rankFor(state.xp).cur;
+  if (after.name !== before) {
+    burstXP(`${after.icon} RANK UP! ${after.name}`);
+  }
+}
+const BADGES = {
+  first_correct: "🩸 First Blood — your first correct answer",
+  bookworm:      "📖 Bookworm — read your first lecture",
+  on_fire:       "🔥 On Fire — a 10-answer streak",
+  sharpshooter:  "🎯 Sharpshooter — 100% on a lecture",
+  lecture_master:"🏅 Lecture Master — mastered a lecture",
+  half_read:     "📚 Halfway There — read 15 lectures",
+  well_read:     "🎓 Well Read — read all 30 lectures",
+  completionist: "👑 Completionist — mastered all 30 lectures",
+  speed_demon:   "⚡ Speed Demon — finished a Fast Mode round"
+};
+function awardBadge(id) {
+  if (state.badges[id]) return;
+  state.badges[id] = true;
+  save(KEYS.badges, state.badges);
+  showToast("🏅 Badge unlocked! " + (BADGES[id] || id));
+  renderRSidebar();
+}
+function lectureMastered(n) {
+  const s = lectureStats(n);
+  return state.read[n] && s.total > 0 && s.answered === s.total && (s.correct / s.answered) >= 0.8;
+}
+function checkMastery(n) {
+  if (lectureMastered(n) && !state.badges["_master_" + n]) {
+    state.badges["_master_" + n] = true;
+    save(KEYS.badges, state.badges);
+    addXP(50);
+    awardBadge("lecture_master");
+    burstXP("🏅 Lecture " + n + " Mastered! +50 XP");
+    // all mastered?
+    if (QUIZ.every(L => lectureMastered(L[0]))) awardBadge("completionist");
+  }
+}
+function markRead(n) {
+  if (!state.read[n]) {
+    state.read[n] = true;
+    save(KEYS.read, state.read);
+    addXP(20);
+    awardBadge("bookworm");
+    const readCount = Object.keys(state.read).filter(k => state.read[k]).length;
+    if (readCount >= 15) awardBadge("half_read");
+    if (readCount >= 30) awardBadge("well_read");
+  }
+}
+function setView(mode) {
+  state.viewMode = mode;
+  if (mode === "practice") markRead(state.currentLec);
+  renderMain(); renderSidebar(); renderRSidebar();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function burstXP(text) {
+  const el = document.createElement("div");
+  el.className = "fast-burst";
+  el.style.color = "var(--primary)";
+  el.textContent = text;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 1300);
+}
+
+function lectureModeBar(n) {
+  const learnActive = state.viewMode === "learn" ? "active" : "";
+  const practiceActive = state.viewMode === "practice" ? "active" : "";
+  const readDot = state.read[n] ? `<span class="mode-dot done" title="Read">✓ read</span>` : "";
+  const masterDot = lectureMastered(n) ? `<span class="mode-dot master" title="Mastered">★ mastered</span>` : "";
+  return `<div class="mode-bar">
+    <button class="mode-btn ${learnActive}" onclick="setView('learn')">📖 Learn</button>
+    <button class="mode-btn ${practiceActive}" onclick="setView('practice')">✍️ Practice</button>
+    <div class="mode-status">${readDot}${masterDot}</div>
+  </div>`;
+}
+
+function formatBlock(b) {
+  const x = b.x;
+  switch (b.t) {
+    case "cq":   return `<div class="rc-cq">${x}</div>`;
+    case "key":  return `<div class="rc-callout rc-key"><span class="rc-tag">🔑 Key</span><div>${x}</div></div>`;
+    case "pearl":return `<div class="rc-callout rc-pearl"><span class="rc-tag">💎 Pearl</span><div>${x}</div></div>`;
+    case "trap": return `<div class="rc-callout rc-trap"><span class="rc-tag">⚠️ Trap</span><div>${x}</div></div>`;
+    case "confusion": return `<div class="rc-callout rc-confusion"><span class="rc-tag">🔀 Don't confuse</span><div>${x}</div></div>`;
+    case "cue":  return `<div class="rc-callout rc-cue"><span class="rc-tag">👁 Cue</span><div>${x}</div></div>`;
+    case "q":    return `<div class="rc-callout rc-think"><span class="rc-tag">🤔 Think it through</span><div>${x}</div></div>`;
+    default:     return `<p>${x}</p>`;
+  }
+}
+
+function renderReadingContent(n) {
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  if (!c) {
+    return `<div class="empty-state"><div class="icon">📖</div><h3>Reading content coming soon</h3>
+      <p>This lecture's notes haven't been added yet. Jump into the questions below.</p></div>`;
+  }
+  let html = "";
+  if (c.tldr) {
+    html += `<div class="rc-tldr"><span class="rc-tldr-label">TL;DR</span>${c.tldr}</div>`;
+  }
+  if (c.mustKnows && c.mustKnows.length) {
+    html += `<div class="rc-section"><h3 class="rc-h">⭐ Must-Knows <span class="rc-sub">— what your professors stress</span></h3>
+      <ol class="rc-musts">${c.mustKnows.map(m => `<li>${m}</li>`).join("")}</ol></div>`;
+  }
+  (c.los || []).forEach(lo => {
+    html += `<div class="rc-lo"><h3 class="rc-h"><span class="lo-num">LO ${lo.id}</span>${lo.statement || ""}</h3>
+      <div class="rc-body">${(lo.blocks || []).map(formatBlock).join("")}</div></div>`;
+  });
+  return html;
+}
+
+function renderLearnView() {
+  const main = document.getElementById("main");
+  const lec = getLecture(state.currentLec);
+  if (!lec) { main.innerHTML = "<p>Lecture not found.</p>"; return; }
+  const [n, title, los] = lec;
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  const prof = c && c.prof ? ` · ${c.prof}` : "";
+  const idx = QUIZ.findIndex(L => L[0] === n);
+  const prev = idx > 0 ? QUIZ[idx - 1][0] : null;
+  const next = idx < QUIZ.length - 1 ? QUIZ[idx + 1][0] : null;
+  const qCount = lectureStats(n).total;
+
+  let html = `
+    <div class="lecture-header">
+      <span class="lec-pill">Lecture ${n}${prof}</span>
+      <h2>${title}</h2>
+    </div>
+    ${lectureModeBar(n)}
+    <div class="reading">${renderReadingContent(n)}</div>
+    <div class="learn-cta">
+      <div class="learn-cta-text">Done reading? Lock it in with ${qCount} practice question${qCount===1?"":"s"}.</div>
+      <button class="btn-start-practice" onclick="setView('practice')">✍️ Start Practice →</button>
+    </div>
+    <div class="nav-bottom">
+      ${prev !== null ? `<button class="btn" onclick="goToLec(${prev})">← Lecture ${prev}</button>` : `<span></span>`}
+      ${next !== null ? `<button class="btn" onclick="goToLec(${next})">Lecture ${next} →</button>` : `<span></span>`}
+    </div>`;
+  main.innerHTML = html;
 }
 
 function renderLecture() {
@@ -255,12 +471,15 @@ function renderLecture() {
   const accuracyText = stats.answered === 0 ? "" :
     ` · <strong>${Math.round(100*stats.correct/stats.answered)}%</strong> correct`;
 
+  const cInfo = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  const profTxt = cInfo && cInfo.prof ? ` · ${cInfo.prof}` : "";
   let html = `
     <div class="lecture-header">
-      <span class="lec-pill">Lecture ${n}</span>
+      <span class="lec-pill">Lecture ${n}${profTxt}</span>
       <h2>${title}</h2>
       <div class="sub">${los.length} learning objective${los.length === 1 ? "" : "s"}${accuracyText}</div>
     </div>
+    ${lectureModeBar(n)}
     <div class="score-row">
       <div class="score-text">${stats.answered} / ${stats.total} answered</div>
       <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
@@ -303,8 +522,8 @@ function renderLecture() {
   const prev = QUIZ.findIndex(L => L[0] === n) > 0 ? QUIZ[QUIZ.findIndex(L => L[0] === n) - 1][0] : null;
   const next = QUIZ.findIndex(L => L[0] === n) < QUIZ.length - 1 ? QUIZ[QUIZ.findIndex(L => L[0] === n) + 1][0] : null;
   html += `<div class="nav-bottom">
-    ${prev !== null ? `<button class="btn" onclick="goToLec(${prev})">← Lecture ${prev}</button>` : `<span></span>`}
-    ${next !== null ? `<button class="btn btn-primary" onclick="goToLec(${next})">Lecture ${next} →</button>` : `<span></span>`}
+    <button class="btn" onclick="setView('learn')">📖 Back to reading</button>
+    ${next !== null ? `<button class="btn btn-primary" onclick="goToLec(${next})">Next: Lecture ${next} 📖 →</button>` : `<span></span>`}
   </div>`;
 
   main.innerHTML = html;
@@ -421,6 +640,23 @@ function answerQ(key, picked, correctIdx) {
   }
   save(KEYS.streak, state.streakData);
 
+  // XP + badges
+  if (correct) {
+    const parts = key.split("_");
+    const lecN = parseInt(parts[0]);
+    const qEntry = findQuestionByKey(key);
+    const diff = qEntry && qEntry.q && qEntry.q[4] === "advanced" ? "advanced" : "basic";
+    let gained = diff === "advanced" ? 10 : 5;
+    gained += 3; // first-attempt bonus (answers are one-shot)
+    addXP(gained);
+    awardBadge("first_correct");
+    if (state.streakData.current === 10) awardBadge("on_fire");
+    // perfectionist: all answered for this lecture and 100%
+    const ls = lectureStats(lecN);
+    if (ls.total > 0 && ls.answered === ls.total && ls.correct === ls.total && ls.total >= 5) awardBadge("sharpshooter");
+    checkMastery(lecN);
+  }
+
   bumpDaily();
 
   renderMain();
@@ -478,6 +714,7 @@ function goToLec(n) {
   save(KEYS.currentLec, n);
   state.reviewIncorrectMode = false;
   state.reviewFlaggedMode = false;
+  state.viewMode = "learn";
   updateReviewButtons();
   renderMain();
   renderSidebar();
@@ -1248,6 +1485,7 @@ function fastNext() {
 
 function endFast() {
   if (FAST.timer) { clearInterval(FAST.timer); FAST.timer = null; }
+  if (FAST.answeredCount > 0) { awardBadge("speed_demon"); addXP(FAST.correctCount * 2); }
   document.getElementById("fast-timer-bar").style.display = "none";
   document.getElementById("fast-hud").style.display = "flex";
   const pct = FAST.answeredCount === 0 ? 0 : Math.round(100 * FAST.correctCount / FAST.answeredCount);
