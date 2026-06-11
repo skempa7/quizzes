@@ -588,24 +588,44 @@ function splitMustLead(s){
   if (m) return [m[1].replace(/[.:]\s*$/, "").trim(), m[2].trim(), ". "];
   return [null, s, ""];
 }
-function proseHTML(text, pid){
+function proseHTML(text, pid, extra){
   const a = pid ? ` data-pb="${pid}"` : "";
   const [lead, body] = splitLead(text);
-  if (lead) return `<p class="rc-p"${a}><strong class="rc-lead">${esc(lead)}.</strong> ${emphEponyms(esc(body))}</p>`;
-  return `<p class="rc-p"${a}>${emphEponyms(esc(text))}</p>`;
+  if (lead) return `<p class="rc-p"${a}><strong class="rc-lead">${esc(lead)}.</strong> ${emphEponyms(esc(body))}${extra||""}</p>`;
+  return `<p class="rc-p"${a}>${emphEponyms(esc(text))}${extra||""}</p>`;
+}
+// terse "point of information" lines (slide-caption style) vs flowing prose
+function isPoint(text){
+  const t = String(text).trim();
+  if (t.length > 140) return false;
+  if ((t.match(/[.!?]/g) || []).length > 1) return false;     // more than one sentence = prose
+  if (/^[A-Z]{3,}\b/.test(t)) return false;                   // ALL-CAPS lead = prose section
+  return /\s[—–]\s/.test(t.slice(0, 80))                      // "Topic — detail"
+      || /^[A-Z][^.!?]{3,55}:\s+\S/.test(t)                   // "Topic: detail"
+      || t.split(/\s+/).length <= 13;                         // very short clause
+}
+function pointHTML(text, pid, extra){
+  const a = pid ? ` data-pb="${pid}"` : "";
+  const [lead, body] = splitLead(text);
+  const inner = lead ? `<strong>${esc(lead)}:</strong> ${emphEponyms(esc(body))}` : emphEponyms(esc(text));
+  return `<p class="rc-point"${a}>${inner}${extra||""}</p>`;
 }
 function noteHTML(b, extra, pid){
   const m = NOTE_META[b.t];   // cls: key | pearl | trap | confusion | cue
   const a = pid ? ` data-pb="${pid}"` : "";
   return `<p class="rc-p rc-c-${m.cls}"${a}>${emphEponyms(esc(b.x))}${extra||""}</p>`;
 }
-// curated "jump to the exact lecture slide" button (high-yield concepts only)
+// small "jump to the matching slide" button (broad coverage)
 function slideJumpBtn(n, jkey){
   const sj = (typeof SLIDE_JUMPS !== "undefined") ? SLIDE_JUMPS[n] : null;
   const s  = (typeof SLIDES !== "undefined") ? SLIDES[n] : null;
   if (!sj || !s || !sj[jkey]) return "";
   const pg = sj[jkey];
-  return ` <button class="slide-jump" onclick="event.stopPropagation(); openLightbox('${s.dir}',${s.count},${pg})" title="Show the lecture slide for this concept">📑 Slide</button>`;
+  return ` <button class="slide-jump" onclick="event.stopPropagation(); openLightbox('${s.dir}',${s.count},${pg})" title="Show the matching lecture slide">📑 Slide ${pg}</button>`;
+}
+// strict embed tier → page number for an inline thumbnail (highest-yield only)
+function slideEmbedPage(n, jkey){
+  return (typeof SLIDE_EMBED !== "undefined" && SLIDE_EMBED[n] && SLIDE_EMBED[n][jkey]) || null;
 }
 
 // ---- flashcards (generated Q&A; fall back to label/fact cues) ----
@@ -617,10 +637,10 @@ function fcLookup(n){
   }
   return FLASHCARDS[n]._idx;
 }
-function flashcardHTML(n, key, fbFront, fbBack){
+function flashcardHTML(n, key, fbFront, fbBack, backOverride){
   const idx = fcLookup(n); const c = idx && idx[key];
   const front = c ? c.front : fbFront;
-  const back  = c ? c.back  : fbBack;
+  const back  = backOverride || (c ? c.back : fbBack);   // doc's ReClaude A wins when provided
   const on = state.cqReveal[key] ? " flipped" : "";
   return `<div class="fc${on}" data-key="${key}" onclick="flipCard('${key}',this)">
     <div class="fc-inner">
@@ -653,6 +673,9 @@ function renderChapterContent(n, losIds){
     const dk = `${n}_${id}`;
     if (typeof DIAGRAMS !== "undefined" && DIAGRAMS[dk]) body += `<div class="rc-diagram">${DIAGRAMS[dk]}</div>`;
     let topic = chapterTitleFromLO(lo) || "";
+    // doc's ReClaude answers (rendered as prose) → fold into the matching q flashcard's back
+    const recAns = blocks.filter(b => b.t === "p" && /^ReClaude A\s*:/.test(b.x)).map(b => b.x.replace(/^ReClaude A\s*:?\s*/, "").trim());
+    let qIdx = 0;
     blocks.forEach((b, bi) => {
       const pid = `${n}_${lo.id}_${bi}`;
       if (b.t === "cq"){
@@ -662,14 +685,17 @@ function renderChapterContent(n, losIds){
           cards.push(flashcardHTML(n, key, topic ? `${topic} — ${pr || "recall this"}` : (pr || "Recall this"), an));
         });
       } else if (b.t === "q"){
-        cards.push(flashcardHTML(n, `${n}_${lo.id}_q${bi}`, b.x, "Think it through — the reasoning is in this section."));
+        cards.push(flashcardHTML(n, `${n}_${lo.id}_q${bi}`, b.x, "Think it through — the reasoning is in this section.", recAns[qIdx++] || null));
       } else if (b.t === "p"){
-        const [lead] = splitLead(b.x); if (lead) topic = lead; body += proseHTML(b.x, pid);
+        if (/^ReClaude A\s*:/.test(b.x)) return;   // answer folded into its flashcard — don't render as prose
+        const sb = slideJumpBtn(n, `${lo.id}_${bi}`);
+        if (isPoint(b.x)) { body += pointHTML(b.x, pid, sb); }
+        else { const [lead] = splitLead(b.x); if (lead) topic = lead; body += proseHTML(b.x, pid, sb); }
       } else if (NOTE_META[b.t]){
-        const jkey = b.t === "key" ? `key_${lo.id}_${bi}` : null;
-        const pg = jkey ? slidePageFor(n, jkey) : null;
-        if (pg) body += `<div class="rc-para-slide" data-pb="${pid}">${noteHTML(b, "", null)}${inlineSlideHTML(n, pg)}</div>`;
-        else    body += noteHTML(b, "", pid);
+        const ekey = `${lo.id}_${bi}`;
+        const epg = b.t === "key" ? slideEmbedPage(n, ekey) : null;
+        if (epg) body += `<div class="rc-para-slide" data-pb="${pid}">${noteHTML(b, "", null)}${inlineSlideHTML(n, epg)}</div>`;
+        else     body += noteHTML(b, slideJumpBtn(n, ekey), pid);
       } else body += proseHTML(b.x, pid);
     });
   });
@@ -1954,7 +1980,7 @@ function ttsChunks(n){
   getChapters(n).forEach(ch=>{
     if(ch.title) out.push(`Next. ${cleanForSpeech(ch.title)}.`);
     ch.los.forEach(id=>{ const lo=loById(n,id); if(!lo) return;
-      (lo.blocks||[]).forEach(b=>{ if(b.t==="p"||b.t==="key"||b.t==="pearl") out.push(cleanForSpeech(b.x)); });
+      (lo.blocks||[]).forEach(b=>{ if((b.t==="p"||b.t==="key"||b.t==="pearl") && !/^ReClaude A\s*:/.test(b.x)) out.push(cleanForSpeech(b.x)); });
     });
   });
   // split into sentence-sized utterances for natural pacing
