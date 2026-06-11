@@ -238,7 +238,11 @@ async function doLink(btn){
 }
 function doUnlink(){ syncUnlink(); renderSyncBody(); updateSyncUI(); showToast("Unlinked — this device is local-only again"); }
 async function doSyncNow(btn){ if(btn){ btn.disabled=true; btn.textContent="Syncing…"; } await syncPush(); if(btn){ btn.disabled=false; btn.textContent="⟳ Sync now"; } renderSyncBody(); showToast("Synced ✓"); }
-function updateSyncUI(){ const b=document.getElementById("btn-sync"); if(b) b.textContent=isSynced()?"🔄 Sync · on":"🔄 Sync across devices"; const m=document.getElementById("sync-modal"); if(m && m.classList.contains("show")) renderSyncBody(); }
+function updateSyncUI(){
+  const b=document.getElementById("btn-sync"); if(b) b.textContent=isSynced()?"🔄 Sync · on":"🔄 Sync across devices";
+  const ind=document.getElementById("sync-ind"); if(ind) ind.style.display = isSynced() ? "" : "none";
+  const m=document.getElementById("sync-modal"); if(m && m.classList.contains("show")) renderSyncBody();
+}
 
 function todayStr() {
   const d = new Date();
