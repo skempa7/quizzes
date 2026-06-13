@@ -33,6 +33,7 @@ const KEYS = {
   markStar: SUBJ + "_markstar_v1",   // { anchorKey: {lec, ch, text} } ⭐ important tags
   bookmarks: SUBJ + "_bookmarks_v1", // { lec: {ci, label, ts} } 🔖 resume points
   notes: SUBJ + "_notes_v1",         // { lec: [ {id, text, ts} ] } freeform notes
+  tomb: SUBJ + "_tomb_v1",           // { id: ts } deleted highlight/note ids — so deletions survive a cloud merge
   railCollapsed: SUBJ + "_rail_v1",
   notesOpen: SUBJ + "_notesopen_v1",
   activity: SUBJ + "_activity_v1"    // { "YYYY-MM-DD": xpEarned } for the heatmap
@@ -68,6 +69,7 @@ const state = {
   markStar: load(KEYS.markStar, {}),
   bookmarks: load(KEYS.bookmarks, {}), // { lec: {ci, label, ts} }
   notes: load(KEYS.notes, {}),         // { lec: [ {id, text, ts} ] }
+  tomb: load(KEYS.tomb, {}),           // { id: ts } deleted-annotation tombstones (for sync)
   activity: load(KEYS.activity, {}),   // { "YYYY-MM-DD": xpEarned }
   railCollapsed: load(KEYS.railCollapsed, false),
   notesOpen: load(KEYS.notesOpen, false),
@@ -166,12 +168,24 @@ function _mergeVal(k,a,b){
   if(k.includes("_streak_")) return { current:Math.max(a.current||0,b.current||0), highest:Math.max(a.highest||0,b.highest||0) };
   if(k.includes("_daily_")) return ((a.date||"")>=(b.date||"")) ? a : b;
   if(k.includes("_answers_")) return _mergeAnswers(a,b);
+  if(k.includes("_tomb_v1")) return _numMap(a,b);   // union deleted-id sets (keep latest ts)
   if(k.includes("_hl_v1") || k.includes("_notes_v1")) return _mergeListMap(a,b);
   if(k.includes("_bookmarks_")) return _mergeBookmarks(a,b);
   if(typeof a==="object" && typeof b==="object" && !Array.isArray(a)) return Object.assign({}, b, a); // union of maps (local wins ties)
   return a;
 }
-function mergeBundles(local, cloud){ const o=Object.assign({},local); for(const k in cloud) o[k]=(k in local)?_mergeVal(k,local[k],cloud[k]):cloud[k]; return o; }
+function mergeBundles(local, cloud){ const o=Object.assign({},local); for(const k in cloud) o[k]=(k in local)?_mergeVal(k,local[k],cloud[k]):cloud[k]; _applyTombstones(o); return o; }
+// After union-merging, drop any highlight/note whose id was deleted on any device.
+// Safe because annoId() ids are never reused, so a tombstone can only kill the exact item that was deleted.
+function _applyTombstones(o){
+  let tomb=null; for(const k in o){ if(k.endsWith("_tomb_v1")){ tomb=o[k]||{}; break; } }
+  if(!tomb) return;
+  for(const k in o){
+    if(!(k.endsWith("_hl_v1") || k.endsWith("_notes_v1"))) continue;
+    const m=o[k]; if(!m || typeof m!=="object") continue;
+    for(const lec in m){ if(Array.isArray(m[lec])) m[lec]=m[lec].filter(x => !(x && x.id && tomb[x.id])); }
+  }
+}
 
 // ---- flows ----
 async function syncLink(code){
@@ -205,7 +219,8 @@ async function syncPullOnLoad(){
     if(!cloud){ await _cloudPut(code, gatherLocal()); return; }
     const local=gatherLocal(), merged=mergeBundles(local, cloud);
     if(JSON.stringify(merged)!==JSON.stringify(local)){ applyBundle(merged); await _cloudPut(code, merged); location.reload(); }
-    else { localStorage.setItem(SYNC_AT_KEY, JSON.stringify(Date.now())); updateSyncUI(); }
+    else { if(JSON.stringify(merged)!==JSON.stringify(cloud)){ try{ await _cloudPut(code, merged); }catch(e){} }  // push local deletions (tombstones) the cloud hasn't seen yet
+           localStorage.setItem(SYNC_AT_KEY, JSON.stringify(Date.now())); updateSyncUI(); }
   }catch(e){}
 }
 // ---- sync UI (⋯ → Sync across devices) ----
@@ -2788,6 +2803,7 @@ function onReadingClick(e){
   if (!m) return;
   const id = m.dataset.annoId, n = state.currentLec;
   state.hl[n] = (state.hl[n] || []).filter(a => a.id !== id);
+  if (id){ state.tomb[id] = Date.now(); save(KEYS.tomb, state.tomb); }  // tombstone so the delete survives a cloud merge
   save(KEYS.hl, state.hl);
   const parent = m.parentNode;
   while (m.firstChild) parent.insertBefore(m.firstChild, m);
@@ -3032,6 +3048,7 @@ function addNoteFromInput(){
 }
 function removeNote(n, id){
   state.notes[n] = (state.notes[n] || []).filter(x => x.id !== id);
+  if (id){ state.tomb[id] = Date.now(); save(KEYS.tomb, state.tomb); }  // tombstone so the delete survives a cloud merge
   save(KEYS.notes, state.notes); renderNotesPanel();
 }
 function wireNoteDrop(){
