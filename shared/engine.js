@@ -422,8 +422,8 @@ function renderRSidebar() {
 
     <div class="stat-card">
       <div class="stat-label">Progress</div>
-      <div class="stat-row"><span class="label">📖 Lectures read</span><span class="val">${readCount}/30</span></div>
-      <div class="stat-row"><span class="label">★ Lectures mastered</span><span class="val">${masterCount}/30</span></div>
+      <div class="stat-row"><span class="label">📖 Lectures read</span><span class="val">${readCount}/${QUIZ.length}</span></div>
+      <div class="stat-row"><span class="label">★ Lectures mastered</span><span class="val">${masterCount}/${QUIZ.length}</span></div>
     </div>
 
     <div class="stat-card">
@@ -535,9 +535,9 @@ const BADGES = {
   on_fire:       "🔥 On Fire — a 10-answer streak",
   sharpshooter:  "🎯 Sharpshooter — 100% on a lecture",
   lecture_master:"🏅 Lecture Master — mastered a lecture",
-  half_read:     "📚 Halfway There — read 15 lectures",
-  well_read:     "🎓 Well Read — read all 30 lectures",
-  completionist: "👑 Completionist — mastered all 30 lectures",
+  half_read:     "📚 Halfway There — read half the lectures",
+  well_read:     "🎓 Well Read — read all the lectures",
+  completionist: "👑 Completionist — mastered all the lectures",
   speed_demon:   "⚡ Speed Demon — finished a Fast Mode round"
 };
 function awardBadge(id) {
@@ -569,8 +569,8 @@ function markRead(n) {
     addXP(20);
     awardBadge("bookworm");
     const readCount = Object.keys(state.read).filter(k => state.read[k]).length;
-    if (readCount >= 15) awardBadge("half_read");
-    if (readCount >= 30) awardBadge("well_read");
+    if (readCount >= Math.max(1, Math.floor(QUIZ.length / 2))) awardBadge("half_read");
+    if (readCount >= QUIZ.length) awardBadge("well_read");
   }
 }
 function setView(mode) {
@@ -2599,8 +2599,8 @@ function renderDashboard(){
       <div class="dash-hero-heat">${renderHeatmap()}</div>
     </div>
     <div class="dash-stats">
-      <div class="dstat"><div class="dstat-num">${readCount}<span>/30</span></div><div class="dstat-lab">📖 Read</div></div>
-      <div class="dstat"><div class="dstat-num">${masterCount}<span>/30</span></div><div class="dstat-lab">★ Mastered</div></div>
+      <div class="dstat"><div class="dstat-num">${readCount}<span>/${QUIZ.length}</span></div><div class="dstat-lab">📖 Read</div></div>
+      <div class="dstat"><div class="dstat-num">${masterCount}<span>/${QUIZ.length}</span></div><div class="dstat-lab">★ Mastered</div></div>
       <div class="dstat"><div class="dstat-num">${o.answered}</div><div class="dstat-lab">Answered</div></div>
       <div class="dstat"><div class="dstat-num">${o.answered?acc+"%":"—"}</div><div class="dstat-lab">Accuracy</div></div>
       <div class="dstat"><div class="dstat-num">${state.streakData.current} 🔥</div><div class="dstat-lab">Streak</div></div>
