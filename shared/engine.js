@@ -27,6 +27,7 @@ const KEYS = {
   conceptFlag: SUBJ + "_cflag_v1",
   recall: SUBJ + "_recall_v1",
   cqReveal: SUBJ + "_cqreveal_v1",   // { revealKey: true } — drives reading progress
+  srDone: SUBJ + "_srdone_v1",       // { masterCardKey: true } — Master "Got it" spaced-rep buckets
   hl: SUBJ + "_hl_v1",               // { lec: [ {ch, text, color} ] } highlights
   markReview: SUBJ + "_markrev_v1",  // { anchorKey: {lec, ch, text} } ⚠️ review-more tags
   markStar: SUBJ + "_markstar_v1",   // { anchorKey: {lec, ch, text} } ⭐ important tags
@@ -60,6 +61,8 @@ const state = {
   conceptFlag: load(KEYS.conceptFlag, {}),  // { "lec_lo_bi": true }
   recallMode: load(KEYS.recall, false),
   cqReveal: load(KEYS.cqReveal, {}),   // { revealKey: true }
+  srDone: load(KEYS.srDone, {}),       // { masterCardKey: true } — Master "Got it"
+  masterAllLec: false,                 // Master cross-lecture review toggle (runtime only)
   hl: load(KEYS.hl, {}),               // { lec: [ {ch, text, color} ] }
   markReview: load(KEYS.markReview, {}),
   markStar: load(KEYS.markStar, {}),
@@ -477,8 +480,10 @@ function renderMain() {
   if (state.reviewFlaggedMode) return renderReviewFlagged();
   if (state.reviewConceptsMode) return renderReviewConcepts();
   if (state.viewMode === "dashboard") return renderDashboard();
-  if (state.viewMode === "learn") return renderLearnView();
+  if (state.viewMode === "quickies") return renderQuickiesView();
+  if (state.viewMode === "core" || state.viewMode === "learn") return renderLearnView();
   if (state.viewMode === "master") return renderMasterView();
+  // "preclaude" (and legacy "practice") → the question view
   return renderLecture();
 }
 
@@ -570,6 +575,8 @@ function markRead(n) {
 }
 function setView(mode) {
   if (typeof stopTTS === "function") stopTTS();
+  if (mode === "learn") mode = "core";          // legacy aliases → new per-lecture step names
+  if (mode === "practice") mode = "preclaude";
   state.viewMode = mode;
   renderMain(); renderSidebar(); renderRSidebar();
   refreshNotesIfOpen();
@@ -587,19 +594,37 @@ function burstXP(text) {
 
 function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 
+// Which per-lecture steps are "done" (drives the stepper ticks) — derived, no new state.
+function lectureStepDone(n) {
+  const rs = lectureReadingStats(n);
+  const st = lectureStats(n);
+  const preDone  = st.total > 0 && st.answered > 0;
+  const coreDone = rs.total > 0 ? rs.done === rs.total : !!state.read[n];
+  return { quickies: preDone || coreDone || !!state.read[n], preclaude: preDone, core: coreDone };
+}
+
+// Ordered (not locked) per-lecture stepper: ① Quickies → ② Preclaude → ③ Core+Concludes, + 🎯 Master.
 function lectureModeBar(n) {
-  const learnActive = state.viewMode === "learn" ? "active" : "";
-  const practiceActive = state.viewMode === "practice" ? "active" : "";
-  const masterActive = state.viewMode === "master" ? "active" : "";
+  const step = state.viewMode === "learn" ? "core"
+             : state.viewMode === "practice" ? "preclaude"
+             : state.viewMode;
   const weak = masterWeakCount(n);
-  const tools = state.viewMode === "learn" ? `
-    <div class="mode-tools">
+  const done = lectureStepDone(n);
+  const dot = (k, label, icon) => {
+    const active = step === k ? " active" : "";
+    const ok = done[k] ? " done" : "";
+    return `<button class="step-btn${active}${ok}" onclick="setView('${k}')">
+      <span class="step-ic">${icon}</span><span class="step-lbl">${label}</span>${done[k] ? '<span class="step-tick">✓</span>' : ""}</button>`;
+  };
+  const tools = step === "core" ? `<div class="mode-tools">
       <button class="tool-btn" id="tts-btn" onclick="toggleTTS()" title="Listen">🔊 Listen</button>
-    </div>` : `<div class="mode-status">${lectureMastered(n)?'<span class="mode-dot master">★ mastered</span>':(state.read[n]?'<span class="mode-dot done">✓ read</span>':'')}</div>`;
-  return `<div class="mode-bar">
-    <button class="mode-btn ${learnActive}" onclick="setView('learn')">📖 Learn</button>
-    <button class="mode-btn ${practiceActive}" onclick="setView('practice')">✍️ Practice</button>
-    <button class="mode-btn ${masterActive}" onclick="setView('master')">🎯 Master${weak?`<span class="mode-badge">${weak}</span>`:""}</button>
+    </div>` : "";
+  return `<div class="step-bar">
+    ${dot("quickies", "Quickies", "⚡")}<span class="step-sep">→</span>
+    ${dot("preclaude", "Preclaude", "✍️")}<span class="step-sep">→</span>
+    ${dot("core", "Core", "📖")}
+    <button class="step-btn master${step === "master" ? " active" : ""}" onclick="setView('master')">
+      <span class="step-ic">🎯</span><span class="step-lbl">Master</span>${weak ? `<span class="step-badge">${weak}</span>` : ""}</button>
     ${tools}
   </div>`;
 }
@@ -876,18 +901,74 @@ function renderChapterContent(n, losIds){
   return html;
 }
 
+// ---- ① Quickies step (TLDCLAUDE standfirst + must-knows; no Claude Time table) ----
+function mustKnowsHTML(n){
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  if (!c || !c.mustKnows || !c.mustKnows.length) return "";
+  const lis = c.mustKnows.map((m, i) => {
+    const [lead, rest, sep] = splitMustLead(m);
+    return `<li>${lead ? `<strong>${esc(lead)}</strong>${sep}` : ""}${emphEponyms(esc(rest))}${slideJumpBtn(n, `mk_${i}`)}</li>`;
+  }).join("");
+  return `<div class="rc-mustknows"><div class="rc-mk-head">⭐ Must-knows <span>— what your professors stress</span></div><ul>${lis}</ul></div>`;
+}
+
+// Tiny delta-doc page-reference chip (populated by the parser into LECTURE_CONTENT[n].pages; "" if absent).
+function docRefChip(n, section){
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  const p = c && c.pages && c.pages[section];
+  return p ? `<span class="doc-ref" title="Delta doc page ${p} — pick up here on paper">📄 p.${p}</span>` : "";
+}
+
+// Prev/next-lecture nav, shared by the step views.
+function lecNavBottom(n){
+  const idx = QUIZ.findIndex(L => L[0] === n);
+  if (idx < 0) return `<div class="nav-bottom"></div>`;
+  const prev = idx > 0 ? QUIZ[idx - 1][0] : null;
+  const next = idx < QUIZ.length - 1 ? QUIZ[idx + 1][0] : null;
+  return `<div class="nav-bottom">
+    ${prev !== null ? `<button class="btn" onclick="goToLec(${prev})">← Lecture ${prev}</button>` : `<span></span>`}
+    ${next !== null ? `<button class="btn" onclick="goToLec(${next})">Lecture ${next} →</button>` : `<span></span>`}
+  </div>`;
+}
+
+// Claude Concludes wrap-up (appended to the Core step; "" if the doc had none extracted).
+function concludesHTML(n){
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  if (!c || !c.concludes) return "";
+  const items = Array.isArray(c.concludes) ? c.concludes : [{ t: "p", x: String(c.concludes) }];
+  const body = items.map(b => `<p class="cc-concludes-item">${emphEponyms(esc(b.x != null ? b.x : b))}</p>`).join("");
+  return `<div class="cc-concludes"><div class="cc-concludes-h">🏁 Claude Concludes — the wrap-up</div>${body}</div>`;
+}
+
+function renderQuickiesView(){
+  showTray(false); hideAnnoPopup();
+  const main = document.getElementById("main");
+  const lec = getLecture(state.currentLec);
+  if (!lec) { main.innerHTML = "<p>Lecture not found.</p>"; return; }
+  const [n, title] = lec;
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  const prof = c && c.prof ? ` · ${c.prof}` : "";
+  const tldr = c && c.tldr ? `<p class="rc-standfirst">${emphEponyms(esc(c.tldr))}</p>` : "";
+  const mk = mustKnowsHTML(n);
+  const body = (tldr || mk) ? `${tldr}${mk}`
+    : `<div class="empty-state"><div class="icon">⚡</div><h3>Quickies coming soon</h3><p>Jump to the Preclaude questions or the reading.</p></div>`;
+  main.innerHTML = `
+    <div class="lecture-header"><span class="lec-pill">Lecture ${n}${prof}</span>${docRefChip(n, "quickies")}<h2>${esc(title)}</h2></div>
+    ${lectureModeBar(n)}
+    <div class="step-lead">⚡ <strong>Claude Quickies</strong> — the high-yield orientation before you dig in.</div>
+    <div class="reading" id="reading">${body}</div>
+    <div class="learn-cta">
+      <div class="learn-cta-text">Oriented? Test yourself <em>cold</em> with the Preclaude questions.</div>
+      <button class="btn-start-practice" onclick="setView('preclaude')">✍️ Start Preclaude →</button>
+    </div>
+    ${lecNavBottom(n)}`;
+  reapplyAnnotations(n); bindReadingAnnotations(n); showTray(true);
+}
+
 function renderReadingContent(n){
   const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
   if (!c) return `<div class="empty-state"><div class="icon">📖</div><h3>Reading content coming soon</h3><p>Jump into the questions instead.</p></div>`;
-  let html = "";
-  if (c.tldr) html += `<p class="rc-standfirst">${emphEponyms(esc(c.tldr))}</p>`;
-  if (c.mustKnows && c.mustKnows.length){
-    const lis = c.mustKnows.map((m, i) => {
-      const [lead, rest, sep] = splitMustLead(m);
-      return `<li>${lead ? `<strong>${esc(lead)}</strong>${sep}` : ""}${emphEponyms(esc(rest))}${slideJumpBtn(n, `mk_${i}`)}</li>`;
-    }).join("");
-    html += `<div class="rc-mustknows"><div class="rc-mk-head">⭐ Must-knows <span>— what your professors stress</span></div><ul>${lis}</ul></div>`;
-  }
+  let html = "";   // ① Quickies now owns the TLDCLAUDE standfirst + must-knows
   const chapters = getChapters(n);
   const deck = (typeof SLIDES !== "undefined") ? SLIDES[n] : null;
   const usedSlides = new Set();
@@ -938,19 +1019,21 @@ function renderLearnView() {
 
   main.innerHTML = `
     <div class="lecture-header">
-      <span class="lec-pill">Lecture ${n}${prof}</span>
+      <span class="lec-pill">Lecture ${n}${prof}</span>${docRefChip(n, "core")}
       <h2>${esc(title)}</h2>
     </div>
     ${lectureModeBar(n)}
+    <div class="step-lead">📖 <strong>ClaudeCore + Concludes</strong> — the full treatment, then the wrap-up.</div>
     <div class="reading-prog">
       <div class="reading-prog-bar"><div class="reading-prog-fill" id="reading-prog-fill" style="width:${rs.pct}%"></div></div>
       <span class="reading-prog-txt" id="reading-prog-txt">${rs.total?`${rs.done}/${rs.total} revealed`:"Read through"}</span>
     </div>
     <div class="reading" id="reading">${renderReadingContent(n)}</div>
+    ${concludesHTML(n)}
     ${slidesPanelHTML(n)}
     <div class="learn-cta">
-      <div class="learn-cta-text">Done reading? Lock it in with ${qCount} practice question${qCount===1?"":"s"}.</div>
-      <button class="btn-start-practice" onclick="setView('practice')">✍️ Start Practice →</button>
+      <div class="learn-cta-text">That's the lecture. Lock in what you marked — drill it in Master.</div>
+      <button class="btn-start-practice" onclick="setView('master')">🎯 Go to Master →</button>
     </div>
     <div class="nav-bottom">
       ${prev !== null ? `<button class="btn" onclick="goToLec(${prev})">← Lecture ${prev}</button>` : `<span></span>`}
@@ -967,70 +1050,156 @@ function renderLearnView() {
 // =============================================================
 // MASTER — weak-spot drill (missed/flagged questions + ⚠️ review paragraphs)
 // =============================================================
-function masterWeakItems(n){
+// =============================================================
+// MASTER — adaptive review: flip cloze cards from your 🖊️ highlights + ⚠️ marks,
+// every CQ as click/swipe cloze, plus the missed/flagged practice drill.
+// =============================================================
+const _MC_STOP = new Set("the a an of to in is are was were be been being and or but for with as at by on from that this these those it its their your you we they he she them not no into within between across over under than then so such can may might must will would should could each per via both either neither also only just more most less least very much many few do does did has have had which who whom whose when where what why how".split(" "));
+function _mcStrip(s){ return String(s == null ? "" : s).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim(); }
+
+// Smart blank-picking: a number/threshold first, else an eponym/proper noun, else the longest content word.
+function pickBlank(raw){
+  const text = _mcStrip(raw);
+  const words = text.split(" ");
+  if (words.length < 4) return null;
+  let term = null;
+  const num = text.match(/[<>≤≥]?\s?\d[\d.,\/–-]*\s?(?:%|mmHg|mg\/dL|mg|mmol|mEq\/L|mL|mm|cm|kg|°C|hrs?|hours?|days?|weeks?)?/);
+  if (num && /\d/.test(num[0])) term = num[0].trim().replace(/[.,/–-]+$/, "");
+  if (!term){
+    const caps = words.map((w,i)=>({w,i})).filter(o => /^[A-Z][A-Za-z]{2,}('s)?$/.test(o.w) && (o.i>0 || /'s$/.test(o.w)) && !_MC_STOP.has(o.w.toLowerCase()));
+    if (caps.length) term = caps.sort((a,b)=>b.w.length-a.w.length)[0].w;
+  }
+  if (!term){
+    const cands = words.filter(w => { const c=w.replace(/[^A-Za-z-]/g,""); return c.length>4 && !_MC_STOP.has(c.toLowerCase()); });
+    if (cands.length) term = cands.sort((a,b)=>b.length-a.length)[0];
+  }
+  if (!term) return null;
+  const idx = text.indexOf(term);
+  if (idx < 0) return null;
+  return { pre: text.slice(0,idx), term: text.slice(idx, idx+term.length), post: text.slice(idx+term.length), full: text };
+}
+
+// Every CQ in a lecture (cq blocks, split on internal " CQ " separators).
+function lectureCQs(n){
+  const c = (typeof LECTURE_CONTENT !== "undefined") ? LECTURE_CONTENT[n] : null;
+  if (!c || !c.los) return [];
   const out = [];
-  const lec = getLecture(n); if (!lec) return out;
-  lec[2].forEach(lo => {
-    getEffectiveQuestions(n, lo[0]).forEach(qe => {
-      const a = state.answers[qe.key];
-      const wrong = a && a.correct === false;
-      const flagged = !!state.flagged[qe.key];
-      if (wrong || flagged) out.push({ type:"q", qe, lo: lo[0], reason: wrong ? "missed" : "flagged" });
-    });
-  });
-  Object.keys(state.markReview).forEach(pb => { const t = state.markReview[pb]; if (t.lec === n) out.push({ type:"para", pb, text: t.text }); });
-  (state.hl[n] || []).forEach(a => { if (a.type === "review") out.push({ type:"hl", id:a.id, ci:a.ci, text:a.text }); });
+  c.los.forEach(lo => (lo.blocks || []).forEach((b, bi) => {
+    if (b.t === "cq") cqItems(b.x).forEach((it, ii) => out.push({ text: it, lec: n, key: `mccq_${n}_${lo.id}_${bi}_${ii}` }));
+  }));
   return out;
 }
-function masterWeakCount(n){ return masterWeakItems(n).length; }
-function masterClearPara(pb){ removeParaTag("review", pb); setView("master"); showToast("Cleared ✓"); }
-function masterClearHl(id){ const n = state.currentLec; state.hl[n] = (state.hl[n] || []).filter(a => a.id !== id); save(KEYS.hl, state.hl); updateMarkupCount(); setView("master"); showToast("Cleared ✓"); }
+// 🖊️ highlights + ⚠️ cautions the student marked (text-selection + paragraph-level).
+function masterMarkItems(n){
+  const out = [];
+  (state.hl[n] || []).forEach(a => { if (a.type === "highlight" || a.type === "review") out.push({ kind: a.type, text: a.text, lec: n, key: `mchl_${n}_${a.id}` }); });
+  Object.keys(state.markReview || {}).forEach(pb => { const r = state.markReview[pb]; if (r && r.lec === n) out.push({ kind: "review", text: r.text, lec: n, key: `mcpb_${n}_${pb}` }); });
+  return out;
+}
+// Practice questions missed or flagged.
+function masterMissedFlagged(n){
+  const out = []; const lec = getLecture(n); if (!lec) return out;
+  lec[2].forEach(lo => getEffectiveQuestions(n, lo[0]).forEach(qe => {
+    const a = state.answers[qe.key]; const wrong = a && a.correct === false; const flagged = !!state.flagged[qe.key];
+    if (wrong || flagged) out.push({ qe, lo: lo[0], lec: n, reason: wrong ? "missed" : "flagged" });
+  }));
+  return out;
+}
+function masterWeakCount(n){ return masterMarkItems(n).length + masterMissedFlagged(n).length; }
+
+function mcReveal(el){
+  if (!el) return;
+  const now = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+  if (el._mcT && now - el._mcT < 350) return;   // ignore double-fire (swipe + the synthesized click)
+  el._mcT = now;
+  const on = el.classList.toggle("revealed");
+  el.setAttribute("aria-expanded", on ? "true" : "false");
+}
+function mcKey(ev, el){ if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); mcReveal(el); } }
+function masterGotIt(key, ev){ if (ev) ev.stopPropagation(); state.srDone[key] = true; save(KEYS.srDone, state.srDone); renderMasterView(); }
+function masterAgain(key, ev){ if (ev) ev.stopPropagation(); if (state.srDone[key]) { delete state.srDone[key]; save(KEYS.srDone, state.srDone); } renderMasterView(); }
+function toggleMasterAllLec(){ state.masterAllLec = !state.masterAllLec; renderMasterView(); }
+
+// One auto-flip cloze card from a highlight/caution.
+function masterFlipCard(item){
+  const { kind, text, key } = item;
+  const tag = kind === "review" ? "⚠️ Review" : "🖊️ Highlight";
+  const cls = kind === "review" ? "mc-review" : "mc-highlight";
+  const done = state.srDone[key] ? " mc-done" : "";
+  const bl = pickBlank(text);
+  let front, back;
+  if (bl){
+    front = `<span class="mc-cloze">${esc(bl.pre)}<span class="mc-blank" aria-label="hidden term">▢▢▢</span>${esc(bl.post)}</span>`;
+    back  = `${esc(bl.pre)}<strong class="mc-answer">${esc(bl.term)}</strong>${esc(bl.post)}`;
+  } else {
+    front = `<span class="mc-cloze mc-prompt">Recall this ${kind === "review" ? "review point" : "highlight"}…</span>`;
+    back  = esc(_mcStrip(text));
+  }
+  return `<div class="cc mc mc-card ${cls}${done}" data-key="${key}">
+    <div class="mc-card-body" role="button" tabindex="0" aria-expanded="false" onclick="mcReveal(this)" onkeydown="mcKey(event,this)">
+      <span class="cc-tag mc-tag">${tag}</span>
+      <div class="mc-face mc-front">${front}<span class="mc-hint">tap to reveal ⟲</span></div>
+      <div class="mc-face mc-back">${back}</div>
+    </div>
+    <div class="mc-foot">
+      <button class="cc-btn" onclick="masterAgain('${key}',event)">↻ Again</button>
+      <button class="cc-btn mc-got${state.srDone[key] ? " on" : ""}" onclick="masterGotIt('${key}',event)">✓ Got it</button>
+    </div>
+  </div>`;
+}
+// One CQ as a click/swipe-to-reveal cloze row.
+function masterClozeRow(item){
+  const bl = pickBlank(item.text); const full = _mcStrip(item.text);
+  let body;
+  if (bl){
+    body = `<span class="mc-row-q">${esc(bl.pre)}<span class="mc-blank" aria-label="hidden term">______</span><span class="mc-fill">${esc(bl.term)}</span>${esc(bl.post)}</span>`;
+  } else {
+    body = `<span class="mc-row-q">${esc(full)}</span>`;
+  }
+  return `<div class="mc-row" data-key="${item.key}" role="button" tabindex="0" aria-expanded="false" onclick="mcReveal(this)" onkeydown="mcKey(event,this)"><span class="mc-row-ic">CQ</span><span class="mc-row-body">${body}</span><span class="mc-row-hint">tap / swipe →</span></div>`;
+}
+
 function renderMasterView(){
   showTray(false); hideAnnoPopup();
   const main = document.getElementById("main");
   const lec = getLecture(state.currentLec);
   if (!lec) { main.innerHTML = "<p>Lecture not found.</p>"; return; }
   const [n, title] = lec;
-  const items = masterWeakItems(n);
-  const missed = items.filter(i => i.type==="q" && i.reason==="missed").length;
-  const flagged = items.filter(i => i.type==="q" && i.reason==="flagged").length;
-  const paras = items.filter(i => i.type==="para" || i.type==="hl").length;
+  const all = state.masterAllLec;
+  const lecs = all ? QUIZ.map(L => L[0]) : [n];
+  let marks = [], cqs = [], mf = [];
+  lecs.forEach(L => { marks = marks.concat(masterMarkItems(L)); cqs = cqs.concat(lectureCQs(L)); mf = mf.concat(masterMissedFlagged(L)); });
+  marks.sort((a, b) => (state.srDone[a.key] ? 1 : 0) - (state.srDone[b.key] ? 1 : 0));   // due cards first
+
   let html = `
-    <div class="lecture-header"><span class="lec-pill">Lecture ${n}</span><h2>${esc(title)}</h2></div>
+    <div class="lecture-header"><span class="lec-pill">Lecture ${n}</span>${docRefChip(n, "master")}<h2>${esc(title)}</h2></div>
     ${lectureModeBar(n)}
-    <div class="master-intro">
-      <div class="master-intro-h">🎯 Master · drill your weak spots</div>
-      <div class="master-intro-sub">Everything you got wrong, flagged, or marked ⚠️ to review — gathered here to drill until it sticks.</div>
+    <div class="step-lead">🎯 <strong>Master</strong> — drill what you marked and every CQ, until it sticks.</div>
+    <div class="master-toggle">
+      <button class="btn btn-small${all ? " btn-primary" : ""}" onclick="toggleMasterAllLec()">${all ? "📚 Reviewing all lectures" : "📖 This lecture only"}</button>
+      <span class="master-toggle-hint">${all ? "tap to focus on this lecture" : "tap to review the whole exam"}</span>
     </div>`;
-  if (!items.length){
-    html += `<div class="empty-state"><div class="icon">🎯</div><h3>No weak spots here yet</h3>
-      <p>Miss a practice question, flag one with ⚑, or drag ⚠️ onto a paragraph while reading — they'll collect here automatically.</p>
-      <button class="btn-start-practice" onclick="setView('practice')">✍️ Go practice →</button></div>`;
+
+  if (!marks.length && !cqs.length && !mf.length){
+    html += `<div class="empty-state"><div class="icon">🎯</div><h3>Nothing to drill yet</h3>
+      <p>🖊️ Highlight a key phrase or ⚠️ mark something to review while reading — it becomes an auto-flip card here. Every CQ shows up here too once a lecture has reading content.</p></div>`;
     main.innerHTML = html; return;
   }
-  html += `<div class="master-stats">
-    ${missed?`<span class="master-chip miss">✗ ${missed} missed</span>`:""}
-    ${flagged?`<span class="master-chip flag">⚑ ${flagged} flagged</span>`:""}
-    ${paras?`<span class="master-chip rev">⚠️ ${paras} to review</span>`:""}</div>`;
-  items.forEach(it => {
-    if (it.type === "q"){
-      html += `<div class="master-item"><div class="master-item-tag ${it.reason}">${it.reason==="missed"?"✗ You missed this":"⚑ Flagged"}</div>${renderQuestionCard(it.qe, n, it.lo)}</div>`;
-    } else if (it.type === "para"){
-      html += `<div class="master-item"><div class="master-item-tag rev">⚠️ Marked to review</div>
-        <div class="master-para">${esc(it.text)}</div>
-        <div class="master-para-actions">
-          <button class="btn btn-small" onclick="jumpToPara(${n},'${it.pb}',0)">Open in lecture</button>
-          <button class="btn-start-practice" onclick="masterClearPara('${it.pb}')">✓ Got it</button>
-        </div></div>`;
-    } else { // type "hl" — text selection marked ⚠️
-      html += `<div class="master-item"><div class="master-item-tag rev">⚠️ Highlighted to review</div>
-        <div class="master-para">${esc(it.text)}</div>
-        <div class="master-para-actions">
-          <button class="btn btn-small" onclick="jumpToMarkup(${n},${it.ci})">Open in lecture</button>
-          <button class="btn-start-practice" onclick="masterClearHl('${it.id}')">✓ Got it</button>
-        </div></div>`;
-    }
-  });
+
+  if (marks.length){
+    const due = marks.filter(m => !state.srDone[m.key]).length;
+    html += `<div class="mc-zone-h">🃏 Recall cards <span>— from your 🖊️ highlights & ⚠️ marks${due < marks.length ? ` · ${due} due` : ""}</span></div>
+      <div class="mc-grid">${marks.map(masterFlipCard).join("")}</div>`;
+  }
+  if (cqs.length){
+    html += `<div class="mc-zone-h">✦ Every CQ <span>— click / swipe to reveal the missing piece</span></div>
+      <div class="mc-cqs">${cqs.map(masterClozeRow).join("")}</div>`;
+  }
+  if (mf.length){
+    const missed = mf.filter(i => i.reason === "missed").length, flagged = mf.filter(i => i.reason === "flagged").length;
+    html += `<div class="mc-zone-h">✗ Missed & flagged questions <span>— ${missed} missed · ${flagged} flagged</span></div>`;
+    mf.forEach(it => { html += `<div class="master-item"><div class="master-item-tag ${it.reason}">${it.reason === "missed" ? "✗ You missed this" : "⚑ Flagged"}</div>${renderQuestionCard(it.qe, it.lec, it.lo)}</div>`; });
+  }
   main.innerHTML = html;
 }
 
@@ -1049,11 +1218,12 @@ function renderLecture() {
   const profTxt = cInfo && cInfo.prof ? ` · ${cInfo.prof}` : "";
   let html = `
     <div class="lecture-header">
-      <span class="lec-pill">Lecture ${n}${profTxt}</span>
+      <span class="lec-pill">Lecture ${n}${profTxt}</span>${docRefChip(n, "preclaude")}
       <h2>${title}</h2>
       <div class="sub">${los.length} learning objective${los.length === 1 ? "" : "s"}${accuracyText}</div>
     </div>
     ${lectureModeBar(n)}
+    <div class="step-lead">✍️ <strong>Preclaude</strong> — 20 questions to test yourself <em>before</em> the Core reading.</div>
     <div class="score-row">
       <div class="score-text">${stats.answered} / ${stats.total} answered</div>
       <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
@@ -1096,8 +1266,8 @@ function renderLecture() {
   const prev = QUIZ.findIndex(L => L[0] === n) > 0 ? QUIZ[QUIZ.findIndex(L => L[0] === n) - 1][0] : null;
   const next = QUIZ.findIndex(L => L[0] === n) < QUIZ.length - 1 ? QUIZ[QUIZ.findIndex(L => L[0] === n) + 1][0] : null;
   html += `<div class="nav-bottom">
-    <button class="btn" onclick="setView('learn')">📖 Back to reading</button>
-    ${next !== null ? `<button class="btn btn-primary" onclick="goToLec(${next})">Next: Lecture ${next} 📖 →</button>` : `<span></span>`}
+    <button class="btn" onclick="setView('quickies')">← ⚡ Quickies</button>
+    <button class="btn btn-primary" onclick="setView('core')">Continue to Core 📖 →</button>
   </div>`;
 
   main.innerHTML = html;
@@ -1302,7 +1472,7 @@ function goToLec(n) {
   state.reviewFlaggedMode = false;
   state.reviewConceptsMode = false;
   state.markupsMode = null;
-  state.viewMode = "learn";
+  state.viewMode = "quickies";   // a lecture now opens on ① Quickies (the doc's order)
   closeRail();
   updateReviewButtons();
   renderMain();
@@ -2760,7 +2930,7 @@ function renderMarkups(){
   const c = markupCounts();
   const tab = (k, ic, lbl) => `<button class="mk-tab ${state.markupsMode===k?'on':''}" onclick="openMarkups('${k}')">${ic} ${lbl} <span class="mk-tab-n">${c[k]||0}</span></button>`;
   let html = `<div class="review-banner"><div><h2>📌 My Markups</h2><div class="review-sub">Everything you've flagged while reading</div></div><button onclick="closeMarkups()">Exit</button></div>
-    <div class="mk-tabs">${tab("highlight","🖊️","Highlights")}${tab("review","⚠️","To review")}${tab("important","⭐","Important")}${tab("bookmark","🔖","Bookmarks")}</div>`;
+    <div class="mk-tabs">${tab("highlight","🖊️","Highlights")}${tab("review","⚠️","To review")}${tab("bookmark","🔖","Resume points")}</div>`;
   const items = markupItems(kind);
   if (!items.length){
     html += `<div class="empty-state"><div class="icon">${meta.icon}</div><h3>Nothing here yet</h3><p>Select text while reading and choose ${meta.icon} ${meta.label}, or drag the icon onto a chapter.</p></div>`;
@@ -2966,4 +3136,37 @@ updateRankChip();
   document.title = QUIZ_CONFIG.title + " — Study";
   var h = document.getElementById("quiz-title");
   if (h) h.textContent = QUIZ_CONFIG.title;
+})();
+
+// ============================================================
+// GESTURES — swipe-to-reveal (CQ cloze rows + flip cards) and
+// swipe between the ① Quickies → ② Preclaude → ③ Core steps.
+// One delegated handler, bound once. Touch only; clicks still work.
+// ============================================================
+(function () {
+  let x0 = null, y0 = null, tgt = null;
+  const STEPS = ["quickies", "preclaude", "core"];
+  document.addEventListener("touchstart", e => {
+    const t = e.changedTouches[0]; x0 = t.clientX; y0 = t.clientY; tgt = e.target;
+  }, { passive: true });
+  document.addEventListener("touchend", e => {
+    if (x0 == null) return;
+    const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0;
+    const ax = Math.abs(dx), ay = Math.abs(dy);
+    x0 = y0 = null;
+    if (ax < 45 || ax < ay * 1.5) return;                 // require a clear horizontal swipe
+    let node = tgt; if (node && node.nodeType === 3) node = node.parentElement;  // text node → element
+    const el = (node && node.closest) ? node : null;
+    if (el) {
+      const row = el.closest(".mc-row");
+      if (row) { if (typeof mcReveal === "function") mcReveal(row); return; }     // swipe a CQ row → reveal
+      const card = el.closest(".mc-card-body");
+      if (card) { if (typeof mcReveal === "function") mcReveal(card); return; }   // swipe a card → reveal
+      if (el.closest(".slides-strip, .mc-cqs, .mc-grid, .question-card")) return; // leave handled/scroll zones
+    }
+    const i = STEPS.indexOf(state.viewMode);                                     // else navigate steps
+    if (i < 0) return;
+    const ni = dx < 0 ? i + 1 : i - 1;
+    if (ni >= 0 && ni < STEPS.length && typeof setView === "function") setView(STEPS[ni]);
+  }, { passive: true });
 })();

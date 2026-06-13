@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../../shared/styles.css?v=20">
+<link rel="stylesheet" href="../../shared/styles.css?v=22">
 </head>
 <body>
 
@@ -60,7 +60,6 @@
       <div class="np-tabs">
         <button class="np-tab on" data-tab="notes" onclick="setNotesTab('notes')">Notes</button>
         <button class="np-tab" data-tab="highlight" onclick="setNotesTab('highlight')">Highlights</button>
-        <button class="np-tab" data-tab="important" onclick="setNotesTab('important')">Important</button>
         <button class="np-tab" data-tab="review" onclick="setNotesTab('review')">Review</button>
       </div>
       <button class="np-close" onclick="toggleNotes()" title="Close">✕</button>
@@ -134,17 +133,15 @@
 
 <!-- Annotation selection popup -->
 <div class="anno-popup" id="anno-popup" style="display:none">
-  <button onclick="annoFromSelection('highlight')" title="Highlight">🖊️</button>
-  <button onclick="annoFromSelection('review')" title="Mark to review">⚠️</button>
-  <button onclick="annoFromSelection('important')" title="Mark important">⭐</button>
-  <button onclick="annoFromSelection('bookmark')" title="Bookmark this spot">🔖</button>
+  <button onclick="annoFromSelection('highlight')" title="Highlight — make a recall card">🖊️</button>
+  <button onclick="annoFromSelection('review')" title="Mark to review — drill it in Master">⚠️</button>
+  <button onclick="annoFromSelection('bookmark')" title="Resume here">🔖</button>
 </div>
 
 <!-- Draggable annotation tray (Learn view) -->
 <div class="anno-tray" id="anno-tray" style="display:none">
-  <div class="anno-tray-chip" draggable="true" data-type="important" title="Drag onto a paragraph: mark important">⭐</div>
   <div class="anno-tray-chip" draggable="true" data-type="review" title="Drag onto a paragraph: mark to review">⚠️</div>
-  <div class="anno-tray-chip" draggable="true" data-type="bookmark" title="Drag onto a paragraph: bookmark">🔖</div>
+  <div class="anno-tray-chip" draggable="true" data-type="bookmark" title="Drag onto a paragraph: resume here">🔖</div>
 </div>
 
 <!-- Mini audio player -->
@@ -165,7 +162,7 @@
 <div class="toast" id="toast"></div>
 
 <script src="content.js?v=7"></script>
-<script src="../../shared/engine.js?v=15"></script>
+<script src="../../shared/engine.js?v=17"></script>
 
 </body>
 </html>

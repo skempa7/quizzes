@@ -2457,3 +2457,100 @@ main { max-width: 1120px; padding-right: 56px; }
 .sync-link-btn { width: 100%; margin-top: 14px; border: none; cursor: pointer; }
 .sync-note { font-size: .78rem; color: var(--muted); line-height: 1.55; margin-top: 12px; }
 .sync-msg { color: var(--wrong); font-size: .84rem; margin-top: 8px; min-height: 1em; }
+
+/* =============================================================
+   PER-LECTURE STEPPER (① Quickies → ② Preclaude → ③ Core+Concludes) + step leads,
+   tiny doc-page refs, and the Claude Concludes wrap-up.
+   ============================================================= */
+.step-bar {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+  margin: 4px 0 18px; padding: 8px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+}
+.step-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 8px 14px; border: 1px solid transparent; border-radius: var(--radius-sm);
+  background: transparent; color: var(--text-soft); font-weight: 700; font-size: 0.9rem;
+  cursor: pointer; position: relative; transition: background .15s, color .15s, border-color .15s;
+}
+.step-btn:hover { background: var(--surface-2); color: var(--text); }
+.step-btn.active { background: var(--primary); color: #fff; box-shadow: var(--shadow-sm); }
+.step-btn.done:not(.active) { color: var(--text); }
+.step-btn .step-ic { font-size: 1rem; }
+.step-btn .step-tick { color: var(--correct); font-weight: 800; margin-left: 2px; }
+.step-btn.active .step-tick { color: #fff; }
+.step-btn.master { margin-left: auto; }
+.step-btn.master.active { background: var(--warning); color: #1a1300; }
+.step-badge {
+  background: var(--warning); color: #1a1300; font-size: 0.7rem; font-weight: 800;
+  min-width: 18px; height: 18px; padding: 0 5px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.step-sep { color: var(--muted); font-weight: 700; opacity: .55; }
+.step-lead {
+  margin: 0 0 18px; padding: 10px 14px; font-size: 0.9rem; color: var(--text-soft);
+  background: var(--primary-light); border-left: 3px solid var(--primary);
+  border-radius: var(--radius-sm);
+}
+.step-lead strong { color: var(--text); }
+.doc-ref {
+  display: inline-block; margin-left: 8px; vertical-align: middle;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: .02em;
+  color: var(--muted); background: var(--surface-2);
+  border: 1px solid var(--border); border-radius: 999px; padding: 1px 7px; cursor: default;
+}
+.cc-concludes {
+  margin: 22px 0 8px; padding: 16px 18px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-left: 3px solid var(--primary); border-radius: var(--radius-md);
+}
+.cc-concludes-h { font-weight: 800; color: var(--text); margin-bottom: 8px; font-size: 1rem; }
+.cc-concludes-item { margin: 0 0 8px; color: var(--text-soft); font-size: 0.92rem; line-height: 1.5; }
+@media (max-width: 600px) {
+  .step-btn .step-lbl { display: none; }   /* icon-only stepper on narrow screens */
+}
+
+/* =============================================================
+   MASTER (adaptive): flip cloze cards from highlights/cautions +
+   click/swipe CQ cloze rows + the missed/flagged drill.
+   ============================================================= */
+.master-toggle { display: flex; align-items: center; gap: 10px; margin: 0 0 18px; flex-wrap: wrap; }
+.master-toggle-hint { font-size: .78rem; color: var(--muted); }
+.mc-zone-h { font-size: 1rem; font-weight: 800; color: var(--text); margin: 26px 0 12px; }
+.mc-zone-h span { font-weight: 600; font-size: .82rem; color: var(--muted); }
+.mc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(248px, 1fr)); gap: 12px; }
+.mc.mc-card { padding: 0; }
+.mc-card-body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; cursor: pointer; min-height: 88px; padding: 16px 18px; border: 1px solid var(--border); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); transition: background .15s; }
+.mc-card-body:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.mc-tag { align-self: flex-start; }
+.mc-highlight .mc-card-body { border-left: 4px solid var(--warning); background: var(--warning-bg); }
+.mc-highlight .mc-tag { background: var(--warning); color: #1a1300; }
+.mc-review .mc-card-body { border-left: 4px solid var(--c-confuse); background: rgba(189,167,221,0.12); }
+.mc-review .mc-tag { background: var(--c-confuse); color: #fff; }
+.mc-face { width: 100%; }
+.mc-cloze { font-size: .95rem; line-height: 1.5; color: var(--text); }
+.mc-prompt { color: var(--muted); font-style: italic; }
+.mc-blank { display: inline-block; min-width: 46px; border-bottom: 2px solid var(--primary); color: transparent; margin: 0 2px; }
+.mc-answer { color: var(--primary); }
+.mc-hint { display: block; margin-top: 8px; color: var(--muted); font-size: .78rem; }
+.mc-back { display: none; font-size: .95rem; line-height: 1.55; color: var(--text); }
+.mc-card-body.revealed .mc-front { display: none; }
+.mc-card-body.revealed .mc-back { display: block; }
+.mc-foot { display: flex; gap: 8px; padding: 8px 4px 0; justify-content: flex-end; }
+.mc-foot .cc-btn { min-height: 44px; padding: 9px 16px; }
+.mc-got.on { background: var(--correct-bg); color: var(--correct); border-color: var(--correct); }
+.mc-done { opacity: .6; }
+.mc-done .mc-card-body { filter: grayscale(.3); }
+/* CQ cloze rows — click/swipe to fill the blank in place */
+.mc-cqs { display: flex; flex-direction: column; gap: 8px; }
+.mc-row { display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: var(--radius-md); cursor: pointer; box-shadow: var(--shadow-sm); transition: border-color .15s; }
+.mc-row:hover { border-color: var(--primary); }
+.mc-row:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.mc-row-ic { font-size: .66rem; font-weight: 800; letter-spacing: .04em; color: #fff; background: var(--primary); border-radius: 6px; padding: 3px 7px; flex: 0 0 auto; }
+.mc-row-body { flex: 1; font-size: .92rem; line-height: 1.5; color: var(--text); }
+.mc-fill { display: none; }
+.mc-row.revealed .mc-blank { display: none; }
+.mc-row.revealed .mc-fill { display: inline; color: var(--primary); font-weight: 700; }
+.mc-row-hint { font-size: .7rem; color: var(--muted); flex: 0 0 auto; }
+.mc-row.revealed .mc-row-hint { display: none; }
