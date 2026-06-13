@@ -598,9 +598,10 @@ function esc(t){ return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").rep
 function lectureStepDone(n) {
   const rs = lectureReadingStats(n);
   const st = lectureStats(n);
-  const preDone  = st.total > 0 && st.answered > 0;
+  const preStarted = st.total > 0 && st.answered > 0;           // moved past Quickies
+  const preDone    = st.total > 0 && st.answered === st.total;   // ALL questions answered → Preclaude tick
   const coreDone = rs.total > 0 ? rs.done === rs.total : !!state.read[n];
-  return { quickies: preDone || coreDone || !!state.read[n], preclaude: preDone, core: coreDone };
+  return { quickies: preStarted || coreDone || !!state.read[n], preclaude: preDone, core: coreDone };
 }
 
 // Ordered (not locked) per-lecture stepper: ① Quickies → ② Preclaude → ③ Core+Concludes, + 🎯 Master.
