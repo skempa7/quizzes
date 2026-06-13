@@ -34,6 +34,7 @@ const KEYS = {
   bookmarks: SUBJ + "_bookmarks_v1", // { lec: {ci, label, ts} } 🔖 resume points
   notes: SUBJ + "_notes_v1",         // { lec: [ {id, text, ts} ] } freeform notes
   tomb: SUBJ + "_tomb_v1",           // { id: ts } deleted highlight/note ids — so deletions survive a cloud merge
+  tombMap: SUBJ + "_tombm_v1",       // { "star:pb"|"rev:pb"|"bm:lec": ts } deleted para-tag/bookmark keys (ts-based, so re-tagging still works)
   railCollapsed: SUBJ + "_rail_v1",
   notesOpen: SUBJ + "_notesopen_v1",
   activity: SUBJ + "_activity_v1"    // { "YYYY-MM-DD": xpEarned } for the heatmap
@@ -70,6 +71,7 @@ const state = {
   bookmarks: load(KEYS.bookmarks, {}), // { lec: {ci, label, ts} }
   notes: load(KEYS.notes, {}),         // { lec: [ {id, text, ts} ] }
   tomb: load(KEYS.tomb, {}),           // { id: ts } deleted-annotation tombstones (for sync)
+  tombMap: load(KEYS.tombMap, {}),     // { "star:pb"|"rev:pb"|"bm:lec": ts } para-tag/bookmark deletion tombstones
   activity: load(KEYS.activity, {}),   // { "YYYY-MM-DD": xpEarned }
   railCollapsed: load(KEYS.railCollapsed, false),
   notesOpen: load(KEYS.notesOpen, false),
@@ -161,6 +163,8 @@ function _numMap(a,b){ const o=Object.assign({},a); for(const k in b) o[k]=Math.
 function _mergeAnswers(a,b){ const o=Object.assign({},a); for(const k in b){ if(!(k in o)) o[k]=b[k]; else { const x=o[k], y=b[k]; if(y&&y.correct&&!(x&&x.correct)) o[k]=y; } } return o; }
 function _mergeListMap(a,b){ const o=Object.assign({},a); for(const lec in b){ const la=o[lec]||[], lb=b[lec]||[], seen=new Set(la.map(x=>x&&x.id)); o[lec]=la.concat(lb.filter(x=>x&&!seen.has(x.id))); } return o; }
 function _mergeBookmarks(a,b){ const o=Object.assign({},a); for(const lec in b){ if(!o[lec] || (b[lec].ts||0)>(o[lec].ts||0)) o[lec]=b[lec]; } return o; }
+// per-key map where the newest-ts entry wins (para-tags) — so a re-tag (newer ts) survives an older deletion tombstone
+function _mergeTsMap(a,b){ const o=Object.assign({},a); for(const k in b){ if(!(k in o) || ((b[k]&&b[k].ts)||0) > ((o[k]&&o[k].ts)||0)) o[k]=b[k]; } return o; }
 function _mergeVal(k,a,b){
   if(a==null) return b; if(b==null) return a;
   if(k.includes("_xp_v1")) return Math.max(Number(a)||0, Number(b)||0);
@@ -168,8 +172,9 @@ function _mergeVal(k,a,b){
   if(k.includes("_streak_")) return { current:Math.max(a.current||0,b.current||0), highest:Math.max(a.highest||0,b.highest||0) };
   if(k.includes("_daily_")) return ((a.date||"")>=(b.date||"")) ? a : b;
   if(k.includes("_answers_")) return _mergeAnswers(a,b);
-  if(k.includes("_tomb_v1")) return _numMap(a,b);   // union deleted-id sets (keep latest ts)
+  if(k.includes("_tomb_v1") || k.includes("_tombm_v1")) return _numMap(a,b);   // union deleted-key sets (keep latest ts)
   if(k.includes("_hl_v1") || k.includes("_notes_v1")) return _mergeListMap(a,b);
+  if(k.includes("_markstar_v1") || k.includes("_markrev_v1")) return _mergeTsMap(a,b);  // newest ts per paragraph wins (so re-tags beat tombstones)
   if(k.includes("_bookmarks_")) return _mergeBookmarks(a,b);
   if(typeof a==="object" && typeof b==="object" && !Array.isArray(a)) return Object.assign({}, b, a); // union of maps (local wins ties)
   return a;
@@ -178,12 +183,20 @@ function mergeBundles(local, cloud){ const o=Object.assign({},local); for(const 
 // After union-merging, drop any highlight/note whose id was deleted on any device.
 // Safe because annoId() ids are never reused, so a tombstone can only kill the exact item that was deleted.
 function _applyTombstones(o){
-  let tomb=null; for(const k in o){ if(k.endsWith("_tomb_v1")){ tomb=o[k]||{}; break; } }
-  if(!tomb) return;
+  let tomb=null, tombM=null;
+  for(const k in o){ if(k.endsWith("_tomb_v1")) tomb=o[k]||{}; else if(k.endsWith("_tombm_v1")) tombM=o[k]||{}; }
   for(const k in o){
-    if(!(k.endsWith("_hl_v1") || k.endsWith("_notes_v1"))) continue;
     const m=o[k]; if(!m || typeof m!=="object") continue;
-    for(const lec in m){ if(Array.isArray(m[lec])) m[lec]=m[lec].filter(x => !(x && x.id && tomb[x.id])); }
+    if(tomb && (k.endsWith("_hl_v1") || k.endsWith("_notes_v1"))){
+      // id-keyed lists: an annoId() is never reused, so a tombstoned id is gone for good
+      for(const lec in m){ if(Array.isArray(m[lec])) m[lec]=m[lec].filter(x => !(x && x.id && tomb[x.id])); }
+    } else if(tombM && (k.endsWith("_markstar_v1") || k.endsWith("_markrev_v1"))){
+      // paragraph-keyed maps: suppress only if the entry is not newer than the deletion (re-tags have a fresh ts)
+      const pre = k.endsWith("_markstar_v1") ? "star:" : "rev:";
+      for(const pb in m){ const t=tombM[pre+pb]; if(t!=null && ((m[pb]&&m[pb].ts)||0) <= t) delete m[pb]; }
+    } else if(tombM && k.endsWith("_bookmarks_v1")){
+      for(const lec in m){ const t=tombM["bm:"+lec]; if(t!=null && ((m[lec]&&m[lec].ts)||0) <= t) delete m[lec]; }
+    }
   }
 }
 
@@ -2814,12 +2827,13 @@ function onReadingClick(e){
 // ---- bookmarks (resume) ----
 function setBookmark(n, ci, label, pb){
   state.bookmarks[n] = { ci, pb: pb || null, label: (label || "").slice(0, 90), ts: Date.now() };
+  delete state.tombMap["bm:"+n]; save(KEYS.tombMap, state.tombMap);   // re-bookmark clears any prior deletion tombstone
   save(KEYS.bookmarks, state.bookmarks);
   applyParaTags(n);
   showToast("🔖 Bookmark dropped — your spot is saved");
   updateMarkupCount();
 }
-function removeBookmark(n){ delete state.bookmarks[n]; save(KEYS.bookmarks, state.bookmarks); applyParaTags(n); updateMarkupCount(); showToast("Bookmark removed"); }
+function removeBookmark(n){ delete state.bookmarks[n]; state.tombMap["bm:"+n]=Date.now(); save(KEYS.tombMap, state.tombMap); save(KEYS.bookmarks, state.bookmarks); applyParaTags(n); updateMarkupCount(); showToast("Bookmark removed"); }
 function mostRecentBookmark(){
   let best = null;
   Object.keys(state.bookmarks).forEach(k => { const b = state.bookmarks[k]; if (b && (!best || b.ts > best.ts)) best = Object.assign({ lec: parseInt(k) }, b); });
@@ -2843,14 +2857,20 @@ function tagParagraph(type, el, n){
   const text = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 160);
   if (type === "bookmark"){ setBookmark(n, ci, text, pb); return; }
   const store = type === "review" ? state.markReview : state.markStar;
-  if (store[pb]) delete store[pb]; else store[pb] = { lec:n, pb, ci, text };
+  const tkey = (type === "review" ? "rev:" : "star:") + pb;
+  if (store[pb]){ delete store[pb]; state.tombMap[tkey] = Date.now(); }              // toggle off → tombstone
+  else { delete state.tombMap[tkey]; store[pb] = { lec:n, pb, ci, text, ts: Date.now() }; } // (re)tag → clear tombstone + stamp
   save(type === "review" ? KEYS.markReview : KEYS.markStar, store);
+  save(KEYS.tombMap, state.tombMap);
   applyParaTags(n); updateMarkupCount(); refreshNotesIfOpen();
   showToast(ANNO_META[type].icon + " " + ANNO_META[type].label + (store[pb] ? " saved" : " removed"));
 }
 function removeParaTag(type, pb){
   const store = type === "review" ? state.markReview : state.markStar;
-  delete store[pb]; save(type === "review" ? KEYS.markReview : KEYS.markStar, store);
+  delete store[pb];
+  state.tombMap[(type === "review" ? "rev:" : "star:") + pb] = Date.now();   // tombstone so the delete survives a cloud merge
+  save(type === "review" ? KEYS.markReview : KEYS.markStar, store);
+  save(KEYS.tombMap, state.tombMap);
   applyParaTags(state.currentLec); updateMarkupCount(); refreshNotesIfOpen(); showToast("Removed");
 }
 function applyParaTags(n){
