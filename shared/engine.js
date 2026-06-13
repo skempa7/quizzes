@@ -1085,6 +1085,17 @@ function renderLearnView() {
 // =============================================================
 const _MC_STOP = new Set("the a an of to in is are was were be been being and or but for with as at by on from that this these those it its their your you we they he she them not no into within between across over under than then so such can may might must will would should could each per via both either neither also only just more most less least very much many few do does did has have had which who whom whose when where what why how".split(" "));
 function _mcStrip(s){ return String(s == null ? "" : s).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim(); }
+// Trim text near `max` chars at a clean boundary — never mid-word. End on a sentence if one
+// falls in range (no ellipsis); otherwise back off to the last whole word and add an ellipsis.
+function _clipText(s, max){
+  s = String(s == null ? "" : s).replace(/\s+/g, " ").trim();
+  if (s.length <= max) return s;
+  const win = s.slice(0, max);
+  const sent = Math.max(win.lastIndexOf(". "), win.lastIndexOf("! "), win.lastIndexOf("? "));
+  if (sent >= max * 0.6) return s.slice(0, sent + 1).trim();
+  const sp = win.lastIndexOf(" ");
+  return (sp > max * 0.5 ? win.slice(0, sp) : win).replace(/[\s,;:.–—-]+$/, "") + "…";
+}
 
 // Smart blank-picking: a number/threshold first, else an eponym/proper noun, else the longest content word.
 function pickBlank(raw){
@@ -1151,7 +1162,8 @@ function toggleMasterAllLec(){ state.masterAllLec = !state.masterAllLec; renderM
 
 // One auto-flip cloze card from a highlight/caution.
 function masterFlipCard(item){
-  const { kind, text, key } = item;
+  const { kind, key } = item;
+  const text = _clipText(item.text, 220);   // keep the card digestible + never cut mid-word
   const tag = kind === "review" ? "⚠️ Review" : "🖊️ Highlight";
   const cls = kind === "review" ? "mc-review" : "mc-highlight";
   const done = state.srDone[key] ? " mc-done" : "";
@@ -2854,7 +2866,7 @@ function resumeReading(lec){
 function tagParagraph(type, el, n){
   const pb = el.getAttribute("data-pb"); if (!pb) return;
   const ci = chapterIndexOfNode(el);
-  const text = (el.textContent || "").trim().replace(/\s+/g, " ").slice(0, 160);
+  const text = _clipText(el.textContent || "", 220);   // clean boundary, never mid-word
   if (type === "bookmark"){ setBookmark(n, ci, text, pb); return; }
   const store = type === "review" ? state.markReview : state.markStar;
   const tkey = (type === "review" ? "rev:" : "star:") + pb;
