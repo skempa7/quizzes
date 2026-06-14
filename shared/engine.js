@@ -1097,21 +1097,45 @@ function _clipText(s, max){
   return (sp > max * 0.5 ? win.slice(0, sp) : win).replace(/[\s,;:.–—-]+$/, "") + "…";
 }
 
-// Smart blank-picking: a number/threshold first, else an eponym/proper noun, else the longest content word.
+// Topic/filler words that are never the discriminating answer (so we don't blank them).
+const _MC_GENERIC = new Set("diarrhea diarrhoea disease diseases patient patients stool stools diagnosis treatment treat management cause causes common normal abnormal present presents history finding findings symptom symptoms result results increase decrease increased decreased reliable detect detected detecting inflammation".split(" "));
+// Suffixes that usually mark the key clinical term (diagnosis / lesion / mediator / procedure).
+const _MC_SUF = /(itis|osis|asis|emia|aemia|[a-z]oma|pathy|toxin|plasia|trophy|penia|cytosis|globin|ectomy|ostomy|otomy|oscopy)$/i;
+
+// Smart blank-picking: a standalone number/threshold first, else an eponym/proper noun, else a
+// salient clinical term (medical suffix, or the "answer" after =/→/:). Returns null rather than
+// blanking a generic word — a sentence with no clear discriminator becomes a plain "recall this"
+// prompt instead of a guess-the-deleted-word cloze.
 function pickBlank(raw){
   const text = _mcStrip(raw);
   const words = text.split(" ");
   if (words.length < 4) return null;
   let term = null;
-  const num = text.match(/[<>≤≥]?\s?\d[\d.,\/–-]*\s?(?:%|mmHg|mg\/dL|mg|mmol|mEq\/L|mL|mm|cm|kg|°C|hrs?|hours?|days?|weeks?)?/);
-  if (num && /\d/.test(num[0])) term = num[0].trim().replace(/[.,/–-]+$/, "");
+  // 1) a STANDALONE number/threshold — but not a digit inside a code like SGLT1 / O157:H7
+  const NUMRX = /[<>≤≥]?\d[\d.,\/–-]*\s?(?:%|mmHg|mg\/dL|mg|mmol|mEq\/L|mL|mm|cm|kg|°C|hrs?|hours?|days?|weeks?|yr|y)?/g;
+  let mnum;
+  while ((mnum = NUMRX.exec(text))){
+    if (mnum.index === 0 || !/[A-Za-z]/.test(text[mnum.index - 1])){ term = mnum[0].trim().replace(/[.,/–-]+$/, ""); break; }
+  }
+  // 2) an eponym / proper noun / abbreviation (longest capitalized token)
   if (!term){
     const caps = words.map((w,i)=>({w,i})).filter(o => /^[A-Z][A-Za-z]{2,}('s)?$/.test(o.w) && (o.i>0 || /'s$/.test(o.w)) && !_MC_STOP.has(o.w.toLowerCase()));
     if (caps.length) term = caps.sort((a,b)=>b.w.length-a.w.length)[0].w;
   }
+  // 3) a salient clinical term — score by suffix / position; require real salience, else give up
   if (!term){
-    const cands = words.filter(w => { const c=w.replace(/[^A-Za-z-]/g,""); return c.length>4 && !_MC_STOP.has(c.toLowerCase()); });
-    if (cands.length) term = cands.sort((a,b)=>b.length-a.length)[0];
+    let best = null, bestScore = 0;
+    words.forEach((w,i)=>{
+      const c = w.replace(/[^A-Za-z-]/g, "");
+      if (c.length < 5 || _MC_STOP.has(c.toLowerCase()) || _MC_GENERIC.has(c.toLowerCase())) return;
+      let s = Math.min(c.length, 14);
+      if (_MC_SUF.test(c)) s += 18;                                              // a clinical term
+      if (/^[A-Z]/.test(c)) s += 4;                                              // a sentence-initial proper noun the cap-step skips
+      const prev = words[i-1] || "";
+      if (/[=:]$/.test(prev) || /[→>]$/.test(prev)) s += 12;                      // the "answer" after =/→/:
+      if (s > bestScore){ bestScore = s; best = c; }
+    });
+    if (bestScore >= 7) term = best;      // blank a discriminating term; null (recall-this) only when nothing qualifies
   }
   if (!term) return null;
   const idx = text.indexOf(term);
