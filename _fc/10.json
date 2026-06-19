@@ -1,0 +1,128 @@
+{
+  "sections": [
+    {
+      "title": "Oral inflammatory and premalignant lesions",
+      "los": [1, 2]
+    },
+    {
+      "title": "Oral and jaw tumors",
+      "los": [3, 4]
+    },
+    {
+      "title": "Salivary gland disease",
+      "los": [5]
+    }
+  ],
+  "cards": [
+    {
+      "key": "10_1_q0",
+      "front": "You see three oral lesions: one white plaque that wipes off with gauze, one ulcer that does not, and one sitting only on non-keratinized mucosa. How do surface preference and the wipe-off test sort the common inflammatory lesions?",
+      "back": "The wipe-off test separates pseudomembranous candidiasis (thrush wipes off) from leukoplakia and hyperplastic candidiasis (do not wipe off). Surface preference separates aphthous ulcers, which favor non-keratinized mucosa, from recurrent HSV, which favors keratinized mucosa such as the hard palate and gingiva."
+    },
+    {
+      "key": "10_1_cc6_0",
+      "front": "On which oral mucosal surface do aphthous (canker sore) ulcers characteristically occur, and how does this contrast with recurrent HSV?",
+      "back": "Aphthous ulcers sit almost exclusively on non-keratinized mucosa (such as the buccal and labial mucosa). Recurrent HSV instead favors keratinized mucosa like the hard palate and attached gingiva."
+    },
+    {
+      "key": "10_1_cc6_1",
+      "front": "Large aphthous ulcers greater than 1 cm are the least common subtype. In what patient population are they classically seen?",
+      "back": "Major (large) aphthae greater than 1 cm are the least common form and are classically seen in AIDS patients."
+    },
+    {
+      "key": "10_1_cc12_0",
+      "front": "In oral candidiasis, which form wipes off the mucosa and which forms do not, and why does this distinction matter?",
+      "back": "Pseudomembranous candidiasis (thrush) wipes off, leaving an erythematous base. Leukoplakia and hyperplastic candidiasis do not wipe off, which is why a non-removable white plaque needs further evaluation rather than being dismissed as thrush."
+    },
+    {
+      "key": "10_1_cc12_1",
+      "front": "Which form of oral candidiasis is called antibiotic sore mouth, and what is its typical distribution?",
+      "back": "Erythematous candidiasis is the antibiotic sore mouth. It classically affects the dorsal tongue and is associated with angular cheilitis."
+    },
+    {
+      "key": "10_1_cc17_0",
+      "front": "A pregnant patient develops a red, vascular exophytic gingival mass. What fibrous proliferative lesion is this, what does it look like histologically, and how is it managed?",
+      "back": "This is a pyogenic granuloma, also called a pregnancy tumor when it arises on the gingiva in pregnancy. Histologically it is composed of exophytic immature blood vessels (lobular capillary proliferation), and it is treated with excision."
+    },
+    {
+      "key": "10_2_q0",
+      "front": "Two premalignant oral patches sit side by side: one white and sharply demarcated, one red and velvety. Which carries the higher malignant risk, and what single factor most drives both?",
+      "back": "The red velvety lesion (erythroplakia) carries the higher malignant risk, with over 50% transforming to carcinoma versus 5 to 25% being dysplastic for leukoplakia. Tobacco is the single factor that most drives both lesions."
+    },
+    {
+      "key": "10_2_cc5_0",
+      "front": "Comparing erythroplakia and leukoplakia, which has the greater malignant potential, and roughly what fraction of each shows malignant or dysplastic change?",
+      "back": "Erythroplakia (red) carries greater risk than leukoplakia (white): over 50% of erythroplakias transform to carcinoma, whereas only about 5 to 25% of leukoplakias are dysplastic."
+    },
+    {
+      "key": "10_2_cc5_1",
+      "front": "What is the shared risk factor and typical demographic profile for both leukoplakia and erythroplakia?",
+      "back": "Both are most commonly associated with tobacco. They typically occur in patients aged 40 to 70 years, with a male-to-female ratio of about 2:1."
+    },
+    {
+      "key": "10_3_q0",
+      "front": "Two oral squamous cell carcinomas: one keratinizing with adjacent leukoplakia in an older smoker, one non-keratinizing in a younger patient with cervical nodes. How do HPV status, molecular driver, morphology, and metastatic behavior separate them?",
+      "back": "The keratinizing tumor in the older smoker is HPV-negative, driven by TP53/CDKN2A mutations and field cancerization, shows keratin pearls, and arises from a precursor lesion. The non-keratinizing tumor is HPV-positive, driven by E6 (inactivating p53) and E7 (inactivating Rb), is basaloid and p16-positive, presents with cervical nodes, and has no precursor lesion."
+    },
+    {
+      "key": "10_3_cc6_0",
+      "front": "What fraction of oral cancers are squamous cell carcinoma, and what is the most common intraoral site?",
+      "back": "About 95% of oral cancers are squamous cell carcinoma. The most common site is the ventral (and lateral) tongue."
+    },
+    {
+      "key": "10_3_cc6_1",
+      "front": "How does the causative agent of oral/oropharyngeal squamous cell carcinoma track with anatomic location?",
+      "back": "HPV-16 causes oropharyngeal SCC; combined tobacco and alcohol cause oral cavity SCC; and actinic (sun) exposure or pipe smoking causes lower lip SCC."
+    },
+    {
+      "key": "10_3_cc8_0",
+      "front": "Contrast the molecular drivers of HPV-negative versus HPV-positive oral/oropharyngeal squamous cell carcinoma.",
+      "back": "HPV-negative SCC is driven by TP53 and CDKN2A mutations along with field cancerization. HPV-positive SCC is driven by viral oncoproteins: E6 inactivates p53 and E7 inactivates Rb."
+    },
+    {
+      "key": "10_3_cc14_0",
+      "front": "Clinically and histologically, how do HPV-negative and HPV-positive oral squamous cell carcinomas differ in morphology, markers, nodal spread, and precursor lesions?",
+      "back": "HPV-negative SCC is keratinizing with keratin pearls and arises from a precursor lesion. HPV-positive SCC is non-keratinizing and basaloid, is p16-positive, presents with cervical lymph node metastasis, and has no precursor lesion."
+    },
+    {
+      "key": "10_4_q0",
+      "front": "Three jaw cysts: one around an unerupted tooth crown, one at a root tip, and one keratinized with parakeratosis. How do the epithelial lining and location sort them, and which one is aggressive?",
+      "back": "The cyst around an unerupted tooth crown is a dentigerous cyst (non-keratinized). The cyst at a root tip is a periapical cyst (inflammatory, most common). The keratinized cyst with parakeratosis is the odontogenic keratocyst (OKC), which is the aggressive one."
+    },
+    {
+      "key": "10_4_cc6_0",
+      "front": "Distinguish the dentigerous cyst, odontogenic keratocyst, and periapical cyst by lining and location, and state which is most common and which is aggressive.",
+      "back": "The dentigerous cyst surrounds the crown of an unerupted tooth and is non-keratinized. The odontogenic keratocyst (OKC) is keratinized with parakeratosis and is aggressive. The periapical cyst sits at a root tip, is inflammatory, and is the most common."
+    },
+    {
+      "key": "10_4_cc12_0",
+      "front": "Compare ameloblastoma and odontoma by appearance, location, and behavior. Which is the most common odontogenic tumor?",
+      "back": "Ameloblastoma is a soap-bubble multilocular lesion in the molar-ramus region of the mandible, shows palisading nuclei, and is locally invasive. Odontoma is the most common odontogenic tumor and is a hamartoma."
+    },
+    {
+      "key": "10_5_q0",
+      "front": "Three salivary gland neoplasms cross your desk: the most common overall, the smoker's tumor with germinal centers, and the most common malignant one. How do frequency, capsule, and histology separate them?",
+      "back": "Pleomorphic adenoma is the most common overall (benign) and shows chondromyxoid stroma. Warthin tumor is second most common, occurs in smokers, and shows germinal centers with a double oncocytic epithelial layer. Mucoepidermoid carcinoma is the most common malignant salivary tumor."
+    },
+    {
+      "key": "10_5_cc6_0",
+      "front": "A patient has a fluctuant lower-lip swelling that changes size with meals. What lesion is this and what causes it?",
+      "back": "This is a mucocele, caused by a blocked or ruptured salivary duct (typically a minor gland) leading to mucus extravasation. It classically fluctuates in size around meals."
+    },
+    {
+      "key": "10_5_cc6_1",
+      "front": "What is the most common cause of viral sialadenitis, and what important complication is it the leading cause of?",
+      "back": "Mumps, caused by a Rubulavirus (paramyxovirus), is the most common viral sialadenitis. It is the most common cause of postnatal acquired (viral) sensorineural deafness."
+    },
+    {
+      "key": "10_5_cc12_0",
+      "front": "Rank the three classic salivary gland neoplasms by frequency, noting which is benign and which is the most common malignancy.",
+      "back": "Pleomorphic adenoma is the most common overall and is benign. Warthin tumor is second most common and occurs in smokers. Mucoepidermoid carcinoma is the most common malignant salivary gland tumor."
+    },
+    {
+      "key": "10_5_cc12_1",
+      "front": "What are the histologic tells that distinguish Warthin tumor from pleomorphic adenoma?",
+      "back": "Warthin tumor shows lymphoid germinal centers with a double oncocytic epithelial layer. Pleomorphic adenoma shows a chondromyxoid (cartilage-like and myxoid) stroma."
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "sections": [
+    {
+      "title": "Working up esophageal complaints",
+      "los": [
+        1
+      ]
+    },
+    {
+      "title": "Diagnosing and treating esophageal disorders",
+      "los": [
+        2
+      ]
+    },
+    {
+      "title": "Screening and surveillance",
+      "los": [
+        3
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "key": "13_1_q0",
+      "front": "A patient reports that food gets stuck. Which two history details most quickly separate a mechanical lesion from a motility disorder, and which test usually comes first?",
+      "back": "Ask about the type of food (solids alone vs solids and liquids together) and the timing/progression of symptoms. Solids-then-liquids points to a mechanical obstruction, while solids and liquids from the start point to a motility disorder. Upper endoscopy (EGD) is usually the first test, as it both diagnoses and excludes malignancy."
+    },
+    {
+      "key": "13_1_cc3_0",
+      "front": "When working up dysphagia, how do you distinguish oropharyngeal from esophageal dysphagia by the patient's description?",
+      "back": "Oropharyngeal dysphagia is trouble initiating the swallow, localized to the neck. Esophageal dysphagia is the sensation of food sticking seconds later, felt retrosternally."
+    },
+    {
+      "key": "13_1_cc3_1",
+      "front": "A patient feels a painless lump in the throat that is present regardless of swallowing and often eases when they swallow. What is this, and is it true dysphagia?",
+      "back": "This is globus sensation, not true dysphagia. It is a painless lump felt irrespective of swallowing, often relieved by swallowing rather than worsened by it."
+    },
+    {
+      "key": "13_1_cc8_0",
+      "front": "In the dysphagia workup, what does a pattern of solids-then-liquids tell you versus dysphagia to solids and liquids from the onset?",
+      "back": "Solids-first dysphagia that later progresses to liquids indicates a mechanical or obstructing lesion. Dysphagia to both solids and liquids from the onset indicates a motility disorder."
+    },
+    {
+      "key": "13_1_cc10_0",
+      "front": "When a patient presents with chest pain that could be esophageal, why can't you rely on the character of the pain or relief with nitroglycerin to rule out the heart?",
+      "back": "Esophageal chest pain can be indistinguishable from cardiac pain, and relief with nitroglycerin does not separate the two. Cardiac causes must be excluded first."
+    },
+    {
+      "key": "13_1_cc16_0",
+      "front": "What is the correct order of testing when a proximal esophageal stricture is suspected, and where do EGD and manometry fit in?",
+      "back": "A suspected proximal stricture warrants a barium swallow before EGD to map the lesion and avoid blind perforation. EGD then diagnoses, excludes malignancy, and can treat; manometry is reserved for when EGD is non-diagnostic."
+    },
+    {
+      "key": "13_2_q0",
+      "front": "Across the esophageal disorders in this lecture, what kind of single vignette feature should you look for to pin the diagnosis and decide the next step?",
+      "back": "Look for the one discriminating clue: the pattern of dysphagia, a culprit pill, the host's immune status, or a salmon-colored segment of mucosa. That single feature usually forces the diagnosis and sets the next management step."
+    },
+    {
+      "key": "13_2_cc2_0",
+      "front": "What is the empiric stepwise work-up of GERD, and what specifically pushes a patient to endoscopy?",
+      "back": "GERD is managed empirically: lifestyle measures, then a PPI trial. EGD is reserved for red-flag features (dysphagia, weight loss, anemia, bleeding) or failure of therapy."
+    },
+    {
+      "key": "13_2_cc4_0",
+      "front": "What three findings are required to diagnose Barrett's esophagus, and is it itself a symptomatic disease?",
+      "back": "Barrett's requires salmon-colored mucosa, a columnar lining at least 1 cm long, and goblet-cell intestinal metaplasia on biopsy. It is a cancer-risk marker, not a symptomatic disease in itself."
+    },
+    {
+      "key": "13_2_cc10_0",
+      "front": "What is the classic profile of esophageal adenocarcinoma, including its location, precursor lesion, and typical patient?",
+      "back": "Esophageal adenocarcinoma arises in the distal esophagus from Barrett's metaplasia, typically in White males, presenting with progressive dysphagia and weight loss. It is the most common esophageal cancer in the US."
+    },
+    {
+      "key": "13_2_cc13_0",
+      "front": "What distinguishes esophageal squamous cell carcinoma from adenocarcinoma in terms of location and risk factors, and which feature decides between them?",
+      "back": "Squamous cell carcinoma occurs in the mid-esophagus and is driven by tobacco and alcohol (over 90% of Western cases); it is the most common esophageal cancer worldwide. The distinction from adenocarcinoma is made by risk factors and location, not by symptoms."
+    },
+    {
+      "key": "13_2_cc21_0",
+      "front": "Why are esophageal varices clinically silent until a crisis, and what presentation links them back to the liver?",
+      "back": "Varices are asymptomatic until they bleed; the link to liver disease is hematemesis in the setting of portal hypertension. EGD diagnoses them and predicts bleeding risk."
+    },
+    {
+      "key": "13_2_cc23_0",
+      "front": "What history nails the diagnosis of pill esophagitis, which medications are typical culprits, and how is it treated?",
+      "back": "Pill esophagitis presents as sudden odynophagia hours to days after a culprit pill such as a bisphosphonate, doxycycline, potassium chloride, NSAID, or iron. It is diagnosed by history and treated by stopping the offending pill."
+    },
+    {
+      "key": "13_2_cc29_0",
+      "front": "What is the classic picture of eosinophilic esophagitis, including the patient, the endoscopic and biopsy findings, and treatment?",
+      "back": "Eosinophilic esophagitis affects young, atopic patients with solid-food dysphagia or impaction that is refractory to acid suppression, showing rings/trachealization and more than 15 eosinophils per high-power field. Treatment is dietary elimination, topical steroids or PPI, and dilation when needed."
+    },
+    {
+      "key": "13_2_cc32_0",
+      "front": "What host and hallmark symptom point to Candida esophagitis, and what is the usual organism and treatment?",
+      "back": "Candida esophagitis occurs in immunosuppressed hosts presenting with odynophagia as the hallmark, with or without oral thrush. It is most commonly caused by C. albicans and treated with fluconazole."
+    },
+    {
+      "key": "13_3_q0",
+      "front": "Two patients both have heartburn but one gets a PPI and reassurance while the other gets a scope. What separates them, and once Barrett's is found, what sets the surveillance interval?",
+      "back": "The patient with an alarm feature (such as dysphagia, weight loss, anemia, bleeding, or new onset at older age) earns an EGD, while uncomplicated heartburn is treated empirically. Once Barrett's is found, the grade of dysplasia determines how often surveillance endoscopy is repeated."
+    },
+    {
+      "key": "13_3_cc2_0",
+      "front": "What clinical features convert empirically treated heartburn into an indication for EGD?",
+      "back": "Heartburn is treated empirically, but an alarm feature triggers EGD: new-onset symptoms at age 60 or older, dysphagia, weight loss, anemia, or bleeding."
+    },
+    {
+      "key": "13_3_cc4_0",
+      "front": "Which patients should be screened for Barrett's esophagus, rather than every patient with reflux?",
+      "back": "Screening targets patients with a stack of risk factors: GERD for at least 5 years plus age 50 or older, male sex, White race, obesity, smoking, and a family history. Not every refluxer needs screening."
+    },
+    {
+      "key": "13_3_cc8_0",
+      "front": "What determines the surveillance interval in Barrett's esophagus, and how does management change when dysplasia appears?",
+      "back": "The surveillance interval is set by the grade of dysplasia, ranging from about 3 months to 5 years. Dysplasia adds endoscopic resection or radiofrequency ablation, and esophagectomy is no longer first-line."
+    }
+  ]
+}

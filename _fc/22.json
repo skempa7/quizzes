@@ -1,0 +1,92 @@
+{
+  "sections": [
+    {
+      "title": "Parasite infections: diagnosis and management", "los": [1, 2]
+    },
+    {
+      "title": "Fungal infections: diagnosis and management", "los": [3, 4]
+    }
+  ],
+  "cards": [
+    {
+      "key": "22_1_q0",
+      "front": "For the high-yield GI parasites, what single buzzword detail (a stool finding, a deficiency, or a complication) lets you name each on sight?",
+      "back": "Each major GI parasite has a signature tell: Entamoeba gives bloody dysentery with flask-shaped ulcers and an anchovy-paste liver abscess; Cryptosporidium gives acid-fast oocysts with watery diarrhea in HIV; Diphyllobothrium causes B12 deficiency; hookworm causes iron-deficiency anemia; pinworm causes perianal itch with a positive tape test. Pattern recognition of one detail identifies the organism."
+    },
+    {
+      "key": "22_1_cc3_0",
+      "front": "A patient with bloody dysentery has colonic flask-shaped ulcers and a right-lobe liver abscess with anchovy-paste contents. Which parasite is responsible and how is it treated?",
+      "back": "Entamoeba histolytica (amoebiasis). The classic triad is bloody dysentery, flask-shaped colonic ulcers, and an anchovy-paste liver abscess, treated with metronidazole."
+    },
+    {
+      "key": "22_1_cc4_0",
+      "front": "An HIV patient has watery, non-bloody diarrhea and stool shows acid-fast oocysts. Which two protozoa should you name?",
+      "back": "Acid-fast oocysts with watery diarrhea point to Cryptosporidium (classically in HIV) or Cyclospora. Both are acid-fast protozoa identified on modified acid-fast stain of stool."
+    },
+    {
+      "key": "22_1_cc10_0",
+      "front": "Match each parasite to its signature complication: Diphyllobothrium, Echinococcus, and Clonorchis. What is the key management caveat for the Echinococcus lesion?",
+      "back": "Diphyllobothrium (fish tapeworm) causes B12 deficiency; Echinococcus causes a hydatid cyst that must not be aspirated (risk of anaphylaxis and seeding); Clonorchis (liver fluke) predisposes to cholangiocarcinoma."
+    },
+    {
+      "key": "22_1_cc11_0",
+      "front": "Ingesting the eggs of Taenia solium (rather than larval cysts in pork) leads to which dangerous condition?",
+      "back": "Ingesting Taenia solium eggs causes cysticercosis, including neurocysticercosis when cysts lodge in the central nervous system. Eating undercooked pork with larval cysts instead causes intestinal taeniasis."
+    },
+    {
+      "key": "22_1_cc19_0",
+      "front": "Name the identifying tell for each intestinal nematode: whipworm, pinworm, hookworm, and Ascaris.",
+      "back": "Whipworm (Trichuris) causes rectal prolapse; pinworm (Enterobius) causes perianal itch with a positive tape test; hookworm causes iron-deficiency anemia; Ascaris causes Loffler syndrome (pulmonary phase) and, in heavy burden, bowel obstruction."
+    },
+    {
+      "key": "22_2_q0",
+      "front": "Management of GI parasites collapses into a few drug families. Which drug covers most protozoa, which covers most worms, and which is the fluke drug?",
+      "back": "Metronidazole is the workhorse for tissue-invasive protozoa such as Entamoeba and Giardia; albendazole or mebendazole covers most nematodes (worms); and praziquantel is the drug for flukes (trematodes) and most tapeworms. Echinococcus is the exception, treated with albendazole rather than praziquantel."
+    },
+    {
+      "key": "22_2_cc3_0",
+      "front": "Which antiprotozoal covers Entamoeba and Giardia, and which different agent is used for Cyclospora and Cystoisospora?",
+      "back": "Metronidazole treats Entamoeba and Giardia. Cyclospora and Cystoisospora are treated with trimethoprim-sulfamethoxazole (TMP-SMX) instead."
+    },
+    {
+      "key": "22_2_cc5_0",
+      "front": "What is the default drug for most intestinal nematodes, and which two nematodes need a different agent (and what is it)?",
+      "back": "Most nematodes are treated with albendazole or mebendazole. Pinworm can also be treated with pyrantel pamoate, and Strongyloides requires ivermectin."
+    },
+    {
+      "key": "22_2_cc7_0",
+      "front": "Praziquantel covers tapeworms, Schistosoma, and flukes, but which cestode is the exception and what is used instead?",
+      "back": "Echinococcus is the exception: it is treated with albendazole, not praziquantel. Praziquantel remains the drug of choice for other tapeworms, Schistosoma, and liver/intestinal flukes."
+    },
+    {
+      "key": "22_3_q0",
+      "front": "The GI fungal section covers just two organisms. For each, what is the host setting and the identifying microscopic clue?",
+      "back": "Candida albicans is the commonest GI fungus, causing thrush and esophagitis in immunocompromised/HIV patients or after antibiotics, and shows pseudohyphae. Histoplasma is a dimorphic fungus acquired from bird/bat droppings that disseminates in the immunocompromised and appears as intracellular yeast within macrophages."
+    },
+    {
+      "key": "22_3_cc3_0",
+      "front": "What is the most common GI fungal infection, in which hosts does it cause esophagitis, and what is seen on microscopy?",
+      "back": "Candida albicans is the most common GI fungal infection. It causes oral thrush and esophagitis in immunocompromised or HIV patients and after antibiotic use, and shows pseudohyphae on microscopy."
+    },
+    {
+      "key": "22_3_cc5_0",
+      "front": "Which dimorphic fungus is acquired from bird and bat droppings, disseminates in the immunocompromised, and appears as intracellular yeast in macrophages?",
+      "back": "Histoplasma capsulatum. It is a dimorphic fungus acquired from bird and bat droppings, disseminates in immunocompromised hosts, and is identified as small intracellular yeasts within macrophages."
+    },
+    {
+      "key": "22_4_q0",
+      "front": "The two GI fungi map to two antifungal strategies. What is first-line for Candida and for Histoplasma, and when do you escalate?",
+      "back": "For Candida, fluconazole is first-line (nystatin suffices for mild oral disease), escalating to an echinocandin or amphotericin B for severe or systemic infection. For Histoplasma, itraconazole covers mild-to-moderate disease, while severe or disseminated infection starts with amphotericin B and then steps down to itraconazole."
+    },
+    {
+      "key": "22_4_cc3_0",
+      "front": "What is the first-line treatment for Candida esophagitis, when is nystatin sufficient, and how do you treat severe or systemic disease?",
+      "back": "Fluconazole is first-line for Candida esophagitis. Nystatin is adequate for mild oral thrush. Severe or systemic candidiasis is treated with an echinocandin or amphotericin B."
+    },
+    {
+      "key": "22_4_cc5_0",
+      "front": "How does treatment of Histoplasma differ between mild-moderate and severe/disseminated disease?",
+      "back": "Mild-to-moderate histoplasmosis is treated with itraconazole. Severe or disseminated disease is started on amphotericin B first, then stepped down to itraconazole."
+    }
+  ]
+}

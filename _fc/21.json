@@ -1,0 +1,141 @@
+{
+  "sections": [
+    {
+      "title": "Congenital and structural disorders",
+      "los": [
+        1
+      ]
+    },
+    {
+      "title": "Gastritis and stress ulceration",
+      "los": [
+        2,
+        3
+      ]
+    },
+    {
+      "title": "Peptic ulcer disease and gastric tumors",
+      "los": [
+        4,
+        5
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "key": "21_1_q0",
+      "front": "A 4-week-old infant has projectile vomiting. What is the classic presentation of hypertrophic pyloric stenosis, and which single electrolyte/acid-base derangement is the exam answer?",
+      "back": "It presents around 3 to 6 weeks of age with projectile non-bilious vomiting, a palpable olive-shaped epigastric mass, and visible left-to-right peristalsis. The classic derangement is a hypochloremic metabolic alkalosis from loss of gastric HCl."
+    },
+    {
+      "key": "21_1_cc2_0",
+      "front": "How do you distinguish omphalocele from gastroschisis on the basis of location and whether a covering sac is present?",
+      "back": "Omphalocele is a midline defect where herniated viscera are covered by a sac and it is associated with other syndromes. Gastroschisis is a para-umbilical defect with no covering sac."
+    },
+    {
+      "key": "21_1_cc4_0",
+      "front": "In congenital diaphragmatic hernia, which side is usually affected, what is the most common cause of death, and how do Bochdalek and Morgagni defects differ in location?",
+      "back": "It is usually left-sided, and pulmonary hypoplasia is the most common cause of death. Bochdalek hernias are posterolateral while Morgagni hernias are anterior."
+    },
+    {
+      "key": "21_1_cc7_0",
+      "front": "What is the full clinical picture of hypertrophic pyloric stenosis, including sex predilection, age, vomiting character, and exam findings?",
+      "back": "It is 3 to 5 times more common in males and presents at 3 to 6 weeks with projectile non-bilious vomiting. Exam reveals a palpable olive and visible left-to-right peristalsis."
+    },
+    {
+      "key": "21_1_cc9_0",
+      "front": "In pyloric stenosis, what acid-base disturbance results, what is the initial diagnostic test, and what is the definitive treatment?",
+      "back": "It causes a hypochloremic metabolic alkalosis from loss of gastric acid. Ultrasound is the initial test, and a Ramstedt pyloromyotomy is the definitive treatment."
+    },
+    {
+      "key": "21_2_q0",
+      "front": "Two named stress ulcers appear on every exam. Which one follows severe burns and which follows raised intracranial pressure or head injury, and what is the mechanism of each?",
+      "back": "Curling ulcers follow burns or shock and result from splanchnic hypoperfusion causing mucosal ischemia. Cushing ulcers follow raised intracranial pressure or head injury, where vagal stimulation drives gastric acid hypersecretion."
+    },
+    {
+      "key": "21_2_cc2_0",
+      "front": "What histologic feature distinguishes gastropathy from true acute gastritis, and which agents typically cause gastropathy?",
+      "back": "Gastropathy shows mucosal injury with an intact epithelium and absent inflammatory cells, classically from NSAIDs, alcohol, or bile. Gastritis is defined by neutrophil infiltration with erosion."
+    },
+    {
+      "key": "21_2_cc4_0",
+      "front": "Acute gastritis reflects an imbalance between damaging and defensive forces at the gastric mucosa. What makes up each side, and how do NSAIDs tip the balance?",
+      "back": "Damaging forces (acid and pepsin) overwhelm defensive forces (mucus, bicarbonate, mucosal blood flow, and prostaglandins). NSAIDs inhibit prostaglandin synthesis, stripping away a key mucosal defense."
+    },
+    {
+      "key": "21_2_cc6_0",
+      "front": "Contrast Curling and Cushing stress ulcers by their clinical trigger and underlying mechanism.",
+      "back": "Curling ulcers follow burns or shock and arise from mucosal ischemia due to hypovolemia. Cushing ulcers follow raised intracranial pressure, where vagal stimulation causes gastric acid hypersecretion."
+    },
+    {
+      "key": "21_3_q1",
+      "front": "Chronic gastritis is divided into types you must distinguish. How do H. pylori and autoimmune gastritis differ in their location, effect on acid secretion, and major complication?",
+      "back": "H. pylori gastritis is antral-predominant, can raise or maintain acid, and risks MALT lymphoma and adenocarcinoma. Autoimmune gastritis affects the fundus and body, causes hypochlorhydria and B12 deficiency with pernicious anemia, and spares the antrum."
+    },
+    {
+      "key": "21_3_cc4_0",
+      "front": "For H. pylori gastritis, what is the predominant location, key virulence factor, diagnostic stain, preferred biopsy site, and first-line eradication regimen?",
+      "back": "It is antral-predominant and the CagA virulence factor is important; the organism is seen with a Warthin-Starry stain on an antral biopsy. First-line triple therapy is a PPI plus clarithromycin and amoxicillin."
+    },
+    {
+      "key": "21_3_cc6_0",
+      "front": "Chronic H. pylori infection is a class 1 carcinogen. Which two gastric malignancies is it most associated with?",
+      "back": "Chronic H. pylori gastritis predisposes to gastric MALT lymphoma and gastric adenocarcinoma."
+    },
+    {
+      "key": "21_3_cc8_0",
+      "front": "What autoantibodies define autoimmune chronic gastritis, what acid and hematologic consequences follow, and which part of the stomach does it affect versus spare?",
+      "back": "It is driven by anti-parietal cell and anti-intrinsic factor antibodies, producing hypochlorhydria and B12 deficiency with pernicious anemia. It targets the fundus and corpus and spares the antrum."
+    },
+    {
+      "key": "21_3_cc10_0",
+      "front": "Ménétrier disease is a hypertrophic gastropathy. What is its characteristic morphology, acid status, and major clinical complication?",
+      "back": "It shows foveolar hyperplasia with corkscrew glands and giant gastric folds, accompanied by hypochlorhydria. The hallmark complication is a protein-losing gastroenteropathy. It is unrelated to Ménière ear disease."
+    },
+    {
+      "key": "21_4_q0",
+      "front": "Duodenal and gastric ulcers differ in how meals affect pain and which artery each threatens. What are the two distinctions flagged as very important?",
+      "back": "Duodenal ulcer pain improves with meals, whereas gastric ulcer pain worsens with meals. A posterior duodenal ulcer can erode the gastroduodenal artery, while a gastric ulcer on the lesser curvature can erode the left gastric artery."
+    },
+    {
+      "key": "21_4_cc3_0",
+      "front": "Compare the typical sites and H. pylori association of duodenal versus gastric ulcers, and how do benign and malignant ulcers differ on gross morphology?",
+      "back": "Duodenal ulcers make up about 90%, sit anteriorly near the pylorus, and are over 95% H. pylori-related; gastric ulcers favor the lesser curvature. Benign ulcers look punched-out with clean margins, while malignant ulcers have heaped-up margins."
+    },
+    {
+      "key": "21_4_cc6_0",
+      "front": "What is the meal-pain rule that distinguishes duodenal from gastric ulcers?",
+      "back": "Duodenal ulcer pain improves with meals, classically returning a few hours later. Gastric ulcer pain worsens with meals."
+    },
+    {
+      "key": "21_4_cc8_0",
+      "front": "Which arteries are threatened by a posterior duodenal ulcer versus a gastric lesser-curvature ulcer, and what complication results from kissing ulcers?",
+      "back": "A posterior duodenal ulcer can erode the gastroduodenal artery, causing emergent hemorrhage, while a gastric or lesser-curvature ulcer threatens the left gastric artery. Kissing ulcers (anterior and posterior) can lead to gastric outlet obstruction."
+    },
+    {
+      "key": "21_5_q0",
+      "front": "Gastric adenocarcinoma divides into two Lauren types. How do the intestinal and diffuse types differ in genetics, morphology, and the signature cell type?",
+      "back": "The intestinal type (~90%) is associated with APC mutations and intestinal metaplasia, occurs distally, and forms glands. The diffuse type (~10%) is driven by CDH1/E-cadherin loss, features signet-ring cells, and can produce linitis plastica."
+    },
+    {
+      "key": "21_5_cc3_0",
+      "front": "Among gastric polyps, which type is most common and benign, which is associated with APC, and which is premalignant, and what size raises that risk?",
+      "back": "Hyperplastic and inflammatory polyps account for about 90% and are benign, while fundic gland polyps are linked to APC. Adenomatous polyps make up roughly 10% and are premalignant, with risk rising above 2 cm."
+    },
+    {
+      "key": "21_5_cc5_0",
+      "front": "Detail the Lauren classification of gastric adenocarcinoma, contrasting the intestinal and diffuse types by frequency, genetics, morphology, and gross appearance.",
+      "back": "The intestinal type is about 90%, linked to APC and intestinal metaplasia, distal in location, and gland-forming. The diffuse type is about 10%, driven by CDH1/E-cadherin loss, composed of signet-ring cells, and can present as linitis plastica."
+    },
+    {
+      "key": "21_5_cc8_0",
+      "front": "What are the classic named metastatic and paraneoplastic signs of gastric carcinoma, and what does each represent?",
+      "back": "Virchow node is a left supraclavicular metastasis, Sister Mary Joseph nodule is a periumbilical metastasis, and Krukenberg tumor is bilateral ovarian metastasis from signet-ring cells. Trousseau sign is migratory thrombophlebitis as a paraneoplastic feature."
+    },
+    {
+      "key": "21_5_cc10_0",
+      "front": "Contrast gastric MALT lymphoma and GIST by their characteristic genetics, cell of origin, and immunohistochemical markers.",
+      "back": "Gastric MALT lymphoma carries t(11;18) or t(14;18), expresses CD19 and CD20, and can transform into diffuse large B-cell lymphoma. GIST arises from interstitial cells of Cajal, harbors KIT or PDGFRA mutations, and stains positive for CD117 and DOG1."
+    }
+  ]
+}

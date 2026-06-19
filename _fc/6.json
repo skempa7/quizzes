@@ -1,0 +1,150 @@
+{
+  "sections": [
+    {
+      "title": "Motility subdivisions and their roles",
+      "los": [1]
+    }
+  ],
+  "cards": [
+    {
+      "key": "6_1_q0",
+      "front": "If peristalsis is the one pattern that actually moves food forward, what do segmentation, mass movement, and haustration each add that peristalsis alone cannot?",
+      "back": "Peristalsis propels by contracting behind and relaxing ahead of the bolus, but segmentation mixes chyme with secretions to maximize absorption, mass movement provides the strong propulsive colonic surge that pushes contents toward the rectum, and haustration is the colon's slow churning that aids water reabsorption."
+    },
+    {
+      "key": "6_1_cc6_0",
+      "front": "Among the major GI motility patterns, which one is the dominant propulsive pattern, which one mixes, and which is the propulsive surge unique to the colon?",
+      "back": "Peristalsis is the dominant propulsive pattern (contract behind, relax ahead). Segmentation mixes contents without net forward movement. Mass movement is the colonic propulsive surge that advances stool toward the rectum."
+    },
+    {
+      "key": "6_1_cc6_1",
+      "front": "What is haustration, and which segment of the GI tract is it specific to?",
+      "back": "Haustration is the colon's variant of peristalsis, named for the haustra (the sacculated pockets of the colon). It is colon-specific and helps churn and dehydrate the fecal stream."
+    },
+    {
+      "key": "6_1_q11",
+      "front": "Trace a single swallow from voluntary to involuntary control, and explain why a solid meal leaves the stomach with a lag phase that a glass of water does not.",
+      "back": "Swallowing begins voluntarily with the oral preparatory and oral stages, then becomes involuntary at the pharyngeal swallow, which triggers esophageal peristalsis. Solids show a gastric emptying lag phase because the pylorus excludes particles larger than 2 mm, so the antrum must grind them down first, whereas liquids pass through immediately with no lag."
+    },
+    {
+      "key": "6_1_cc18_0",
+      "front": "During swallowing, which stages are under voluntary control, and at what point does the process become involuntary?",
+      "back": "The oral preparatory and oral stages are voluntary. Control becomes involuntary at the pharyngeal swallow, which is triggered as the bolus reaches the back of the mouth and initiates the reflexive swallowing sequence."
+    },
+    {
+      "key": "6_1_cc18_1",
+      "front": "How is the esophagus divided by muscle type, and which disease characteristically affects each portion?",
+      "back": "The upper one-third of the esophagus is striated (skeletal) muscle, affected in myasthenia gravis, while the lower two-thirds is smooth muscle, affected in scleroderma. Disease thus maps to the muscle type involved."
+    },
+    {
+      "key": "6_1_cc18_2",
+      "front": "What is the difference between primary and secondary esophageal peristalsis, and what triggers each?",
+      "back": "Primary peristalsis is swallow-initiated and carries the bolus down the esophagus. Secondary peristalsis is an enteric nervous system mop-up wave triggered by residual food or distension, clearing material that did not fully pass and producing the sensation of food stuck in the chest."
+    },
+    {
+      "key": "6_1_cc27_0",
+      "front": "In the stomach, which region performs accommodation, which performs mixing, and which performs emptying?",
+      "back": "The orad stomach (fundus) performs accommodation through tonic, near-threshold relaxation. The corpus (body) mixes. The antrum performs grinding and emptying. Each region's motility pattern matches its function."
+    },
+    {
+      "key": "6_1_cc27_1",
+      "front": "Why does a solid meal produce a gastric emptying lag phase while liquids do not?",
+      "back": "The pylorus excludes particles larger than 2 mm, so solids must undergo antral grinding before they can pass into the duodenum, creating the solid-meal lag phase. Liquids are not size-restricted and empty without a lag."
+    },
+    {
+      "key": "6_1_q32",
+      "front": "If slow waves never directly cause a contraction by themselves, what is their function, and what converts a slow wave into an actual contraction?",
+      "back": "Slow waves are rhythmic subthreshold oscillations of the membrane potential that set the pacemaking frequency and timing for possible contractions. A contraction occurs only when an excitatory input (such as ACh) brings the slow-wave crest above threshold, firing spike potentials (true action potentials) that drive smooth muscle contraction."
+    },
+    {
+      "key": "6_1_cc41_0",
+      "front": "What exactly are GI slow waves, and are they influenced by neural or hormonal input?",
+      "back": "Slow waves are regular subthreshold membrane oscillations, not action potentials, and they serve only a pacemaking role. Their basic rhythm is intrinsic and is not changed in frequency by neural or hormonal input."
+    },
+    {
+      "key": "6_1_cc41_1",
+      "front": "What is a spike potential in GI smooth muscle, and roughly what membrane voltage must be reached for it to fire?",
+      "back": "A spike potential is a true action potential that fires at the crest of a slow wave once threshold (around -40 mV) is reached. Acetylcholine sensitizes the muscle so that the slow-wave crest is more likely to reach threshold and trigger spikes."
+    },
+    {
+      "key": "6_1_cc41_2",
+      "front": "Which cells generate GI slow waves, and what functional unit is required for a contraction to occur?",
+      "back": "The interstitial cells of Cajal (ICCs) generate slow waves. Contraction requires the combined ICC and smooth-muscle unit. Loss of ICCs (as in gastroparesis) impairs the ability to generate coordinated contractions."
+    },
+    {
+      "key": "6_1_q46",
+      "front": "Why does your stomach growl when you skip a meal, and what stops that pattern the moment you eat — but only if you eat, not if you are fed intravenously?",
+      "back": "The growling reflects the migrating motor complex (MMC), a fasting-only housekeeping pattern that sweeps the gut roughly every 90 minutes to clear residue and keep the small bowel sterile. It is halted by enteral nutrients physically present in the gut, so IV (parenteral) feeding does not stop it because no food contacts the bowel lumen."
+    },
+    {
+      "key": "6_1_cc54_0",
+      "front": "What is the migrating motor complex, how often does it occur, and what is the clinical consequence of losing it?",
+      "back": "The MMC is a fasting-only housekeeping pattern that occurs roughly every 90 minutes to sweep the small bowel and keep it sterile. Reduced MMC activity (as seen in IBS) predisposes to small intestinal bacterial overgrowth (SIBO)."
+    },
+    {
+      "key": "6_1_cc54_1",
+      "front": "What stops the migrating motor complex, and which part of the nervous system drives it?",
+      "back": "The MMC is stopped by enteral nutrients physically present in the gut, not by intravenous feeding. It is driven entirely by the enteric nervous system without a vagovagal reflex."
+    },
+    {
+      "key": "6_1_cc54_2",
+      "front": "What are the opposing effects of motilin and CCK on the MMC and gastric emptying?",
+      "back": "Motilin stimulates the MMC and promotes gastric emptying, whereas CCK inhibits gastric emptying. They act as opposing hormones in controlling motility."
+    },
+    {
+      "key": "6_1_q59",
+      "front": "Vomiting uses the same machinery as normal propulsion — so what single change turns orderly forward motility into expulsion, and what triggers it?",
+      "back": "The single change is reversal of the propulsive wave: a retrograde antiperistaltic wave moves contents backward up through the LES, UES, and out the mouth. It is initiated centrally by the chemoreceptor trigger zone (CRTZ), classically triggered by irritants such as chemotherapy agents."
+    },
+    {
+      "key": "6_1_cc64_0",
+      "front": "In mechanical terms, how does vomiting differ from normal peristalsis?",
+      "back": "Vomiting is a retrograde antiperistaltic wave that moves contents backward, out through the lower esophageal sphincter, then the upper esophageal sphincter, and finally the mouth. It is essentially reversed peristalsis."
+    },
+    {
+      "key": "6_1_cc64_1",
+      "front": "What structure initiates emesis, and what is the classic irritant trigger acting on it?",
+      "back": "The chemoreceptor trigger zone (CRTZ) initiates emesis. Chemotherapy is the classic irritant-driven trigger that stimulates the CRTZ to provoke vomiting."
+    },
+    {
+      "key": "6_1_q69",
+      "front": "In the smooth-muscle esophagus, why must the inhibitory signal fire before the excitatory one, and how can a single GI hormone coordinate accommodation and emptying at once?",
+      "back": "Inhibitory neurons (NO/VIP) must fire first to relax the segment ahead of the bolus so that the following excitatory ACh-driven contraction can push the bolus into a receptive, relaxed segment, producing orderly peristalsis. CCK coordinates both ends of digestion by inhibiting gastric emptying while promoting orad (fundic) accommodation, slowing delivery to the duodenum."
+    },
+    {
+      "key": "6_1_cc75_0",
+      "front": "Which neurotransmitters drive excitatory versus inhibitory esophageal motility, and which fires first relative to the bolus?",
+      "back": "Acetylcholine is excitatory and contracts the muscle, while nitric oxide and VIP are inhibitory and relax it. Inhibition fires first, ahead of the bolus, and the lower esophagus has relatively more inhibitory tone."
+    },
+    {
+      "key": "6_1_cc75_1",
+      "front": "Which motility functions depend on a vagovagal reflex, and which is purely enteric?",
+      "back": "Gastric accommodation and pancreatic secretion are mediated by vagovagal reflexes. The migrating motor complex is enteric-only, requiring no vagovagal input. This reflects a split in the control system between CNS-linked and purely local control."
+    },
+    {
+      "key": "6_1_cc75_2",
+      "front": "What are the two simultaneous motility actions of CCK on the stomach?",
+      "back": "CCK inhibits gastric emptying while simultaneously promoting orad (fundic) accommodation. This single hormone thus slows delivery of chyme to the duodenum and helps the proximal stomach relax to store the meal."
+    },
+    {
+      "key": "6_1_q80",
+      "front": "Achalasia, gastroparesis, Hirschsprung disease, and fecal incontinence each break a different link in the motility chain — which link does each break, and what is the tell for each?",
+      "back": "Achalasia breaks LES relaxation and esophageal peristalsis (dysphagia to both solids and liquids with a bird-beak barium sign). Gastroparesis breaks gastric emptying, often from diabetic ICC loss (delayed emptying, early satiety). Hirschsprung breaks the distal enteric ganglia (aganglionic segment, failure to pass meconium, obstruction). Fecal incontinence breaks voluntary external anal sphincter control (loss of continence)."
+    },
+    {
+      "key": "6_1_cc92_0",
+      "front": "What is the motility defect in achalasia, and how does it present on swallowing and barium imaging?",
+      "back": "Achalasia is a neurogenic disorder in which the LES fails to relax and esophageal peristalsis is lost. It causes dysphagia to both solids and liquids and shows the classic bird-beak tapering on barium swallow."
+    },
+    {
+      "key": "6_1_cc92_1",
+      "front": "How does gastroparesis differ from a post-pylorectomy state at the level of gastric emptying?",
+      "back": "Gastroparesis is disorganized, delayed gastric emptying, classically from diabetic loss of interstitial cells of Cajal. After pylorectomy the opposite occurs: rapid uncontrolled emptying causes dumping syndrome. They represent opposite extremes of emptying."
+    },
+    {
+      "key": "6_1_cc92_2",
+      "front": "What is the underlying defect in Hirschsprung disease, and which structure is essential for maintaining continence?",
+      "back": "Hirschsprung disease is caused by an aganglionic distal segment of bowel resulting from failure of enteric neural crest cell migration, leading to a non-relaxing obstructed segment. Continence depends on the voluntary external anal sphincter."
+    }
+  ]
+}

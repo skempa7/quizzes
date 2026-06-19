@@ -1,0 +1,72 @@
+{
+  "sections": [
+    {
+      "title": "What ibs is and how it is diagnosed", "los": [1, 2]
+    },
+    {
+      "title": "Workup and differential diagnosis", "los": [3, 4]
+    }
+  ],
+  "cards": [
+    {
+      "key": "16_1_cc1_0",
+      "front": "What kind of disorder is irritable bowel syndrome at the physiological level, why does that make it a diagnosis of exclusion, and what molecular mimicry is implicated in the post-infectious subset?",
+      "back": "IBS is a functional brain-gut disorder driven by visceral hypersensitivity and altered motility with no structural lesion, so it is a diagnosis of exclusion. The post-infectious subset is linked to anti-vinculin and anti-CdtB antibodies arising from molecular mimicry."
+    },
+    {
+      "key": "16_2_q0",
+      "front": "What single sentence in a question stem screams IBS, what Rome IV criteria sit behind it, what findings force you to stop and work the patient up, and how does subtype steer treatment?",
+      "back": "Pain relieved by defecation is the classic IBS tell, reflecting the Rome IV criterion of recurrent abdominal pain at least one day per week for three months that is related to defecation or to a change in stool frequency or form. Alarm features such as bleeding, weight loss, anemia, or nocturnal symptoms mandate a workup before diagnosis. Bristol stool subtype (IBS-C, IBS-D, or IBS-M) then guides drug choice."
+    },
+    {
+      "key": "16_2_cc2_0",
+      "front": "On the boards, which specific feature in a stem is the giveaway that the diagnosis is IBS, and which Rome IV criterion does it correspond to?",
+      "back": "Pain that is relieved by defecation is the board tell for IBS. It is the Rome IV \"related to defecation\" criterion presented in disguise."
+    },
+    {
+      "key": "16_2_cc4_0",
+      "front": "What are the full Rome IV diagnostic criteria for IBS, including the required pain frequency, duration, and the supporting features?",
+      "back": "Rome IV requires recurrent abdominal pain at least one day per week over the past three months, plus at least two of three features: related to defecation, a change in stool frequency, or a change in stool form."
+    },
+    {
+      "key": "16_2_cc9_0",
+      "front": "How is IBS subtyped using the Bristol Stool Form Scale, and why does that subtype matter clinically?",
+      "back": "Subtype is set by the predominant Bristol form: IBS-C is hard or lumpy stool (BSFS 1-2), IBS-D is loose or watery stool (BSFS 6-7), and IBS-M is mixed. The subtype determines the drug choice."
+    },
+    {
+      "key": "16_2_cc14_0",
+      "front": "Why is IBS called a diagnosis of exclusion, which alarm features should trigger a workup regardless of age, and how often does a limited workup clear organic disease when no alarms are present?",
+      "back": "IBS is a diagnosis of exclusion because there is no structural lesion. Alarm features such as hematochezia, melena, nocturnal diarrhea, weight loss, anemia, or a relevant family history mandate workup at any age. In their absence, a limited workup excludes organic disease in over 95 percent of patients."
+    },
+    {
+      "key": "16_3_q0",
+      "front": "Celiac disease mimics IBS and belongs in the exclusion workup, so which serology do you send first, which test confirms it, and what does a normal limited workup actually buy you?",
+      "back": "Send TTG-IgA first as the screening serology, and confirm a positive result with EMA-IgA, checking total IgA to avoid a false negative. A normal limited workup in a patient without alarm features excludes organic disease in over 95 percent of cases, which is the basis for diagnosing IBS by exclusion."
+    },
+    {
+      "key": "16_3_cc3_0",
+      "front": "In the celiac workup for suspected IBS, which serology is first-line, which is confirmatory, what additional test prevents a false negative, and which antibodies instead point to post-infectious IBS?",
+      "back": "TTG-IgA is first-line and EMA-IgA is confirmatory, with a total IgA level checked to avoid a false negative from IgA deficiency. Anti-vinculin and anti-CdtB antibodies instead suggest post-infectious IBS rather than celiac disease."
+    },
+    {
+      "key": "16_3_cc5_0",
+      "front": "When a patient has no alarm features, what does a limited workup consist of and how reliably does it exclude organic disease?",
+      "back": "A limited workup includes basic labs, celiac serology, and fecal calprotectin if indicated. With no alarm features, this excludes organic disease in over 95 percent of patients, supporting an IBS diagnosis by exclusion."
+    },
+    {
+      "key": "16_4_q0",
+      "front": "What single confusion did the professor warn about at the start of the lecture, how do you distinguish the two conditions, and which classic distractor is falsely offered as an IBS association?",
+      "back": "The warning was not to confuse IBS with IBD. IBS is functional with normal labs and endoscopy, whereas IBD is inflammatory with elevated calprotectin, mucosal disease, and systemic signs. Colorectal cancer is the classic distractor falsely listed as an IBS association when it is actually only a differential and alarm consideration."
+    },
+    {
+      "key": "16_4_cc2_0",
+      "front": "How do you distinguish IBS from IBD using objective findings, and what should you look for in the stem to tell them apart?",
+      "back": "IBS is functional with normal labs and endoscopy, while IBD is inflammatory with elevated calprotectin, mucosal disease, and systemic signs. Read the stem for objective findings, which point toward IBD rather than IBS."
+    },
+    {
+      "key": "16_4_cc5_0",
+      "front": "Which comorbid conditions are genuinely associated with IBS, and which commonly offered condition is a distractor that is not actually an IBS association?",
+      "back": "IBS is associated with anxiety, depression, PTSD, and fibromyalgia. Colorectal cancer is not an IBS association; it is a differential and alarm consideration that is often used as a classic distractor."
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+{
+  "sections": [
+    {
+      "title": "Energy metabolism vocabulary and liver pathways",
+      "los": [1, 2, 3]
+    },
+    {
+      "title": "Regulation of food intake and feeding versus fasting",
+      "los": [4, 5, 6]
+    },
+    {
+      "title": "Insulin and glucagon control",
+      "los": [7, 8]
+    }
+  ],
+  "cards": [
+    {
+      "key": "9_1_q0",
+      "front": "In metabolic vocabulary, what direction of reaction does the suffix -lysis signal versus -genesis, and why does the suffix alone tell you the answer?",
+      "back": "The suffix -lysis means breaking down or splitting (a catabolic, degrading direction), while -genesis means making or building up (an anabolic, synthetic direction). So glycogenolysis breaks glycogen down whereas glycogenesis builds it, and the suffix reveals the direction before any biochemistry is known."
+    },
+    {
+      "key": "9_1_cc2_0",
+      "front": "How is the respiratory quotient (RQ) defined in terms of gas exchange?",
+      "back": "The respiratory quotient is the volume of CO2 released divided by the volume of O2 absorbed."
+    },
+    {
+      "key": "9_1_cc2_1",
+      "front": "What does basal metabolic rate (BMR) measure, and is it the same for everyone?",
+      "back": "Basal metabolic rate is the number of calories needed for basic life-sustaining function at rest. It differs from person to person."
+    },
+    {
+      "key": "9_1_cc4_0",
+      "front": "What distinguishes aerobic metabolism from glycolysis in terms of oxygen use and pathway?",
+      "back": "Aerobic metabolism is the oxygen-using TCA (Krebs) pathway, whereas glycolysis alone is the anaerobic front end that does not require oxygen."
+    },
+    {
+      "key": "9_2_q0",
+      "front": "Deep into a fast with hepatic glycogen nearly exhausted but blood glucose still defended, which liver pathways are running and where is the glucose coming from?",
+      "back": "With glycogen depleted, the liver maintains blood glucose mainly through gluconeogenesis, generating new glucose from non-carbohydrate precursors such as amino acids, glycerol, and lactate. Fatty acid oxidation and ketogenesis supply alternative fuel so glucose is spared for the brain."
+    },
+    {
+      "key": "9_2_cc6_0",
+      "front": "When blood glucose is high, which liver pathway stores glucose as glycogen, and which pathway reverses that storage?",
+      "back": "Glycogenesis stores excess glucose as glycogen when blood glucose is high, and glycogenolysis reverses the process by breaking glycogen back down to glucose."
+    },
+    {
+      "key": "9_2_cc8_0",
+      "front": "Which enzyme converts pyruvate to acetyl-CoA, the molecule that feeds into the TCA cycle?",
+      "back": "Pyruvate dehydrogenase converts pyruvate to acetyl-CoA, the convergence molecule that enters the TCA cycle."
+    },
+    {
+      "key": "9_2_cc14_0",
+      "front": "What metabolic conditions must be met before hepatic ketogenesis is triggered?",
+      "back": "Ketogenesis fires only when both glucose and glycogen stores are depleted."
+    },
+    {
+      "key": "9_2_cc14_1",
+      "front": "What happens to carbohydrate intake that exceeds the liver's glycogen storage capacity?",
+      "back": "Excess carbohydrate beyond glycogen capacity is routed into lipogenesis and stored as triglyceride."
+    },
+    {
+      "key": "9_3_q0",
+      "front": "Two hepatocytes differ only in their ATP:AMP ratio. From that alone, what can you predict about which metabolic pathways each one is running?",
+      "back": "The hepatocyte with a high ATP:AMP ratio is energy-replete, so glycolysis is inhibited and storage pathways (glycogenesis and lipogenesis) are favored. The hepatocyte with a low ATP:AMP ratio is energy-depleted, so breakdown pathways are activated to generate ATP."
+    },
+    {
+      "key": "9_3_cc6_0",
+      "front": "How does the ATP:AMP ratio act as a switch between fuel storage and fuel breakdown?",
+      "back": "A high ATP:AMP ratio inhibits glycolysis and drives storage pathways (glycogenesis and lipogenesis), while a low ATP:AMP ratio shifts metabolism toward breakdown to regenerate ATP."
+    },
+    {
+      "key": "9_4_q0",
+      "front": "When the stomach is empty and signaling hunger, trace the hormone from the stomach to the hypothalamic peptide it releases and name the appetite-suppressing signal it shuts off.",
+      "back": "An empty stomach releases ghrelin, which acts on the hypothalamus to release the orexigenic peptides NPY and AgRP, driving hunger. Ghrelin also inhibits alpha-MSH, the appetite-suppressing (anorexigenic) signal."
+    },
+    {
+      "key": "9_4_cc6_0",
+      "front": "Through what hypothalamic peptides does ghrelin drive hunger, and which anorexigenic signal does it suppress?",
+      "back": "Ghrelin, released by the empty stomach, triggers hypothalamic release of NPY and AgRP to produce hunger, and it also inhibits alpha-MSH."
+    },
+    {
+      "key": "9_4_cc6_1",
+      "front": "Which signals are orexigenic (appetite-stimulating) and which are anorexigenic (appetite-suppressing)?",
+      "back": "Orexigenic signals include NPY, AgRP, ghrelin, and cortisol. Anorexigenic signals include alpha-MSH, insulin, leptin, GLP-1, CCK, and serotonin."
+    },
+    {
+      "key": "9_5_q0",
+      "front": "During an overnight fast the brain still receives glucose. Which four hormones make that happen, and which single organ are they all leaning on?",
+      "back": "Glucagon, epinephrine, cortisol, and growth hormone are the counter-regulatory hormones that defend brain glucose during fasting. They all act on the liver, driving glycogenolysis and gluconeogenesis to keep glucose available."
+    },
+    {
+      "key": "9_5_cc6_0",
+      "front": "Which four counter-regulatory hormones defend blood glucose for the brain during fasting?",
+      "back": "The fasting brain-glucose defenders are glucagon, epinephrine, cortisol, and growth hormone."
+    },
+    {
+      "key": "9_5_cc6_1",
+      "front": "Beyond their digestive role in the fed state, what additional appetite function do GLP-1 and CCK share?",
+      "back": "GLP-1 and CCK are fed-state digestive hormones that also act as anorexigenic satiety signals, suppressing further food intake."
+    },
+    {
+      "key": "9_6_cc1_0",
+      "front": "What does secretin trigger to neutralize chyme, and how does GLP-1 modulate secretin to protect pepsin activation?",
+      "back": "Secretin stimulates bicarbonate secretion, which neutralizes acidic chyme. GLP-1 inhibits secretin so that gastric acid is preserved, allowing continued activation of pepsin."
+    },
+    {
+      "key": "9_7_q0",
+      "front": "A protein meal raises both insulin and glucagon, but a carbohydrate meal raises insulin while suppressing glucagon. Why does the body want glucagon up after a steak?",
+      "back": "A protein-rich, low-carbohydrate meal raises insulin, which would otherwise drive glucose into cells and cause hypoglycemia. The simultaneous rise in glucagon stimulates hepatic glucose output, preventing the blood glucose from falling too low when little carbohydrate has been eaten."
+    },
+    {
+      "key": "9_7_cc2_0",
+      "front": "What factors stimulate insulin secretion, and what factors inhibit it?",
+      "back": "Insulin secretion is stimulated by hyperglycemia, amino acids, and GIP. It is inhibited by glucagon, hypoglycemia, somatostatin, exercise, and leptin."
+    },
+    {
+      "key": "9_7_cc2_1",
+      "front": "What factors stimulate glucagon secretion, and what factors inhibit it?",
+      "back": "Glucagon secretion is stimulated by hypoglycemia, a protein meal, stress, and exercise. It is inhibited by hyperglycemia, carbohydrates, and GLP-1."
+    },
+    {
+      "key": "9_7_cc4_0",
+      "front": "Why does the dual stimulation of insulin and glucagon by amino acids protect against hypoglycemia after a low-carb protein meal?",
+      "back": "Amino acids stimulate both insulin and glucagon at the same time. The concurrent glucagon rise raises hepatic glucose output, preventing the insulin-driven hypoglycemia that would otherwise follow a low-carbohydrate protein meal."
+    },
+    {
+      "key": "9_8_q0",
+      "front": "After a large pasta dinner, predict the dominant pancreatic hormone, the liver's main action, and where the absorbed glucose ends up.",
+      "back": "The carbohydrate load raises blood glucose, so insulin is the dominant pancreatic hormone. The liver shifts to storage, running glycogenesis and lipogenesis. The absorbed glucose is stored as glycogen, with any surplus converted to triglyceride."
+    },
+    {
+      "key": "9_8_cc8_0",
+      "front": "In the fasting state, trace the hormonal chain that drives the liver to export glucose.",
+      "back": "During fasting, blood glucose falls, so insulin drops and glucagon rises. Glucagon drives the liver to run glycogenolysis and gluconeogenesis, exporting glucose into the blood."
+    },
+    {
+      "key": "9_8_cc10_0",
+      "front": "In the fed state, trace the hormonal chain that drives the liver to store fuel, and state the fate of surplus glucose.",
+      "back": "After feeding, blood glucose rises and insulin rises, driving glycogenesis and lipogenesis to store fuel. Surplus glucose beyond glycogen capacity is converted to triglyceride."
+    },
+    {
+      "key": "9_8_cc10_1",
+      "front": "How does the insulin:glucagon ratio shift across the balanced, post-carbohydrate, and fasting/stress states?",
+      "back": "The insulin:glucagon ratio is roughly 2:1 in a balanced state, about 10:1 after a carbohydrate meal, and about 1:2 during fasting or stress."
+    },
+    {
+      "key": "9_8_cc10_2",
+      "front": "Why are insulin and glucagon never both high at the same time?",
+      "back": "Insulin and glucagon are under reciprocal control, with each hormone inhibiting the secretion of the other, so the two are never elevated simultaneously."
+    }
+  ]
+}

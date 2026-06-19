@@ -1,0 +1,133 @@
+{
+  "sections": [
+    {"title": "Microsporidiosis in immunocompromised patients", "los": [1]},
+    {"title": "Fungal toxins and intoxications", "los": [2]}
+  ],
+  "cards": [
+    {
+      "key": "3_1_cc1_0",
+      "front": "How are microsporidia now classified, and what key structural features define these organisms that cause GI infection in immunocompromised patients?",
+      "back": "Microsporidia are now classified as fungi (reclassified from protozoa). They are obligate intracellular, spore-forming organisms with small spores roughly 1 to 2 micrometers in size."
+    },
+    {
+      "key": "3_1_cc3_0",
+      "front": "Which patient populations are at greatest risk for symptomatic microsporidiosis, and what happens when an immunocompetent person is infected?",
+      "back": "The main risk factor is immunocompromise, especially HIV with a CD4 count below 100 or organ transplant. Infections do occur in immunocompetent people but are rare and self-limited."
+    },
+    {
+      "key": "3_1_cc3_1",
+      "front": "How is microsporidiosis transmitted, and what makes its spores environmentally hardy?",
+      "back": "Transmission is fecal-oral via contaminated water or food. The spores are durable and can survive in the environment for months."
+    },
+    {
+      "key": "3_1_cc5_0",
+      "front": "By what stepwise mechanism does a microsporidian spore invade an enterocyte and ultimately produce diarrhea?",
+      "back": "The spore everts its polar filament to directly inject sporoplasm into the host cell cytoplasm, where it replicates intracellularly. This leads to enterocyte rupture and villous atrophy, producing diarrhea."
+    },
+    {
+      "key": "3_1_cc7_0",
+      "front": "What is the classic clinical presentation of GI microsporidiosis in an HIV patient?",
+      "back": "An HIV patient with a low CD4 count presenting with chronic non-bloody watery diarrhea, weight loss, and fat malabsorption."
+    },
+    {
+      "key": "3_1_cc11_0",
+      "front": "Which stain is used to diagnose microsporidiosis, and what does a positive result look like under the microscope?",
+      "back": "The modified trichrome (Weber) stain is used. It shows pink-red spores against a green background."
+    },
+    {
+      "key": "3_1_cc13_0",
+      "front": "How does treatment of intestinal microsporidiosis differ by species, and what additional therapy is essential in HIV patients?",
+      "back": "Enterocytozoon bieneusi is treated with fumagillin, while Encephalitozoon intestinalis is treated with albendazole. In both cases, antiretroviral therapy is given to restore immune function."
+    },
+    {
+      "key": "3_2_cc2_0",
+      "front": "Among fungal intoxications, what is the clinical significance of mycetismus gastrointestinalis and how much exam attention does it warrant?",
+      "back": "Mycetismus gastrointestinalis is a benign, self-limited mushroom intoxication. It is low-yield and not an exam focus, so it is enough to simply recognize the term."
+    },
+    {
+      "key": "3_2_cc2_1",
+      "front": "How does the time of symptom onset help distinguish benign mushroom intoxication from lethal amatoxin poisoning?",
+      "back": "Early onset under 6 hours with a self-limited course points to benign mycetismus. Delayed onset at 6 to 24 hours suggests amatoxin poisoning, which is potentially lethal."
+    },
+    {
+      "key": "3_2_cc5_0",
+      "front": "What is the molecular mechanism of alpha-amanitin toxicity, and which organs bear the brunt of the damage?",
+      "back": "Alpha-amanitin irreversibly inhibits RNA polymerase II, halting mRNA synthesis so no new protein is made and the cell dies. Hepatocytes are hit hardest because they are highly transcription-dependent, with renal proximal tubule cells affected second."
+    },
+    {
+      "key": "3_2_cc5_1",
+      "front": "For amatoxin poisoning, what aspect of the toxin should you focus on rather than its chemical structure?",
+      "back": "Focus on the mechanism, which is inhibition of RNA polymerase II. The detailed chemical structure of the toxin is not a testable point."
+    },
+    {
+      "key": "3_2_cc7_0",
+      "front": "What characterizes phase 1 of amatoxin (amanitin) poisoning, and why can it be misleading?",
+      "back": "Phase 1, roughly 6 to 24 hours after ingestion, presents with nausea, severe vomiting, watery or bloody diarrhea, and abdominal cramps. It mimics ordinary food poisoning, which can be misleading."
+    },
+    {
+      "key": "3_2_cc7_1",
+      "front": "What happens during phase 2 of amatoxin poisoning, and why is this stage clinically dangerous?",
+      "back": "Phase 2, about 24 to 48 hours in, brings apparent clinical improvement as GI symptoms abate. It is dangerous because patients may be falsely reassured or discharged just before liver failure sets in."
+    },
+    {
+      "key": "3_2_cc7_2",
+      "front": "What defines phase 3 of amatoxin poisoning, and which lab and clinical findings appear?",
+      "back": "Phase 3, around days 3 to 5, is fulminant hepatic failure with ALT and AST climbing into the thousands, rising INR, jaundice, and hepatic encephalopathy. It is often accompanied by acute kidney injury."
+    },
+    {
+      "key": "3_2_cc11_0",
+      "front": "What are the immediate management steps for suspected amatoxin mushroom poisoning, and what must you avoid doing?",
+      "back": "Give activated charcoal if within 6 hours, provide aggressive IV fluids, identify the mushroom, and transfer to a liver center. Do not discharge the patient based on the apparent improvement of phase 2."
+    },
+    {
+      "key": "3_2_cc20_0",
+      "front": "Which fungi produce aflatoxin, and under what storage conditions and foods does contamination typically occur?",
+      "back": "Aspergillus flavus and Aspergillus parasiticus produce aflatoxin. Contamination occurs on improperly stored grains such as corn, peanuts, nuts, and oilseeds."
+    },
+    {
+      "key": "3_2_cc20_1",
+      "front": "For aflatoxin, which two facts should you prioritize over memorizing its isoforms?",
+      "back": "Prioritize the mechanism of toxicity and its association with hepatocellular carcinoma. The specific isoforms (B1, B2, G1, G2) are not testable."
+    },
+    {
+      "key": "3_2_cc22_0",
+      "front": "By what mechanism does aflatoxin cause hepatocellular carcinoma at the molecular level?",
+      "back": "CYP450 activates aflatoxin into a reactive epoxide that forms a DNA adduct. This produces a characteristic p53 codon 249 mutation, driving hepatocellular carcinoma."
+    },
+    {
+      "key": "3_2_cc24_0",
+      "front": "Why is the combination of hepatitis B and aflatoxin exposure especially dangerous for hepatocellular carcinoma risk?",
+      "back": "HBV alone and aflatoxin alone each raise HCC risk only modestly, but together their effects synergize. The combined risk multiplies to roughly 30 to 60 times baseline."
+    },
+    {
+      "key": "3_2_cc26_0",
+      "front": "How is aflatoxin contamination prevented, and why does cooking fail to make contaminated grain safe?",
+      "back": "Prevention relies on keeping grains dry and cool to prevent fungal growth. Cooking does not help because aflatoxins are heat-stable."
+    },
+    {
+      "key": "3_2_cc35_0",
+      "front": "What is coprine, where does it come from, and what is its active metabolite?",
+      "back": "Coprine is a toxin that acts like Antabuse (disulfiram) and comes from the mushroom Coprinus atramentarius. Its active metabolite is 1-aminocyclopropanol."
+    },
+    {
+      "key": "3_2_cc37_0",
+      "front": "How does the coprine reaction produce its symptoms when a person drinks alcohol after eating the mushroom?",
+      "back": "The coprine metabolite blocks aldehyde dehydrogenase, just like disulfiram. Acetaldehyde then accumulates when alcohol is consumed, causing flushing, tachycardia, and nausea."
+    },
+    {
+      "key": "3_2_cc39_0",
+      "front": "What counseling should a patient receive after eating Coprinus atramentarius regarding alcohol?",
+      "back": "Advise avoiding alcohol for about 3 days after eating Coprinus atramentarius. Drinking alcohol outside that window produces no symptoms."
+    },
+    {
+      "key": "3_2_cc39_1",
+      "front": "What is the timing of onset and resolution of the coprine-alcohol (Antabuse-like) reaction?",
+      "back": "Symptoms begin 15 to 30 minutes after drinking alcohol. The reaction is self-limited and resolves within 2 to 3 hours."
+    },
+    {
+      "key": "3_2_cc41_0",
+      "front": "How is the coprine-alcohol reaction treated, and is a specific antidote available?",
+      "back": "Treatment is supportive with fluids, anti-emetics, and monitoring. There is no specific antidote, and the reaction is self-limited."
+    }
+  ]
+}

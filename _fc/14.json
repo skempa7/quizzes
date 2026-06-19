@@ -1,0 +1,63 @@
+{
+  "sections": [
+    {"title": "Localizing and diffuse abdominal pain", "los": [1, 2]},
+    {"title": "Emergency and non-emergency acute abdomen", "los": [3, 4]}
+  ],
+  "cards": [
+    {
+      "key": "14_1_q0",
+      "front": "A patient points to one quadrant and says the pain stays there. Why does that fact, that it localizes, make the diagnostic job easier than with diffuse pain?",
+      "back": "Localized pain points to a specific organ in that quadrant (somatic parietal peritoneal irritation), which narrows the differential to a short list. Diffuse pain has no single organ to anchor it, so the workup is broader."
+    },
+    {
+      "key": "14_1_cc3_0",
+      "front": "When abdominal pain localizes to a single quadrant, how do you translate each region into its likely organ and differential?",
+      "back": "Localized pain maps to the organ underlying that quadrant, giving a short differential: RUQ liver or gallbladder, epigastric stomach or pancreas, RLQ appendix, LLQ sigmoid colon, and suprapubic bladder."
+    },
+    {
+      "key": "14_1_cc4_0",
+      "front": "Why does abdominal pain make gastric cancer easy to miss until it is advanced?",
+      "back": "In gastric cancer the abdominal pain is typically a late sign, so by the time pain brings the patient in the disease is often already advanced, which is a key reason it is caught late."
+    },
+    {
+      "key": "14_2_cc1_0",
+      "front": "When abdominal pain is diffuse rather than localized to one quadrant, what categories of cause should you think of?",
+      "back": "Diffuse, non-localizing pain suggests generalized peritonitis, early visceral pain before it localizes, or a metabolic or systemic cause. In every case you must screen for the four life-threatening surgical emergencies."
+    },
+    {
+      "key": "14_3_q0",
+      "front": "Four causes of an acute abdomen go straight to surgery and must be known cold. What are they, and what single finding turns each from a maybe into an emergency?",
+      "back": "The four are ruptured AAA (hypotension with a pulsatile mass), perforated viscus (free air under the diaphragm), ischemic bowel (pain out of proportion with lactic acidosis), and major hemorrhage (hemodynamic instability). Each named finding converts suspicion into an immediate surgical emergency."
+    },
+    {
+      "key": "14_3_cc2_0",
+      "front": "Which four causes of abdominal pain mean surgery now, and how do they shape triage of every other cause?",
+      "back": "The surgical four are ruptured AAA, perforated viscus, ischemic bowel, and major hemorrhage. Every other cause of an acute abdomen is triaged against these, because they require operating immediately rather than observation."
+    },
+    {
+      "key": "14_3_cc4_0",
+      "front": "What is the classic clinical triad of a ruptured abdominal aortic aneurysm, and where are most AAAs located?",
+      "back": "The triad is hypotension, a pulsatile abdominal mass, and back or abdominal pain. Most AAAs are infrarenal, and a rupture demands immediate surgery rather than observation."
+    },
+    {
+      "key": "14_3_cc9_0",
+      "front": "An upright abdominal film shows free air under the diaphragm. What does this represent and how urgent is it?",
+      "back": "Free air under the diaphragm is pneumoperitoneum, indicating a perforated viscus, which is a surgical emergency. It must never be dismissed as benign bowel gas."
+    },
+    {
+      "key": "14_3_cc11_0",
+      "front": "What triad of findings points to mesenteric ischemia, and which cardiac history should raise your suspicion?",
+      "back": "Mesenteric ischemia classically presents with pain out of proportion to exam findings, an elevated WBC count, and metabolic acidosis from rising lactate. Atrial fibrillation or another embolic source heightens suspicion, and dead bowel requires surgery."
+    },
+    {
+      "key": "14_4_q0",
+      "front": "Some acute abdomens can be watched rather than rushed to the OR. What are the classic observe-able causes, and what bedside change tells you to stop observing and operate?",
+      "back": "Classic observe-able causes include early appendicitis, uncomplicated cholecystitis or cholelithiasis, pelvic inflammatory disease, and pancreatitis. If the pain worsens or peritoneal signs develop, you stop observing and proceed to surgery."
+    },
+    {
+      "key": "14_4_cc2_0",
+      "front": "Which acute abdomen diagnoses are reasonable to observe, and what is the rule for when observation must convert to operation?",
+      "back": "Early appendicitis, uncomplicated cholecystitis or cholelithiasis, PID, and pancreatitis can often be observed. The rule is that if pain worsens or peritoneal signs appear, you operate."
+    }
+  ]
+}

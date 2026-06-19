@@ -1,0 +1,73 @@
+{
+  "sections": [
+    {
+      "title": "Diagnosing and managing acute appendicitis",
+      "los": [5, 6]
+    },
+    {
+      "title": "Investigating the acute abdomen",
+      "los": [7]
+    },
+    {
+      "title": "Appendiceal carcinoid",
+      "los": [8]
+    }
+  ],
+  "cards": [
+    {
+      "key": "15_5_q0",
+      "front": "In acute appendicitis, what is the classic pattern of pain migration, which four named clinical signs should you know, and why is prompt treatment non-negotiable?",
+      "back": "Pain classically migrates from a vague periumbilical (visceral) location to the right lower quadrant as the parietal peritoneum becomes involved. The four named signs are Rovsing, psoas, obturator, and McBurney point tenderness. Treatment is urgent because an untreated appendix can perforate, leading to peritonitis, sepsis, and death."
+    },
+    {
+      "key": "15_5_cc2_0",
+      "front": "Where does appendicitis pain start and where does it move to, and what is the feared consequence if it goes untreated?",
+      "back": "The pain begins periumbilical and then migrates to the right lower quadrant. If untreated, the appendix can perforate, causing sepsis and potentially death, which is why prompt treatment is essential."
+    },
+    {
+      "key": "15_5_cc4_0",
+      "front": "How is the anatomical position of the appendix distributed, and why does this variability matter for diagnosing appendicitis?",
+      "back": "Roughly 65% of appendices are retrocecal, about 30% are pelvic, and around 5% lie elsewhere. Because the location varies so much, the classic examination signs can be absent, which is why the special maneuvers are useful for detecting it."
+    },
+    {
+      "key": "15_5_cc9_0",
+      "front": "What are the four physical examination signs of appendicitis, and how is each one elicited?",
+      "back": "Rovsing sign: pressing the left lower quadrant produces right lower quadrant pain. Psoas sign: pain on hip extension, suggesting a retrocecal appendix. Obturator sign: pain on hip flexion with internal rotation, suggesting a pelvic appendix. McBurney sign: point tenderness at McBurney point in the right lower quadrant."
+    },
+    {
+      "key": "15_6_q0",
+      "front": "Right lower quadrant pain is not always appendicitis. How does the differential diagnosis shift across a young woman, a patient over 60, and a child, and why are pregnant, elderly, and immunocompromised patients especially dangerous to diagnose?",
+      "back": "In a young woman, consider gynecologic causes such as ovarian torsion, ovarian cyst, ectopic pregnancy, and pelvic inflammatory disease. In a patient over 60, consider cecal carcinoma. In a child, consider gastroenteritis, mesenteric lymphadenitis, and intussusception. Pregnant, elderly, and immunocompromised patients are dangerous because their presentations are atypical or blunted, raising the risk of missed diagnosis and complications, so the threshold to image should be low."
+    },
+    {
+      "key": "15_6_cc2_0",
+      "front": "For right lower quadrant pain, what alternative diagnoses should you prioritize in a young woman, a patient over 60, and a child?",
+      "back": "Young woman: ovarian torsion, ovarian cyst, ectopic pregnancy, or pelvic inflammatory disease. Over 60: cecal carcinoma. Child: gastroenteritis, mesenteric lymphadenitis, or intussusception."
+    },
+    {
+      "key": "15_6_cc8_0",
+      "front": "Which patient populations are dangerous to diagnose for appendicitis, and what makes each one challenging?",
+      "back": "Pregnant patients are difficult because the appendix migrates upward and CT is avoided, so ultrasound or MRI is used. Elderly patients present atypically, rupture about 30% of the time, and have higher mortality. Immunocompromised patients have blunted signs. All three warrant a low threshold to image."
+    },
+    {
+      "key": "15_7_q0",
+      "front": "A reproductive-age woman presents with abdominal pain. What is the single first test you order, and how does that result guide your choice of imaging?",
+      "back": "The first test is a beta-hCG, ordered before any imaging. It detects pregnancy, including a possible ectopic, and determines whether CT radiation is safe to use; if pregnancy is confirmed, ultrasound (and MRI if needed) is preferred over CT."
+    },
+    {
+      "key": "15_7_cc2_0",
+      "front": "What is the first test to order in any reproductive-age patient with abdominal pain, and why does it come before imaging?",
+      "back": "Beta-hCG is the first test, performed before imaging. It can identify an ectopic pregnancy and determines whether CT radiation is safe to proceed with."
+    },
+    {
+      "key": "15_7_cc4_0",
+      "front": "In the workup of an acute abdomen, how do you select among CT, ultrasound, MRI, plain film, and laboratory tests?",
+      "back": "CT is the workhorse imaging study. Ultrasound is first-line in children and pregnancy and for gallbladder or gynecologic concerns, and MRI is used in pregnancy after ultrasound. An upright film detects free air, and a white blood cell count assesses for inflammation."
+    },
+    {
+      "key": "15_8_cc1_0",
+      "front": "How does appendiceal carcinoid typically present, and how is its management determined by tumor size and location?",
+      "back": "Appendiceal carcinoid is usually small and found incidentally. Small lesions are treated with appendectomy alone, whereas tumors larger than 2 cm or those involving the appendiceal base require right hemicolectomy. Carcinoid syndrome is uncommon with these tumors."
+    }
+  ]
+}

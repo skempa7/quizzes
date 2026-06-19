@@ -1,0 +1,120 @@
+{
+  "sections": [
+    {"title": "Inflammatory bowel disease overview", "los": [1]},
+    {"title": "Crohn's disease", "los": [2, 3]},
+    {"title": "Ulcerative colitis", "los": [4]},
+    {"title": "Crohn's versus ulcerative colitis", "los": [5]}
+  ],
+  "cards": [
+    {
+      "key": "20_1_q0",
+      "front": "Lamet called IBD a diagnosis of exclusion. What categories of colitis must be ruled out first, and in one sentence why does IBD happen at all?",
+      "back": "Before diagnosing IBD you must exclude infectious, ischemic, radiation, diverticular, and drug or toxin-induced colitis. IBD itself arises from a genetically and immunologically driven failure to distinguish foreign from self combined with a failure to down-regulate the mucosal immune response."
+    },
+    {
+      "key": "20_1_cc3_0",
+      "front": "Because IBD is a diagnosis of exclusion, which five other causes of colitis must be ruled out before you can call it IBD?",
+      "back": "You must first exclude infectious, ischemic, radiation, diverticular, and drug or toxin-induced colitis. Only after these are ruled out is IBD an appropriate diagnosis."
+    },
+    {
+      "key": "20_1_cc5_0",
+      "front": "At a mechanistic level, what two immune failures explain why IBD develops?",
+      "back": "IBD results from a failure to distinguish foreign from self and a failure to down-regulate the mucosal immune response. The process is driven by both genetic and immunologic factors."
+    },
+    {
+      "key": "20_2_q0",
+      "front": "What four pathology features define Crohn's disease, and which single biopsy finding is pathognomonic for it?",
+      "back": "Crohn's is defined by transmural (full-thickness) inflammation, a mouth-to-anus distribution favoring the terminal ileum, discontinuous skip lesions, and cobblestone mucosa. The non-caseating granuloma on biopsy is the pathognomonic feature."
+    },
+    {
+      "key": "20_2_cc2_0",
+      "front": "Crohn's inflammation is transmural while UC is mucosa-only. What two structural complications does that full-thickness involvement uniquely produce?",
+      "back": "Because Crohn's is transmural (full-thickness), it produces fistulas and strictures. UC, being limited to the mucosa, makes neither of these."
+    },
+    {
+      "key": "20_2_cc5_0",
+      "front": "How is Crohn's disease distributed along the gut, where is it most common, and what mucosal patterns mark it?",
+      "back": "Crohn's can affect anywhere from mouth to anus but is most common at the terminal ileum. It produces discontinuous skip lesions and a cobblestone mucosal appearance."
+    },
+    {
+      "key": "20_2_cc7_0",
+      "front": "What biopsy finding is pathognomonic for Crohn's disease, and what is the contrasting histologic finding in ulcerative colitis?",
+      "back": "The non-caseating granuloma on biopsy is pathognomonic for Crohn's disease. In ulcerative colitis the characteristic histologic finding is instead the crypt abscess."
+    },
+    {
+      "key": "20_3_q0",
+      "front": "Lamet framed Crohn's therapy as a ladder. What is the rough escalation order, and which biologic carries the PML risk that took it out of favor?",
+      "back": "Therapy escalates roughly from aminosalicylates to steroids and immunomodulators, then to biologics such as anti-TNF agents and gut-selective drugs. Natalizumab, an anti-integrin, carries the risk of progressive multifocal leukoencephalopathy (PML), which took it out of favor in place of agents like vedolizumab."
+    },
+    {
+      "key": "20_3_cc2_0",
+      "front": "What are the two overarching goals of Crohn's therapy, and what specific deficiency should you anticipate in terminal-ileal disease?",
+      "back": "The goals are to induce and to maintain remission, scaled to the extent and severity of disease. Terminal-ileal Crohn's impairs absorption there and characteristically causes vitamin B12 deficiency."
+    },
+    {
+      "key": "20_3_cc9_0",
+      "front": "How does sulfasalazine deliver active drug to the colon, and why can't plain 5-ASA do the same job?",
+      "back": "Sulfasalazine contains a diazo bond that colonic bacteria cleave to release active 5-ASA directly in the colon. Plain 5-ASA cannot achieve this because it is absorbed too early in the proximal gut before reaching the colon."
+    },
+    {
+      "key": "20_3_cc11_0",
+      "front": "What makes budesonide a distinctive steroid choice in Crohn's, and what key limitation do steroids share in this disease?",
+      "back": "Budesonide is a locally-acting steroid with minimal systemic absorption, giving it fewer systemic side effects. Like steroids generally, it can induce remission but does not maintain it."
+    },
+    {
+      "key": "20_3_cc17_0",
+      "front": "Rank the anti-TNF agents infliximab, certolizumab, and adalimumab by how human they are, and explain why that ordering matters clinically.",
+      "back": "Infliximab is chimeric (about 75% human), certolizumab is about 95% human, and adalimumab is fully human (100%). The more human the antibody, the less immunogenic it is, reducing antibody formation and loss of response."
+    },
+    {
+      "key": "20_3_cc19_0",
+      "front": "Among the newer Crohn's agents, which one carries PML risk, which gut-selective alternative avoids it, and what crucial caveat applies to surgery in Crohn's?",
+      "back": "Natalizumab carries a risk of progressive multifocal leukoencephalopathy (PML), whereas vedolizumab is gut-selective and does not. Surgery in Crohn's disease is not curative, since disease can recur elsewhere along the gut."
+    },
+    {
+      "key": "20_4_q0",
+      "front": "Lamet gave ulcerative colitis three defining adjectives in his first sentence about it. What are they, and what biopsy finding is its histologic signature?",
+      "back": "Ulcerative colitis is rectal-onset (starts in the rectum), contiguous (continuous, no skip lesions), and mucosa-only (no transmural spread). Its histologic signature on biopsy is the crypt abscess."
+    },
+    {
+      "key": "20_4_cc2_0",
+      "front": "What three defining adjectives describe the distribution and depth of ulcerative colitis, and what two Crohn's features does it lack?",
+      "back": "Ulcerative colitis starts in the rectum, is contiguous, and is mucosa-only. It shows no skip lesions and no transmural spread, distinguishing it from Crohn's."
+    },
+    {
+      "key": "20_4_cc4_0",
+      "front": "How does ulcerative colitis extend through the colon by severity, and what does endoscopy characteristically show?",
+      "back": "UC extends from proctitis (rectum) to left-sided colitis and then to pancolitis. Endoscopy characteristically shows loss of the normal vascular pattern along with mucosal granularity."
+    },
+    {
+      "key": "20_4_cc6_0",
+      "front": "What is the biopsy hallmark of ulcerative colitis, what does the chronically inflamed colon look like radiographically, and how does cancer risk accumulate?",
+      "back": "The biopsy hallmark of UC is the crypt abscess. Chronic disease produces a lead-pipe colon with loss of haustra, and colorectal cancer risk rises by roughly 10% per 10 years of disease."
+    },
+    {
+      "key": "20_4_cc11_0",
+      "front": "How is ulcerative colitis treated across the severity spectrum, and what makes its surgical option fundamentally different from Crohn's?",
+      "back": "Mild proctitis is treated with topical 5-ASA or steroids, while severe disease requires IV steroids plus anti-TNF therapy. Unlike in Crohn's, colectomy is curative in ulcerative colitis because the disease is confined to the colon."
+    },
+    {
+      "key": "20_5_q0",
+      "front": "Given a single vignette feature, such as a granuloma, fistula, skip lesion, or lead-pipe colon, how do you instantly assign it to UC or Crohn's?",
+      "back": "Granulomas, fistulas, and skip lesions point to Crohn's disease, which is transmural and discontinuous. A lead-pipe colon (and continuous mucosal disease with crypt abscesses) points to ulcerative colitis."
+    },
+    {
+      "key": "20_5_cc3_0",
+      "front": "Using depth of inflammation, how do you sort fistula, stricture, and abscess versus toxic megacolon between Crohn's and UC?",
+      "back": "Fistula, stricture, and abscess reflect transmural disease and indicate Crohn's. Toxic megacolon, although the inflammation is mucosal, reflects extensive colonic involvement and is the classic complication of ulcerative colitis."
+    },
+    {
+      "key": "20_5_cc5_0",
+      "front": "Sort the classic buzzwords (crypt abscess, lead-pipe, continuous, curative colectomy, granuloma, cobblestone, skip lesions, non-curative surgery) into UC versus Crohn's.",
+      "back": "UC buzzwords are crypt abscess, lead-pipe colon, continuous involvement, and curative colectomy. Crohn's buzzwords are non-caseating granuloma, cobblestone mucosa, skip lesions, and non-curative surgery."
+    },
+    {
+      "key": "20_5_cc7_0",
+      "front": "What is the smoking paradox in inflammatory bowel disease, and how does smoking affect UC versus Crohn's?",
+      "back": "The smoking paradox is that smoking has opposite effects in the two diseases. Smoking is protective in ulcerative colitis but harmful in Crohn's disease."
+    }
+  ]
+}

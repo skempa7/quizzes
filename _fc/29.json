@@ -1,0 +1,120 @@
+{
+  "sections": [
+    {
+      "title": "Hernia types and predisposing factors", "los": [1, 2, 3]
+    },
+    {
+      "title": "Complications and clinical definitions", "los": [4, 5]
+    },
+    {
+      "title": "Management, umbilical hernias, and mesh repair", "los": [6, 7, 8]
+    }
+  ],
+  "cards": [
+    {
+      "key": "29_1_q0",
+      "front": "A young man has a groin bulge that descends into the scrotum and the impulse strikes your fingertip on coughing. Which hernia type is this, and where does its sac lie relative to the inferior epigastric vessels?",
+      "back": "This is an indirect inguinal hernia. Its sac travels through the internal ring lateral to the inferior epigastric vessels, follows the spermatic cord, and can descend into the scrotum, producing a fingertip impulse."
+    },
+    {
+      "key": "29_1_cc4_0",
+      "front": "What three structures form the borders of Hesselbach's triangle, and which hernia type passes through it?",
+      "back": "Hesselbach's triangle is bordered by the inferior epigastric vessels laterally, the lateral edge of the rectus sheath medially, and the inguinal ligament inferiorly. A direct inguinal hernia passes through it."
+    },
+    {
+      "key": "29_1_cc13_0",
+      "front": "How do indirect and direct inguinal hernias differ in their relationship to the inferior epigastric vessels, their origin, and the impulse they produce on exam?",
+      "back": "An indirect hernia is lateral to the inferior epigastric vessels, passes through the internal ring, is congenital, can reach the scrotum, and gives a fingertip impulse. A direct hernia is medial to the vessels, pushes through the weak posterior wall, is acquired, and gives a pulp (palm) impulse."
+    },
+    {
+      "key": "29_1_cc15_0",
+      "front": "Through what anatomic route does a femoral hernia pass, and what feature explains its high strangulation risk?",
+      "back": "A femoral hernia passes through the femoral canal, below the inguinal ligament and medial to the femoral vein. Its narrow, rigid neck gives it the highest risk of incarceration and strangulation."
+    },
+    {
+      "key": "29_2_q0",
+      "front": "Why does a patent processus vaginalis predispose specifically to an indirect inguinal hernia rather than a direct one?",
+      "back": "The processus vaginalis follows the spermatic cord through the internal ring lateral to the inferior epigastric vessels. When it fails to obliterate, it leaves a preformed peritoneal sac along this indirect (lateral) path, so the resulting hernia is indirect rather than direct."
+    },
+    {
+      "key": "29_2_cc3_0",
+      "front": "What are the main factors that predispose a patient to developing an inguinal hernia?",
+      "back": "Predisposing factors include chronically raised intra-abdominal pressure (chronic cough or COPD, constipation, prostatism with straining, ascites), a patent processus vaginalis, connective-tissue weakness, and increasing age."
+    },
+    {
+      "key": "29_3_q0",
+      "front": "A woman presents with a groin hernia. What is the single most likely type, and what relative-frequency fact about femoral hernias should you be careful not to over-apply?",
+      "back": "Even in women the most common groin hernia is still the indirect inguinal hernia. Femoral hernias are only relatively more common in women than in men, not the most common type overall, which is the trap the exam wants you to avoid."
+    },
+    {
+      "key": "29_3_cc3_0",
+      "front": "What is the most common hernia type in both sexes, in which group are femoral hernias relatively more common, and which side do pediatric hernias favor?",
+      "back": "The indirect inguinal hernia is the most common hernia in both sexes. Femoral hernias are only relatively more common in women, and pediatric inguinal hernias favor the right side."
+    },
+    {
+      "key": "29_4_q0",
+      "front": "A groin hernia is irreducible but non-tender with well-perfused contents. Which stage does this describe, and what one-sentence rule keeps it distinct from the next, more dangerous stage?",
+      "back": "This is an incarcerated hernia: irreducible but with intact perfusion. The rule is that incarceration can occur without strangulation, but strangulation (ischemia of the contents) cannot occur without incarceration."
+    },
+    {
+      "key": "29_4_cc4_0",
+      "front": "What distinguishes an incarcerated hernia from a strangulated one, and what directional rule links the two?",
+      "back": "An incarcerated hernia is irreducible with perfusion still intact, whereas a strangulated hernia has ischemic contents. The directional rule: incarceration without strangulation is possible, but strangulation without incarceration is not."
+    },
+    {
+      "key": "29_4_cc6_0",
+      "front": "What anatomically defines a sliding hernia, and which organs typically form the sac wall?",
+      "back": "In a sliding hernia, a retroperitoneal viscus forms part of the wall of the hernia sac itself rather than lying freely within it. Typical organs include the bladder, sigmoid colon, cecum, or ovary."
+    },
+    {
+      "key": "29_5_q0",
+      "front": "Why can a Richter hernia strangulate and necrose bowel without ever producing a bowel obstruction?",
+      "back": "In a Richter hernia only part of the circumference of the bowel wall (the antimesenteric border) is trapped and strangulated. Because the bowel lumen remains patent, the trapped segment can become ischemic and necrose while intestinal flow continues, so no obstruction develops."
+    },
+    {
+      "key": "29_5_cc4_0",
+      "front": "Which hernia carries the highest strangulation risk and why, and what makes a Richter hernia uniquely dangerous?",
+      "back": "The femoral hernia carries the highest incarceration and strangulation risk because of its narrow neck. A Richter hernia is dangerous because only part of the bowel circumference is trapped, so it can strangulate and necrose while the lumen stays patent, giving no obstruction."
+    },
+    {
+      "key": "29_5_cc10_0",
+      "front": "Match each named hernia to its hallmark: obturator, Littre, Spigelian, and pantaloon hernias.",
+      "back": "An obturator hernia presents with the Howship-Romberg sign (medial thigh pain) in a thin elderly woman with small-bowel obstruction. A Littre hernia contains a Meckel diverticulum. A Spigelian hernia occurs along the linea semilunaris. A pantaloon hernia has both direct and indirect components straddling the inferior epigastric vessels."
+    },
+    {
+      "key": "29_6_q0",
+      "front": "Why is forceful reduction of a tender, irreducible groin hernia dangerous, and what should you do instead?",
+      "back": "Forcing reduction risks pushing already ischemic or dead bowel back into the abdomen (reduction en masse), which can cause perforation and peritonitis. Instead, the tender, incarcerated hernia warrants prompt surgical evaluation rather than aggressive manual reduction."
+    },
+    {
+      "key": "29_6_cc4_0",
+      "front": "What is the management rule for a tender, incarcerated groin hernia, and what is the role of a truss?",
+      "back": "Do not force-reduce a tender or incarcerated hernia, because you may reduce dead bowel into the abdomen; instead arrange prompt surgical evaluation. A truss is only a temporizing measure and is not a definitive treatment."
+    },
+    {
+      "key": "29_7_q0",
+      "front": "How does management of a small reducible umbilical hernia differ between a 1-year-old and an adult, and why?",
+      "back": "In a 1-year-old a small reducible umbilical hernia is observed because most close spontaneously by school age, with repair reserved for those persisting or incarcerating. In an adult the hernia is acquired and will not close on its own, so elective surgical repair is generally recommended."
+    },
+    {
+      "key": "29_7_cc3_0",
+      "front": "How does the natural history and origin of a pediatric umbilical hernia differ from an adult umbilical hernia?",
+      "back": "A pediatric umbilical hernia usually resolves spontaneously and can simply be observed until preschool age unless it incarcerates. An adult umbilical hernia is acquired, does not resolve on its own, and typically requires repair."
+    },
+    {
+      "key": "29_7_cc5_0",
+      "front": "How do omphalocele and gastroschisis differ in covering, location, and severity?",
+      "back": "An omphalocele is a midline defect in which the herniated viscera are covered by a membranous sac. A gastroschisis has no covering sac and lies lateral to (usually right of) the umbilicus, leaving bowel exposed, making it the more severe defect."
+    },
+    {
+      "key": "29_8_q0",
+      "front": "Why is permanent synthetic mesh the default for elective groin-hernia repair, yet a riskier choice in a contaminated surgical field?",
+      "back": "Tension-free mesh reinforces the defect without suture-line tension and markedly lowers recurrence, making it the elective standard. In a contaminated field, permanent synthetic mesh acts as a foreign body that can harbor infection, so its use is riskier and may favor a different approach or material."
+    },
+    {
+      "key": "29_8_cc3_0",
+      "front": "What is the standard material for groin-hernia repair, which named techniques use it, and what is its main benefit?",
+      "back": "The standard is tension-free repair with permanent synthetic mesh, typically polypropylene (Marlex). Named techniques include Lichtenstein, plug-and-patch, Kugel, and the Prolene Hernia System (PHS). The main benefit is a substantially lower recurrence rate."
+    }
+  ]
+}

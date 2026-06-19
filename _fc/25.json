@@ -1,0 +1,34 @@
+{
+  "sections": [
+    {
+      "title": "Imaging modalities and how studies are performed",
+      "los": [1, 2]
+    },
+    {
+      "title": "Radiologic findings and emergent abnormalities",
+      "los": [3, 4]
+    }
+  ],
+  "cards": [
+    {
+      "key": "25_1_q0",
+      "front": "On a plain radiograph, what are the four basic radiographic densities the film can distinguish, and what substance produces each?",
+      "back": "Plain films distinguish four densities from most to least radiolucent: air or gas (darkest/blackest), fat (dark gray), soft tissue or fluid including water, blood, and muscle (mid gray), and bone or calcium (white). Metal is sometimes added as a fifth, brightest density. Each appears as a different shade because of differing X-ray attenuation."
+    },
+    {
+      "key": "25_2_q0",
+      "front": "To evaluate the esophageal mucosa for ulceration and polyps, would you choose single-contrast or double-contrast barium technique, and what does each technique demonstrate best?",
+      "back": "Double-contrast (barium plus an effervescent gas agent) coats the mucosa with a thin barium layer while distending the lumen with air, giving fine mucosal detail and is preferred for detecting ulcers, polyps, and early mucosal lesions. Single-contrast (barium-filling only) distends the lumen and is better for showing overall outline, strictures, large filling defects, and motility, but provides less mucosal detail."
+    },
+    {
+      "key": "25_3_q0",
+      "front": "What does an encircling, constricting \"apple-core\" lesion on a barium study of the colon signify, and separately what does a HIDA scan with a gallbladder that never fills indicate?",
+      "back": "An apple-core (annular napkin-ring) lesion is the classic appearance of an annular, circumferential colorectal carcinoma narrowing the lumen. A HIDA scan in which tracer reaches the bowel but the gallbladder never fills indicates cystic duct obstruction, which is diagnostic of acute cholecystitis."
+    },
+    {
+      "key": "25_4_q0",
+      "front": "On abdominal films, how do you distinguish mechanical bowel obstruction from ileus, and what is the significance of air-fluid levels in the obstructed film?",
+      "back": "Mechanical obstruction shows dilated bowel proximal to the blockage with collapsed distal bowel and a discrete caliber change at the transition point; air-fluid levels (especially multiple levels at differing heights on an upright film) reflect trapped gas and fluid above the obstruction. Ileus instead shows generalized, proportionate dilation of both small and large bowel with no transition point, because peristalsis has globally stopped rather than being blocked."
+    }
+  ]
+}

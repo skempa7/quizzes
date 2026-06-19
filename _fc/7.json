@@ -1,0 +1,103 @@
+{
+  "sections": [
+    {
+      "title": "Lower esophageal sphincter and reflux mechanism",
+      "los": [2]
+    },
+    {
+      "title": "Disease staging and symptoms",
+      "los": [3, 4]
+    },
+    {
+      "title": "Diagnosis and the role of endoscopy",
+      "los": [5]
+    }
+  ],
+  "cards": [
+    {
+      "key": "7_2_q0",
+      "front": "In pure pressure terms, what condition must exist at the lower esophageal sphincter for gastric acid to reflux back up into the esophagus?",
+      "back": "Reflux occurs when the LES is incompetent and intragastric pressure exceeds esophageal pressure, so the pressure gradient drives stomach contents upward. A competent LES normally maintains a high-pressure zone that prevents this retrograde flow."
+    },
+    {
+      "key": "7_2_cc13_0",
+      "front": "What is the normal resting pressure of the lower esophageal sphincter, and below what value is it considered incompetent and prone to reflux?",
+      "back": "Normal LES baseline tone is about 10 to 35 mmHg. An LES resting pressure below 10 mmHg is considered incompetent and predisposes to gastroesophageal reflux."
+    },
+    {
+      "key": "7_2_cc13_1",
+      "front": "What two conditions must both be present for gastroesophageal reflux to occur, framed as a pressure relationship?",
+      "back": "Reflux requires an incompetent LES together with intragastric pressure that exceeds esophageal pressure. The resulting pressure gradient is what physically drives gastric contents back into the esophagus."
+    },
+    {
+      "key": "7_2_cc13_2",
+      "front": "Beyond the LES itself, what second anatomic structure forms the anti-reflux barrier at the gastroesophageal junction?",
+      "back": "The anti-reflux barrier is made up of the LES plus the crural diaphragm, which acts as an external sphincter. Together these two structures reinforce the high-pressure zone that prevents reflux."
+    },
+    {
+      "key": "7_2_cc13_3",
+      "front": "How does the prevalence of hiatal hernia differ between non-erosive reflux and severe esophagitis, and what mucosal pH drives the injury?",
+      "back": "Hiatal hernia is found in roughly one quarter of non-erosive reflux cases but in about three quarters of severe esophagitis cases, linking hernia to disease severity. Esophageal mucosal erosion occurs when refluxed acid lowers the pH below 4."
+    },
+    {
+      "key": "7_3_q0",
+      "front": "Two patients with reflux are both on prescription PPIs, but one is controlled and one is not. Which GERD stage applies to each, and why does that distinction change management?",
+      "back": "The controlled patient on daily prescription therapy is Stage 2, whereas the patient who remains uncontrolled on prescription therapy with highly erosive disease is Stage 3. The distinction matters because failure of response on prescription PPIs signals escalation, such as endoscopy and consideration of surgery, rather than continued empiric medical management."
+    },
+    {
+      "key": "7_3_cc6_0",
+      "front": "How are Stage 1 and Stage 2 GERD distinguished by symptom frequency and treatment approach?",
+      "back": "Stage 1 GERD occurs about 1 to 2 times per month and is managed with lifestyle changes and over-the-counter agents. Stage 2 involves daily symptoms requiring prescription therapy, and the disease is controlled on that treatment."
+    },
+    {
+      "key": "7_3_cc6_1",
+      "front": "What defines Stage 3 versus Stage 4 GERD, and what is the hinge that separates them from earlier stages?",
+      "back": "Stage 3 is reflux that remains uncontrolled despite prescription therapy and is highly erosive, while Stage 4 is reflux-induced carcinoma. The hinge between the milder and more severe stages is loss of control on treatment, which marks progression toward erosive and malignant disease."
+    },
+    {
+      "key": "7_4_q0",
+      "front": "Most GERD presents as postprandial heartburn, yet a patient with a months-long cough and no lung disease turns out to have reflux. How can GERD present atypically and escape recognition?",
+      "back": "GERD can present with extraesophageal or atypical symptoms such as chronic cough, hoarseness, asthma, and throat clearing rather than classic heartburn. Because these symptoms mimic pulmonary or ENT disease, reflux is easily overlooked, and clinical diagnosis on symptoms alone is only about 65% accurate."
+    },
+    {
+      "key": "7_4_cc7_0",
+      "front": "What are the classic typical symptoms of GERD, and what timing pattern is the giveaway?",
+      "back": "Typical GERD presents with heartburn, regurgitation, and a sour or bitter taste. The telling pattern is that symptoms occur about 30 to 60 minutes after meals and worsen when reclining."
+    },
+    {
+      "key": "7_4_cc7_1",
+      "front": "What atypical or extraesophageal symptoms can GERD produce, and how reliable is a symptom-based clinical diagnosis?",
+      "back": "Atypical or extraesophageal GERD can present as chronic cough, hoarseness, asthma, and throat clearing. Diagnosing GERD on clinical symptoms alone is only about 65% accurate, so these disguised presentations are easily missed."
+    },
+    {
+      "key": "7_4_cc7_2",
+      "front": "Why might Helicobacter pylori infection paradoxically lower GERD risk, and what is the downside of eradicating it?",
+      "back": "H. pylori decreases GERD risk because it reduces gastric acid production, but it raises the risk of MALT lymphoma and gastric cancer. Eradicating the infection can restore acid output and worsen GERD symptoms."
+    },
+    {
+      "key": "7_5_q0",
+      "front": "If uncomplicated GERD requires no diagnostic testing, what specific findings should flip a patient from empiric treatment to immediate endoscopy?",
+      "back": "Alarm features mandate prompt endoscopy, including dysphagia, odynophagia, weight loss, and iron-deficiency anemia. These signs raise concern for complications such as stricture, erosive esophagitis, Barrett esophagus, or malignancy, which empiric acid suppression alone would not address."
+    },
+    {
+      "key": "7_5_cc9_0",
+      "front": "How is uncomplicated GERD diagnosed and managed initially, and how good is response to therapy as a diagnostic test?",
+      "back": "Uncomplicated GERD is managed with empiric acid suppression and no further testing. Symptom response to therapy is about 78% sensitive but only 54% specific, so it supports the diagnosis but is far from definitive."
+    },
+    {
+      "key": "7_5_cc9_1",
+      "front": "Which alarm features in a patient with reflux symptoms should prompt endoscopy rather than empiric treatment?",
+      "back": "The alarm features are dysphagia, odynophagia, weight loss, and iron-deficiency anemia. Any of these warrants endoscopy to evaluate for complications such as stricture, severe esophagitis, Barrett esophagus, or cancer."
+    },
+    {
+      "key": "7_5_cc9_2",
+      "front": "Why should endoscopy be performed before starting acid suppression when esophagitis is suspected?",
+      "back": "Acid-suppressing therapy heals the mucosa and can obscure underlying esophagitis, making it harder to detect on endoscopy. Scoping before treatment preserves the diagnostic findings so the true extent of disease can be assessed."
+    },
+    {
+      "key": "7_5_cc9_3",
+      "front": "What is a fundoplication, how does it work mechanically, and how effective is it at healing esophagitis?",
+      "back": "Fundoplication is a surgical procedure that wraps the gastric fundus 360 degrees around the distal esophagus to recreate and reinforce the LES. It heals esophagitis in more than 85% of patients and serves as the definitive antireflux surgical option."
+    }
+  ]
+}

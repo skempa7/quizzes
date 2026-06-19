@@ -1,0 +1,35 @@
+{
+  "sections": [
+    {
+      "title": "Recognizing and working up bowel obstruction", "los": [1, 2, 3]
+    },
+    {
+      "title": "Surgical decisions for intestinal lesions", "los": [4]
+    },
+    {
+      "title": "Overgrowth, flatus, and foreign bodies", "los": [5, 6]
+    }
+  ],
+  "cards": [
+    {
+      "key": "23_1_q0",
+      "front": "Four days after hip surgery a patient has a hugely distended but soft, non-tender abdomen with no flatus, and films show colonic dilation with no transition point. Is this mechanical or functional, and what single measurement decides whether you intervene?",
+      "back": "This is a functional obstruction (acute colonic pseudo-obstruction, or Ogilvie syndrome) rather than mechanical, indicated by the soft non-tender abdomen and the absence of a transition point. The cecal diameter is the deciding number: once it reaches roughly 10 to 12 cm the perforation risk climbs, prompting neostigmine, colonoscopic decompression, or surgery."
+    },
+    {
+      "key": "23_2_q0",
+      "front": "A patient with a prior laparotomy presents with colicky pain, bilious vomiting, and obstipation. What is the most likely cause of the small bowel obstruction, and which CT and lab findings would push you from a non-operative trial to immediate surgery?",
+      "back": "Postoperative adhesions are the most likely cause of small bowel obstruction in someone with prior abdominal surgery. Findings that mandate urgent operation are signs of strangulation or ischemia, such as a closed-loop obstruction, bowel-wall thickening, pneumatosis or portal venous gas, reduced wall enhancement, or free fluid on CT, together with rising lactate, leukocytosis, or peritonitis."
+    },
+    {
+      "key": "23_3_q0",
+      "front": "An elderly nursing-home patient develops sudden massive abdominal distension, and imaging shows a coffee-bean loop arising from the pelvis. What is it, why is it urgent, and what definitive step follows successful detorsion?",
+      "back": "This is a sigmoid volvulus, a twist of the redundant sigmoid colon producing a closed-loop large bowel obstruction. It is urgent because the twisted segment can rapidly become ischemic, gangrenous, and perforate. Initial treatment is endoscopic detorsion and decompression, but because recurrence is high the definitive step is elective sigmoid resection during the same admission."
+    },
+    {
+      "key": "23_4_q0",
+      "front": "On one exam you face two intestinal lesions: an adult intussusception and a biopsy-proven small bowel lymphoma. How do you manage each, and why do they break the usual rule of simply relieving an obstruction?",
+      "back": "Adult intussusception is treated with surgical resection rather than reduction because, unlike in children, it is usually caused by a pathologic lead point such as a tumor that must be removed and examined. Small bowel lymphoma is managed primarily with chemotherapy (surgery reserved for complications like perforation or bleeding), since it is a systemic malignancy. Both break the reflex of merely decompressing the bowel because the underlying lesion, not the obstruction itself, dictates definitive treatment."
+    }
+  ]
+}

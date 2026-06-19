@@ -1,0 +1,153 @@
+{
+  "sections": [
+    {
+      "title": "Gastric anatomy and peptic ulcer disease",
+      "los": [1, 2, 3, 4]
+    },
+    {
+      "title": "Gastric tumors and their surgical management",
+      "los": [5, 6, 7, 8]
+    },
+    {
+      "title": "Pyloric stenosis and bariatric surgery",
+      "los": [9, 10]
+    }
+  ],
+  "cards": [
+    {
+      "key": "18_1_q0",
+      "front": "Why does a posterior gastric or duodenal ulcer bleed so much more dramatically than an anterior one?",
+      "back": "A posterior ulcer sits directly over the gastroduodenal artery, which runs behind the duodenal bulb and stomach. When the ulcer erodes through the wall it ruptures this large vessel, producing massive hemorrhage rather than the free perforation seen with anterior ulcers."
+    },
+    {
+      "key": "18_1_cc3_0",
+      "front": "In gastric anatomy, which artery lies behind the duodenal bulb and is the source of catastrophic bleeding when a posterior ulcer erodes into it?",
+      "back": "The gastroduodenal artery. It runs posterior to the stomach and duodenal bulb, so a posterior ulcer can erode into it and cause massive hemorrhage."
+    },
+    {
+      "key": "18_1_cc6_0",
+      "front": "When mapping gastric cell zonation, which secretory cells live in the fundus and which acid-driving cell defines the antrum that gastric operations target?",
+      "back": "Parietal cells (acid) and chief cells (pepsinogen) populate the fundus, while gastrin-secreting G cells are located in the antrum. This zonation is the basis for the design of acid-reducing gastric surgeries."
+    },
+    {
+      "key": "18_2_q0",
+      "front": "Two ulcer patients describe opposite relationships between eating and pain. How do you sort a duodenal from a gastric ulcer, and which one must you biopsy?",
+      "back": "Duodenal ulcer pain is relieved by eating and worsens with fasting, whereas gastric ulcer pain is provoked by eating, leading to food avoidance and weight loss. Gastric ulcers must be biopsied because they can harbor malignancy; duodenal ulcers essentially never do."
+    },
+    {
+      "key": "18_2_cc2_0",
+      "front": "What is the classic pain pattern, fasting relationship, and early weight trend of a duodenal ulcer?",
+      "back": "Duodenal ulcer pain is relieved by food and worsens with fasting, classically waking the patient at night. Because eating helps, weight stays stable or even increases early on."
+    },
+    {
+      "key": "18_2_cc4_0",
+      "front": "How does the eating-pain relationship of a gastric ulcer differ from a duodenal ulcer, and what does that do to the patient's weight?",
+      "back": "A gastric ulcer hurts more with food, so the patient avoids eating and loses weight. This is the opposite of a duodenal ulcer, where food relieves the pain."
+    },
+    {
+      "key": "18_2_cc10_0",
+      "front": "In a bleeding peptic ulcer, what does the difference between bright red hematemesis and coffee-ground emesis tell you about the bleed?",
+      "back": "Bright red hematemesis indicates fresh, active bleeding, while coffee-ground emesis is blood that has sat in the stomach long enough to be digested by acid. The color therefore acts as a clock on how recent the hemorrhage is."
+    },
+    {
+      "key": "18_2_cc14_0",
+      "front": "Since most peptic ulcer disease is now managed medically, what are the four complications that still mandate surgery?",
+      "back": "Surgery for peptic ulcer disease is reserved for hemorrhage, perforation, obstruction, or intractability. Absent one of these four complications, treatment is medical."
+    },
+    {
+      "key": "18_3_q0",
+      "front": "The post-gastrectomy syndromes all present with vague abdominal misery. What single organizing principle lets you sort them on a vignette?",
+      "back": "Timing relative to meals is the key sorter: early dumping appears within 15 to 30 minutes, late dumping (reactive hypoglycemia) hours later, and afferent-loop or alkaline reflux patterns are distinguished by whether vomiting relieves the pain. Anchoring each syndrome to its temporal and pain-relief signature separates them."
+    },
+    {
+      "key": "18_3_cc9_0",
+      "front": "After gastric surgery, how do early and late dumping syndrome differ in timing and mechanism?",
+      "back": "Early dumping occurs roughly 15 to 30 minutes after eating and is osmotic, producing vasomotor symptoms as hyperosmolar chyme draws fluid into the gut. Late dumping occurs hours later and is reactive hypoglycemia from an exaggerated insulin response."
+    },
+    {
+      "key": "18_3_cc11_0",
+      "front": "After a Billroth II, how do you distinguish afferent-loop obstruction from alkaline reflux gastritis by the character of the vomiting?",
+      "back": "Afferent-loop obstruction causes bilious, projectile vomiting that relieves the pain, since emptying the obstructed loop decompresses it. Alkaline reflux gastritis instead causes constant pain with vomiting that does not relieve it."
+    },
+    {
+      "key": "18_4_q0",
+      "front": "What single provocative test separates a gastrinoma from ordinary duodenal ulcer disease, and which way does the result move?",
+      "back": "The secretin stimulation test distinguishes them. Secretin normally suppresses gastrin, but in Zollinger-Ellison syndrome it paradoxically raises serum gastrin, confirming a gastrinoma."
+    },
+    {
+      "key": "18_4_cc4_0",
+      "front": "Why does the secretin stimulation test give a paradoxical result in Zollinger-Ellison syndrome, and what is that result?",
+      "back": "In healthy patients secretin suppresses gastrin release, but gastrinoma cells respond to secretin by increasing gastrin secretion. This paradoxical rise in gastrin after secretin is the diagnostic hallmark of Zollinger-Ellison syndrome."
+    },
+    {
+      "key": "18_4_cc5_0",
+      "front": "What is the basal acid output in Zollinger-Ellison syndrome, and why does it barely rise with further stimulation?",
+      "back": "Basal acid output is roughly ten times normal in Zollinger-Ellison syndrome. The chronically high gastrin has already driven the parietal cell mass to near-maximal secretion, so additional stimulation produces little further increase."
+    },
+    {
+      "key": "18_6_q0",
+      "front": "A patient with longstanding pernicious anemia develops vague epigastric symptoms. Why does this demand urgent attention, and what are the four named metastases you screen for in gastric cancer?",
+      "back": "Pernicious anemia with atrophic gastritis is premalignant, so new epigastric symptoms raise concern for gastric carcinoma and warrant urgent evaluation. The four eponymous metastases are the Virchow node, Krukenberg tumor, Blumer shelf, and Sister Mary Joseph nodule."
+    },
+    {
+      "key": "18_6_cc3_0",
+      "front": "Why is pernicious anemia with atrophic gastritis considered a premalignant condition for gastric carcinoma, and how often does it progress?",
+      "back": "Chronic atrophic gastritis from pernicious anemia damages the gastric mucosa and predisposes to malignant transformation. Roughly 40 percent of these patients progress to gastric carcinoma, making it a true premalignant state."
+    },
+    {
+      "key": "18_6_cc11_0",
+      "front": "Name the four eponymous metastatic sites of gastric carcinoma and the anatomic location each corresponds to.",
+      "back": "Virchow node is a left supraclavicular node, Krukenberg tumor is metastasis to the ovary, Blumer shelf is a rectouterine (pouch of Douglas) deposit felt on rectal exam, and a Sister Mary Joseph nodule is a periumbilical metastasis."
+    },
+    {
+      "key": "18_7_q0",
+      "front": "Endoscopy shows a smooth submucosal gastric mass with a central crater. What is the likely lesion, and how is it treated now versus in the past?",
+      "back": "The lesion is consistent with a gastric leiomyoma, a benign smooth-muscle tumor that classically appears submucosal with central ulceration. Management is surgical resection of the mass."
+    },
+    {
+      "key": "18_7_cc2_0",
+      "front": "What is the classic endoscopic appearance of a gastric leiomyoma, and how is it managed?",
+      "back": "A gastric leiomyoma appears as a smooth submucosal mass with central ulceration on endoscopy. It is treated by surgical resection."
+    },
+    {
+      "key": "18_8_q0",
+      "front": "Two gastric-cancer patients reach the OR, one with localized disease and one whose tumor has perforated and seeded the peritoneum. How does the surgical goal differ?",
+      "back": "For localized disease the goal is curative resection, an extended total gastrectomy that removes the tumor and its draining nodes en bloc. For disseminated, peritoneally seeded disease the goal shifts to palliation, relieving symptoms such as obstruction or bleeding rather than attempting cure."
+    },
+    {
+      "key": "18_8_cc3_0",
+      "front": "In a curative extended total gastrectomy for gastric cancer, which organs and tissues are removed along with the stomach?",
+      "back": "A curative extended total gastrectomy removes the stomach together with the spleen, the distal pancreas, the parapyloric lymph nodes, and the omentum. This wide en bloc field aims to clear the tumor and its draining lymphatics."
+    },
+    {
+      "key": "18_9_q0",
+      "front": "A newborn vomits forcefully and a thick olive is palpable in the abdomen. Who classically develops this, and what fixes it?",
+      "back": "This is hypertrophic pyloric stenosis, classically in a firstborn male presenting with projectile vomiting and a palpable olive-shaped mass. After correcting dehydration and electrolyte abnormalities, a pyloromyotomy is curative."
+    },
+    {
+      "key": "18_9_cc3_0",
+      "front": "What is the classic demographic and symptom triad of pyloric stenosis, and what is the definitive treatment?",
+      "back": "Pyloric stenosis classically affects a firstborn male who presents with projectile vomiting and a palpable olive. The definitive treatment is pyloromyotomy, performed after the infant has been rehydrated and electrolytes corrected."
+    },
+    {
+      "key": "18_10_q0",
+      "front": "Who qualifies for bariatric surgery, which operation is now the gold standard, and what nutritional price does the bypass exact?",
+      "back": "Candidacy is set by a BMI of 40 or greater (or being about 100 pounds over ideal weight), with the threshold loosened for type 2 diabetics. Roux-en-Y gastric bypass is the gold standard, but by bypassing the duodenum it causes malabsorption of iron, calcium, and B12, requiring lifelong supplementation."
+    },
+    {
+      "key": "18_10_cc3_0",
+      "front": "What BMI threshold defines bariatric surgery candidacy, and how is it modified for diabetics?",
+      "back": "Candidacy generally requires a BMI of 40 or greater, or being roughly 100 pounds over ideal body weight. The threshold is loosened for patients with type 2 diabetes, who may qualify at a lower BMI."
+    },
+    {
+      "key": "18_10_cc12_0",
+      "front": "Why does Roux-en-Y gastric bypass cause iron, calcium, and B12 deficiencies, and what complications follow?",
+      "back": "Roux-en-Y bypasses the duodenum, the main site of iron and calcium absorption and a contributor to B12 handling, producing malabsorption of these nutrients. The result is anemia and metabolic bone disease, so patients require lifelong supplementation."
+    },
+    {
+      "key": "18_10_cc14_0",
+      "front": "Why do patients form gallstones after bariatric surgery, and through what hormonal mechanism?",
+      "back": "Rapid weight loss after bariatric surgery reduces CCK secretion, which decreases gallbladder contraction and leads to biliary stasis. The stagnant bile promotes gallstone formation (cholelithiasis)."
+    }
+  ]
+}

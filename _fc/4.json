@@ -1,0 +1,162 @@
+{
+  "sections": [
+    {
+      "title": "Digestion, absorption, and secretion across the gut", "los": [1, 2]
+    },
+    {
+      "title": "The mucosal barrier", "los": [7]
+    }
+  ],
+  "cards": [
+    {
+      "key": "4_1_q0",
+      "front": "Why is the small intestine, not the colon, built for nutrient absorption, and what does that structural choice cost the colon?",
+      "back": "The small intestine has villi and microvilli that create an enormous surface area optimized for nutrient absorption, while the colon lacks villi. The trade-off is that the colon cannot absorb nutrients and is instead specialized to dehydrate chyme by reabsorbing water and electrolytes."
+    },
+    {
+      "key": "4_1_cc4_0",
+      "front": "In the small intestine versus the colon, where are villi found and how does that match each segment's primary job?",
+      "back": "Villi are present only in the small intestine, where their job is nutrient absorption. The colon has no villi because its job is to dehydrate chyme by reabsorbing water rather than absorb nutrients."
+    },
+    {
+      "key": "4_1_cc4_1",
+      "front": "Among the two enterocyte populations of the intestinal epithelium, which one absorbs and which one secretes?",
+      "back": "Absorptive enterocytes on the villi carry out absorption, while crypt enterocytes carry out secretion. These are their primary respective roles."
+    },
+    {
+      "key": "4_2_q0",
+      "front": "After a fatty meal, which single hormone simultaneously empties the gallbladder, opens the sphincter of Oddi, and revs the pancreas, and why does it reappear in the motility lecture?",
+      "back": "Cholecystokinin (CCK), released by duodenal I cells in response to fat and protein, contracts the gallbladder, relaxes the sphincter of Oddi, and stimulates pancreatic enzyme secretion. It reappears in the motility lecture because it also inhibits gastric emptying and promotes orad gastric accommodation."
+    },
+    {
+      "key": "4_2_cc9_0",
+      "front": "Which cells release CCK, what triggers it, and what are its three actions on the gallbladder, sphincter of Oddi, and pancreas?",
+      "back": "CCK is released by duodenal I cells in response to fat and protein. It contracts the gallbladder, relaxes the sphincter of Oddi, and stimulates pancreatic secretion and growth."
+    },
+    {
+      "key": "4_2_cc9_1",
+      "front": "Beyond its digestive actions, what effect does CCK have on gastric emptying, and why does that matter for the motility lectures?",
+      "back": "CCK is a potent inhibitor of gastric emptying. This is a motility action that carries forward into the motility lectures (Lec 5 to 6)."
+    },
+    {
+      "key": "4_2_cc9_2",
+      "front": "What fraction of bile acids does the terminal ileum recycle, by what mechanism, and what vitamin does that same segment absorb?",
+      "back": "The terminal ileum recycles about 95% of bile acids via the enterohepatic circulation, returning them to the liver. The same segment also absorbs vitamin B12."
+    },
+    {
+      "key": "4_2_q14",
+      "front": "For each macronutrient, what are the rate-limiting enzyme, apical transporter, and exit door, and which single transporter do all three monosaccharides share on the way out?",
+      "back": "Carbohydrates use brush-border disaccharidases, with glucose and galactose entering via apical SGLT1 and fructose via GLUT5; protein relies on enterokinase-activated trypsin and apical PepT1/amino-acid transporters; lipids depend on pancreatic lipase with micellar uptake. All three monosaccharides exit the basolateral membrane through GLUT2."
+    },
+    {
+      "key": "4_2_cc20_0",
+      "front": "What distinguishes the SGLT1 and SGLT2 transporters in terms of location and the sugars they move?",
+      "back": "SGLT1 is the apical, sodium-coupled transporter that absorbs glucose and galactose in the intestine. SGLT2 is found in the kidney, and the SGLT1 mechanism is the basis for oral rehydration solution."
+    },
+    {
+      "key": "4_2_cc20_1",
+      "front": "Which transporter handles apical fructose uptake, which provides the basolateral exit for all three monosaccharides, and what is the classic trap?",
+      "back": "GLUT5 mediates apical, sodium-independent fructose absorption, while GLUT2 is the basolateral exit for all three monosaccharides. The classic trap is mistakenly placing GLUT2 on the apical membrane."
+    },
+    {
+      "key": "4_2_cc20_2",
+      "front": "Why does lactase deficiency cause an osmotic diarrhea while maltose digestion is comparatively protected?",
+      "back": "Lactose can only be digested by lactase, so its deficiency leaves undigested lactose in the lumen that draws in water and causes osmotic diarrhea. Maltose is protected because it has redundant enzymes that can digest it."
+    },
+    {
+      "key": "4_2_cc27_0",
+      "front": "How is trypsinogen activated in the duodenum, and why is enterokinase the key to the entire protease cascade?",
+      "back": "The brush-border enzyme enterokinase, found only in the duodenum, activates trypsinogen to trypsin. Trypsin then activates all the other pancreatic proteases, making enterokinase the trigger for the whole cascade."
+    },
+    {
+      "key": "4_2_cc27_1",
+      "front": "In cystinuria and Hartnup disease, which amino acids are affected and how can the body still rescue absorption despite a defective amino-acid transporter?",
+      "back": "Cystinuria affects the cationic amino acids (cystine, ornithine, lysine, arginine; COLA) and Hartnup disease affects neutral amino acids such as tryptophan. Both are rescued because dipeptides can still be absorbed via PepT1, though Hartnup can lead to pellagra from tryptophan loss."
+    },
+    {
+      "key": "4_2_cc29_0",
+      "front": "In lipid digestion, which enzyme is essential, what role do bile acids play, and how do lipid products actually reach the enterocyte?",
+      "back": "Pancreatic lipase is the essential enzyme for fat digestion, while bile acids emulsify fat to increase surface area. The lipid breakdown products are then ferried to the enterocyte inside micelles, with lingual and gastric lipases playing only minor roles."
+    },
+    {
+      "key": "4_2_cc29_1",
+      "front": "After absorption, how are triglycerides repackaged and routed out of the enterocyte, and what is the exception that uses the portal route instead?",
+      "back": "Re-synthesized triglycerides are packaged into chylomicrons that enter the lacteals and travel via lymph rather than the portal vein. The exception is medium-chain fatty acids, which are absorbed directly into the portal circulation."
+    },
+    {
+      "key": "4_2_q34",
+      "front": "The gut handles about 8.5 L of fluid a day but loses only ~100 mL, so where does all that fluid come from, and why is the jejunum, not the duodenum, the sodium workhorse?",
+      "back": "Of the roughly 8.5 L presented daily, about 6.5 L is endogenous GI secretion and only about 2 L is dietary, with only ~100 mL lost in stool. The jejunum is the major site of sodium absorption because of its high absorptive capacity, whereas the duodenum specializes more in nutrient and iron handling."
+    },
+    {
+      "key": "4_2_cc40_0",
+      "front": "Of the ~8.5 L of fluid presented to the gut each day, how much comes from secretion versus diet, how much reaches the colon, and how much is lost?",
+      "back": "About 8.5 L is presented per day and only roughly 100 mL is lost in stool. Approximately 6.5 L is GI secretion and about 2 L is dietary, with around 2 L reaching the colon."
+    },
+    {
+      "key": "4_2_cc40_1",
+      "front": "What are the main intestinal sodium absorption mechanisms, what feature do they share, and what ultimately powers them all?",
+      "back": "Sodium is absorbed via ENaC (colon, aldosterone-regulated), sodium-nutrient cotransport (duodenum), sodium-chloride cotransport, and the sodium-hydrogen exchanger (NHE), all of which are electroneutral. The basolateral Na/K-ATPase powers all of these by maintaining the sodium gradient."
+    },
+    {
+      "key": "4_2_cc40_2",
+      "front": "How do the duodenum, jejunum, and ileum divide the labor of absorption?",
+      "back": "The duodenum specializes in nutrients and iron, the jejunum is the major site of sodium absorption, and the ileum handles vitamin B12 and bile acid recycling. This reflects segment-by-segment specialization of the small intestine."
+    },
+    {
+      "key": "4_2_cc47_0",
+      "front": "How does the route of intestinal calcium absorption shift between high and low intake, and which vitamin governs the regulated pathway?",
+      "back": "With high calcium intake, absorption is mainly paracellular, while with low intake it becomes transcellular through an apical channel, calbindin, and a basolateral Ca-ATPase. The transcellular pathway is regulated by vitamin D3."
+    },
+    {
+      "key": "4_2_cc47_1",
+      "front": "Walk through the steps of non-heme iron absorption in the duodenum, from luminal reduction to fate inside the enterocyte.",
+      "back": "Dietary ferric iron (Fe3+) is reduced to ferrous iron (Fe2+) by the brush-border reductase DCYTB, then taken up across the apical membrane by DMT1. Inside the enterocyte iron is either stored as ferritin or exported into the blood through ferroportin (FPN1)."
+    },
+    {
+      "key": "4_2_q52",
+      "front": "Intestinal secretion uses the same chloride channel whether the trigger is cAMP or calcium, so how does cholera toxin turn a normal physiologic process into life-threatening diarrhea?",
+      "back": "Both cAMP and calcium signaling open the apical CFTR chloride channel, after which sodium and water follow into the lumen. Cholera toxin permanently elevates cAMP so CFTR stays open continuously, driving massive, unregulated secretory diarrhea that persists even when the patient stops eating."
+    },
+    {
+      "key": "4_2_cc59_0",
+      "front": "What is the shared final pathway by which both cAMP and calcium signals drive intestinal fluid secretion?",
+      "back": "Both cAMP and calcium open the apical chloride channel CFTR, allowing chloride to enter the lumen. Sodium then follows for electroneutrality and water follows osmotically, producing secretion through a single common endpoint."
+    },
+    {
+      "key": "4_2_cc59_1",
+      "front": "How do the secretory triggers sort into cAMP-mediated versus calcium-mediated messengers?",
+      "back": "cAMP-mediated triggers include cholera toxin, E. coli toxin, VIP, histamine, and prostaglandin. Calcium-mediated triggers include acetylcholine, bradykinin, and serotonin."
+    },
+    {
+      "key": "4_2_cc59_2",
+      "front": "Why does the diarrhea caused by cholera or E. coli toxin continue even when the patient is kept NPO?",
+      "back": "Cholera and E. coli toxins permanently raise intracellular cAMP, so the CFTR chloride channel never closes. This drives continuous secretory diarrhea that persists even when the patient stops eating."
+    },
+    {
+      "key": "4_2_q65",
+      "front": "Across the four mechanisms of diarrhea, which type keeps going when the patient stops eating, and which lab pattern unmasks a destroyed villous surface?",
+      "back": "Secretory diarrhea (from toxins or VIP) persists with fasting, whereas osmotic diarrhea (such as lactose intolerance) stops with fasting; the other two mechanisms are inflammatory and dysmotility. A destroyed villous surface, as in celiac disease, is unmasked by a low d-xylose absorption test along with steatorrhea and signs of pan-malabsorption."
+    },
+    {
+      "key": "4_2_cc70_0",
+      "front": "What is the fasting test, and how does it separate secretory from osmotic diarrhea?",
+      "back": "The fasting test distinguishes diarrhea by whether it stops when the patient stops eating. Secretory diarrhea (toxin or VIP driven) persists with fasting, while osmotic diarrhea (such as lactose intolerance) stops with fasting."
+    },
+    {
+      "key": "4_2_cc70_1",
+      "front": "Beyond secretory and osmotic, what are the underlying defects in inflammatory and dysmotility diarrhea?",
+      "back": "Inflammatory diarrhea results from loss of absorptive surface area, while dysmotility diarrhea results from transit that is too fast for adequate absorption. These complete the four-mechanism framework of diarrhea."
+    },
+    {
+      "key": "4_2_cc73_0",
+      "front": "What constellation of findings makes celiac disease a pan-malabsorptive process rather than an isolated deficiency?",
+      "back": "Celiac disease causes pan-malabsorption from loss of absorptive surface area, producing steatorrhea, a low d-xylose absorption test, and hypoalbuminemia with edema. The d-xylose abnormality points specifically to a mucosal surface-area defect."
+    },
+    {
+      "key": "4_2_cc73_1",
+      "front": "Which vitamins are lost in steatorrhea, and why is B12 deficiency a different problem altogether?",
+      "back": "Steatorrhea causes loss of the fat-soluble vitamins A, D, E, and K. Vitamin B12 deficiency is instead an ileum or intrinsic-factor problem, and the water-soluble vitamins are generally spared by fat malabsorption."
+    }
+  ]
+}

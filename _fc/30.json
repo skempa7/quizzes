@@ -1,0 +1,102 @@
+{
+  "sections": [
+    {
+      "title": "Ano-rectal anatomy",
+      "los": [1]
+    },
+    {
+      "title": "Hemorrhoids: types, presentation, and management",
+      "los": [2, 3]
+    },
+    {
+      "title": "Perianal disorders",
+      "los": [4]
+    },
+    {
+      "title": "Ano-rectal malignancies and congenital or structural conditions",
+      "los": [5, 6]
+    }
+  ],
+  "cards": [
+    {
+      "key": "30_1_q0",
+      "front": "Why does the dentate line determine whether an anal lesion is painful and whether it can be treated without anesthesia?",
+      "back": "The dentate line is the boundary between visceral and somatic innervation. Tissue above it is insensate columnar mucosa, so lesions there are painless and can be treated in the office without anesthesia, while tissue below it is sensate anoderm with somatic nerves, making lesions painful and requiring anesthesia."
+    },
+    {
+      "key": "30_1_cc3_0",
+      "front": "In ano-rectal anatomy, what three things does the dentate line mark, and how does sensation differ on each side of it?",
+      "back": "The dentate line is the squamocolumnar junction and the somatic-visceral (sensory) boundary, and the anal crypts at this line are the origin of perianal abscesses. Above it the mucosa is insensate, while below it the anoderm is sensate."
+    },
+    {
+      "key": "30_1_cc5_0",
+      "front": "How does venous drainage differ between the internal and external hemorrhoidal plexuses, and why does this anatomic split matter?",
+      "back": "The internal plexus (above the dentate line) drains into the portal system, while the external plexus (below the dentate line) drains into the caval (systemic) system. This portal-caval split makes the internal plexus a site of portosystemic anastomosis relevant in portal hypertension."
+    },
+    {
+      "key": "30_2_q0",
+      "front": "A symptomatic internal hemorrhoid has failed fiber and sitz baths. What office procedure is the next step, and why can it be performed without anesthesia?",
+      "back": "Rubber-band ligation is the next step for a refractory internal hemorrhoid. Because internal hemorrhoids lie above the dentate line in insensate mucosa, the band can be applied painlessly in the office without anesthesia."
+    },
+    {
+      "key": "30_2_cc4_0",
+      "front": "How are internal hemorrhoids graded from first to fourth degree, and what single feature defines the grade?",
+      "back": "Grading is based on reducibility of prolapse: first degree has no prolapse, second degree prolapses but reduces spontaneously, third degree requires manual reduction, and fourth degree is irreducible."
+    },
+    {
+      "key": "30_2_cc9_0",
+      "front": "What is the stepwise management ladder for hemorrhoids from first-line therapy to definitive surgery?",
+      "back": "Start with conservative measures (fiber, stool softeners, sitz baths), then progress to rubber-band ligation for refractory internal hemorrhoids, and finally excisional hemorrhoidectomy for large grade III or IV disease."
+    },
+    {
+      "key": "30_3_q0",
+      "front": "One patient has painless bright-red rectal bleeding with a prolapsing mass and another has acute severe anal pain with a tender lump. Which hemorrhoid does each have, and what anatomic fact explains the difference?",
+      "back": "The first patient has an internal hemorrhoid and the second has a thrombosed external hemorrhoid. The difference is the dentate line: internal hemorrhoids sit above it in insensate mucosa (painless), while external hemorrhoids sit below it in sensate anoderm and become painful when thrombosed."
+    },
+    {
+      "key": "30_3_cc4_0",
+      "front": "Using the dentate line, how do you differentiate internal from external hemorrhoids by location, sensation, and typical presentation?",
+      "back": "Internal hemorrhoids lie above the dentate line in insensate mucosa and present with painless bleeding or prolapse. External hemorrhoids lie below the dentate line in sensate anoderm and cause acute pain when thrombosed."
+    },
+    {
+      "key": "30_4_q0",
+      "front": "A patient has a painful linear tear in the posterior midline with bright-red blood not mixed with stool. What is the diagnosis, what finding would push you toward Crohn's, and how do you treat it acutely?",
+      "back": "This is an anal fissure (fissure-in-ano), classically a painful posterior-midline linear ulcer with blood streaking the stool surface. Multiple or atypically located (off-midline) fissures should raise suspicion for Crohn's disease. Acute fissures (under two weeks) are managed conservatively with fiber, sitz baths, and topical agents."
+    },
+    {
+      "key": "30_4_cc4_0",
+      "front": "Where do perianal abscesses originate, which type is most common, and what happens if one is left untreated?",
+      "back": "Perianal abscesses start in the anal crypts at the dentate line, and the perianal (infralevator) type is the most common. An untreated abscess can evolve into a fistula-in-ano, a crypt-to-skin tract evaluated with an anoscope and probe."
+    },
+    {
+      "key": "30_4_cc11_0",
+      "front": "What are the classic features of an anal fissure, which presentation flags Crohn's disease, and how is an acute fissure managed?",
+      "back": "An anal fissure is a painful posterior-midline linear ulcer with blood not mixed with the stool and often a sentinel pile (skin tag). Multiple or atypical fissures suggest Crohn's disease. Acute fissures (under two weeks) are treated conservatively."
+    },
+    {
+      "key": "30_4_cc16_0",
+      "front": "How do the major anorectal STIs differ in their presentation, diagnostic test, and treatment?",
+      "back": "Condylomata acuminata come from HPV and are premalignant; lymphogranuloma venereum is diagnosed by microimmunofluorescent titer and treated with doxycycline; gonorrhea causes a mucopurulent discharge diagnosed by culture and Gram stain and treated with penicillin G plus probenecid; herpes simplex is treated with acyclovir; and syphilis presents with a painless chancre."
+    },
+    {
+      "key": "30_5_q0",
+      "front": "What is the modern treatment of choice for anal squamous cell carcinoma, and how did it change clinical practice?",
+      "back": "The modern treatment of choice is combined chemoradiation, known as the Nigro protocol. It shifted practice away from upfront abdominoperineal resection toward a sphincter-sparing approach, with surgery reserved for treatment failures."
+    },
+    {
+      "key": "30_5_cc3_0",
+      "front": "What are the key epidemiologic and treatment features of anal squamous cell carcinoma, including the historic shift in management?",
+      "back": "Anal SCC accounts for less than 2% of anorectal cancers, occurs with roughly equal frequency above and below the dentate line, and carries a poor prognosis. Treatment shifted from abdominoperineal resection to sphincter-sparing chemoradiation (the Nigro protocol), with APR now reserved for failures."
+    },
+    {
+      "key": "30_5_cc5_0",
+      "front": "What features characterize anorectal malignant melanoma, and what common benign lesion can it be mistaken for?",
+      "back": "Anorectal melanoma is rare and aggressive and may show black pigmentation. It can be mistaken for a thrombosed external hemorrhoid, so a pigmented anal lesion should not be assumed benign."
+    },
+    {
+      "key": "30_6_cc1_0",
+      "front": "How do imperforate anus and rectal prolapse differ in cause and management, and what malignant concern accompanies chronic prolapse?",
+      "back": "Imperforate anus is a neonatal malformation, often with meconium passing via a fistula, that requires surgical correction. Rectal prolapse results from pelvic-floor weakness, and a long-standing chronic prolapse can harbor an underlying carcinoma, warranting vigilance."
+    }
+  ]
+}

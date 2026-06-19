@@ -1,0 +1,74 @@
+{
+  "sections": [
+    {
+      "title": "Managing bacterial gut infections",
+      "los": [2]
+    },
+    {
+      "title": "Managing viral gut infections",
+      "los": [4]
+    }
+  ],
+  "cards": [
+    {
+      "key": "8_2_q0",
+      "front": "Across nearly all bacterial gastroenteritis, what is the default management approach, and which organism makes the instinct to reach for antibiotics actively harmful?",
+      "back": "The default for almost all bacterial gastroenteritis is supportive fluid and electrolyte repletion, since most cases are self-limited. The key trap is enterohemorrhagic E. coli (EHEC), where antibiotics provide no benefit and increase the risk of hemolytic uremic syndrome."
+    },
+    {
+      "key": "8_2_cc5_0",
+      "front": "What is the default first-line management for most cases of bacterial gastroenteritis, and why is it sufficient for the majority of patients?",
+      "back": "Fluid and electrolyte repletion is the default management. Most bacterial gastroenteritis is self-limited, so rehydration alone is enough and targeted antibiotics are reserved for specific situations."
+    },
+    {
+      "key": "8_2_cc5_1",
+      "front": "In cholera, what is the single most lifesaving intervention, and what is the underlying threat that makes it so critical?",
+      "back": "Aggressive rehydration is lifesaving in cholera. The toxin drives massive secretory fluid loss that can rapidly progress to hypovolemic shock, so replacing volume is the priority over any antimicrobial."
+    },
+    {
+      "key": "8_2_cc5_2",
+      "front": "Why are antibiotics avoided in enterohemorrhagic E. coli (EHEC) infection, and what is the correct management instead?",
+      "back": "Antibiotics offer no benefit in EHEC and increase the risk of hemolytic uremic syndrome (HUS), likely by enhancing Shiga toxin release. Management is supportive with fluids only."
+    },
+    {
+      "key": "8_2_q10",
+      "front": "Rotavirus, norovirus, and adenovirus all cause watery diarrhea, so which genome type, affected population, and classic clinical setting distinguish each one?",
+      "back": "Rotavirus is dsRNA, affects young children, peaks in winter, and is vaccine-preventable. Norovirus is ssRNA, affects adults, and causes cruise-ship and institutional outbreaks. Enteric adenovirus (serotypes 40/41) is the only DNA virus (dsDNA) and affects children and the immunocompromised."
+    },
+    {
+      "key": "8_2_cc18_0",
+      "front": "What genome type, patient population, season, and toxin mechanism characterize rotavirus gastroenteritis?",
+      "back": "Rotavirus is a double-stranded RNA virus that classically affects children in winter, with vomiting preceding diarrhea. Its NSP4 protein acts as an enterotoxin causing osmotic diarrhea, and a vaccine exists."
+    },
+    {
+      "key": "8_2_cc18_1",
+      "front": "What genome type, population, and outbreak setting define norovirus, and is a vaccine available?",
+      "back": "Norovirus is a single-stranded RNA virus that predominantly affects adults and causes cruise-ship and institutional outbreaks via binding to histo-blood group antigens (HBGA). There is no vaccine."
+    },
+    {
+      "key": "8_2_cc18_2",
+      "front": "Among the viral causes of gastroenteritis covered, which one has a DNA genome, and what serotypes and population are involved?",
+      "back": "Enteric adenovirus is the only DNA virus (double-stranded DNA) among these causes. Serotypes 40 and 41 cause gastroenteritis, primarily in children and immunocompromised patients."
+    },
+    {
+      "key": "8_2_cc18_3",
+      "front": "What is the most sensitive diagnostic test for viral gastroenteritis, and which host binding factor is shared by rotavirus and norovirus?",
+      "back": "RT-PCR is the most sensitive viral diagnostic test. Histo-blood group antigens (HBGA) enhance the binding of both rotavirus and norovirus, making it a shared susceptibility factor."
+    },
+    {
+      "key": "8_4_q0",
+      "front": "With no routine antiviral for viral gastroenteritis, what does management actually consist of, and what single preventive tool exists for only one of these viruses?",
+      "back": "Management is supportive, centered on fluid and electrolyte replacement, because viral gastroenteritis is self-limited and has no routine antiviral. The only preventive tool is the live attenuated rotavirus vaccine; norovirus and adenovirus have no vaccine."
+    },
+    {
+      "key": "8_4_cc4_0",
+      "front": "What does management of viral gastroenteritis consist of, and why are antivirals not part of routine care?",
+      "back": "Management is supportive, providing fluids and electrolytes. Viral gastroenteritis is self-limited, so no routine antivirals are used."
+    },
+    {
+      "key": "8_4_cc4_1",
+      "front": "Among rotavirus, norovirus, and adenovirus, which is vaccine-preventable, and what type of vaccine is it?",
+      "back": "Only rotavirus is vaccine-preventable, with a live attenuated oral vaccine. Norovirus and adenovirus have no available vaccine."
+    }
+  ]
+}

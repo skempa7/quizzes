@@ -1,0 +1,128 @@
+{
+  "sections": [
+    {
+      "title": "Hiatal hernia and reflux disease",
+      "los": [1, 2]
+    },
+    {
+      "title": "Surgical reflux, achalasia, and diverticula",
+      "los": [3]
+    },
+    {
+      "title": "Esophageal cancer and other esophageal disorders",
+      "los": [4, 5]
+    }
+  ],
+  "cards": [
+    {
+      "key": "12_1_q0",
+      "front": "There are two types of hiatal hernia: one is common and frequently silent, the other stays quiet until it strangulates. How do you tell them apart, and which one is repaired even when symptoms are mild?",
+      "back": "A sliding (type I) hernia is far more common, occurs when the gastroesophageal junction slides up through the hiatus, and is often asymptomatic, managed medically. A paraesophageal hernia occurs when the fundus herniates alongside the esophagus and is repaired even when mild because of the risk of incarceration, volvulus, and gastric ischemia."
+    },
+    {
+      "key": "12_1_cc6_0",
+      "front": "What defines a sliding (type I) hiatal hernia, how common is it relative to the paraesophageal type, and what is the character of its pain?",
+      "back": "In a sliding (type I) hernia the gastroesophageal junction slides up through the hiatus. It is roughly 100 times more common than the paraesophageal type and is often asymptomatic, with pain that does not radiate."
+    },
+    {
+      "key": "12_1_cc11_0",
+      "front": "In a paraesophageal hiatal hernia, what anatomic structure herniates, why is it dangerous, and which type is often repaired even when asymptomatic?",
+      "back": "The gastric fundus herniates alongside the esophagus while the GE junction stays in place. It is dangerous because it remains silent until incarceration or ischemia occurs, and type IV is often repaired prophylactically to avoid gastric volvulus and ischemia."
+    },
+    {
+      "key": "12_2_q0",
+      "front": "Which physiologic factors allow acid reflux to occur, what features make the symptoms surgical rather than cardiac, and which test confirms each part of the diagnostic picture?",
+      "back": "Reflux occurs because the GE junction is a pressure zone rather than a true sphincter, and injury depends on the duration of acid contact rather than excess acidity. Symptoms (heartburn worse supine, relieved by antacids) point to a foregut rather than cardiac cause, and the diagnostic triad is barium swallow for anatomy, endoscopy with biopsy for mucosa, and manometry for physiology."
+    },
+    {
+      "key": "12_2_cc6_0",
+      "front": "Why does reflux injury depend more on acid-contact duration than on hyperacidity, and what does that imply about the nature of the gastroesophageal junction?",
+      "back": "Reflux injury is a function of how long the mucosa is exposed to acid, not how acidic the refluxate is. The GE junction is a high-pressure zone rather than a true anatomic sphincter, so loss of that pressure barrier prolongs acid contact and causes damage."
+    },
+    {
+      "key": "12_2_cc8_0",
+      "front": "What is the classic symptom pattern of reflux, and what late symptoms signal that a stricture has developed?",
+      "back": "Reflux symptoms are typically worse when supine and relieved by antacids. Late-onset dysphagia and vomiting suggest progression to a peptic stricture."
+    },
+    {
+      "key": "12_2_cc13_0",
+      "front": "In the diagnostic workup for reflux, what does each of barium swallow, endoscopy with biopsy, and manometry specifically assess?",
+      "back": "Barium swallow assesses anatomy, endoscopy with biopsy assesses the mucosa, and manometry assesses physiology, demonstrating the lost high-pressure zone at the GE junction."
+    },
+    {
+      "key": "12_3_q0",
+      "front": "When does reflux warrant an operation and what does that operation accomplish? Why is achalasia painless despite a hugely dilated esophagus? And how do a Zenker and a mid-esophageal diverticulum differ in mechanism?",
+      "back": "Reflux earns surgery when medical therapy fails or relapses; the operation corrects the anatomic defect and rebuilds a competent valve. Achalasia is painless because the proximal dilation is non-ischemic, even when severe. A Zenker is a pulsion diverticulum from cricopharyngeal dysfunction, whereas a mid-esophageal diverticulum is a traction lesion pulled outward by inflammation such as TB or histoplasmosis."
+    },
+    {
+      "key": "12_3_cc6_0",
+      "front": "What proportion of reflux patients ultimately need surgery, and what is the core principle of an antireflux operation?",
+      "back": "About one-third of patients fail medical therapy, and roughly half of initial responders relapse. The operation corrects the underlying defect and rebuilds a competent valve, rather than being defined by a specific named wrap."
+    },
+    {
+      "key": "12_3_cc6_1",
+      "front": "What is the characteristic complication of antireflux surgery, and what other complications can occur?",
+      "back": "Gas-bloat syndrome, an inability to belch or vomit, is the characteristic complication. Other complications include dysphagia, recurrence, perforation, and splenic injury."
+    },
+    {
+      "key": "12_3_cc8_0",
+      "front": "What is the core pathophysiologic defect in achalasia, and why is it painless despite massive esophageal dilation?",
+      "back": "Achalasia is a failure of the lower esophageal sphincter to relax, not a spasm, leading to progressive proximal esophageal dilation. It is painless because the dilation is non-ischemic."
+    },
+    {
+      "key": "12_3_cc13_0",
+      "front": "What classic imaging finding suggests achalasia, and what is the confirmatory diagnostic sequence?",
+      "back": "A bird-beak appearance on upper GI contrast study suggests achalasia and is a board-flagged do-not-miss finding. Diagnosis is confirmed by a sequence of contrast study, then endoscopy, then manometry."
+    },
+    {
+      "key": "12_3_cc15_0",
+      "front": "Since medical therapy is largely ineffective for achalasia, what are the definitive treatment options?",
+      "back": "Medical therapy is not helpful in achalasia. Definitive treatment is forceful pneumatic dilation or esophageal myotomy."
+    },
+    {
+      "key": "12_3_cc23_0",
+      "front": "How do pulsion and traction esophageal diverticula differ in mechanism, location, and management?",
+      "back": "Pulsion diverticula include the cervical Zenker (from cricopharyngeal dysfunction, treated by excision plus myotomy) and distal-third diverticula (treat the underlying cause). Traction diverticula are mid-esophageal, caused by inflammation such as TB or histoplasmosis, and usually require no treatment."
+    },
+    {
+      "key": "12_4_q0",
+      "front": "A patient presents with progressive dysphagia and weight loss. How do you distinguish squamous cell carcinoma from adenocarcinoma, how do you stage the tumor, and how does location guide treatment?",
+      "back": "Squamous cell carcinoma arises from squamous epithelium and is linked to alcohol and tobacco use, while adenocarcinoma arises from Barrett columnar metaplasia. Staging uses EUS for depth and CT of the chest and abdomen for extent. Treatment is determined by location: upper tumors get radiotherapy, middle tumors a staged esophagectomy with bypass, and lower or proximal gastric tumors an esophagogastric resection."
+    },
+    {
+      "key": "12_4_cc6_0",
+      "front": "What are the cell of origin and key risk factors for esophageal squamous cell carcinoma versus adenocarcinoma?",
+      "back": "Squamous cell carcinoma arises from squamous epithelium and is associated with alcohol and tobacco use, classically described in black men. Adenocarcinoma arises from Barrett columnar change, developing in roughly 10% of Barrett cases."
+    },
+    {
+      "key": "12_4_cc8_0",
+      "front": "How does esophageal cancer typically present, and what two studies are used to stage it?",
+      "back": "Esophageal cancer has an insidious onset with progressive dysphagia. Staging uses endoscopic ultrasound (EUS) to assess tumor depth and CT of the chest and abdomen to assess extent."
+    },
+    {
+      "key": "12_4_cc16_0",
+      "front": "How does the location of an esophageal cancer determine its surgical or radiotherapeutic treatment?",
+      "back": "Upper tumors are treated with radiotherapy, middle tumors with staged esophagectomy plus bypass, and lower esophageal or proximal gastric tumors with esophagogastric resection and end-to-end anastomosis."
+    },
+    {
+      "key": "12_5_q0",
+      "front": "Consider a rare intramural esophageal tumor, a spontaneous esophageal rupture after vomiting, and a child who swallowed drain cleaner. How is each recognized and managed, and what must you avoid doing for the caustic ingestion?",
+      "back": "The intramural tumor is a leiomyoma, the most common benign esophageal tumor, causing progressive dysphagia by indenting the lumen. The spontaneous rupture is Boerhaave syndrome, a full-thickness perforation diagnosed by Gastrografin study and treated with aggressive surgery. Caustic ingestion is an emergency managed with airway protection and endoscopy, and you must avoid neutralization, induced emesis, and steroids."
+    },
+    {
+      "key": "12_5_cc6_0",
+      "front": "What is the most common benign intramural esophageal tumor, and how does it typically present?",
+      "back": "Leiomyoma is the most common benign intramural esophageal tumor. It has low malignant potential, indents the lumen, and causes progressive dysphagia."
+    },
+    {
+      "key": "12_5_cc8_0",
+      "front": "What is Boerhaave syndrome, what serious complication does it cause, and how is it diagnosed and treated?",
+      "back": "Boerhaave syndrome is a spontaneous full-thickness esophageal perforation caused by forceful vomiting, leading to mediastinal sepsis. It is diagnosed with a Gastrografin (water-soluble contrast) study and treated with aggressive surgery."
+    },
+    {
+      "key": "12_5_cc16_0",
+      "front": "In the emergency management of caustic ingestion, which three interventions must be avoided, and what is the correct approach?",
+      "back": "Caustic ingestion is an emergency in which neutralization, induced emesis, and steroids must all be avoided. Correct management centers on airway protection and endoscopy."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "sections": [
+    {
+      "title": "Malabsorption and celiac disease",
+      "los": [1, 2]
+    },
+    {
+      "title": "Vitamin absorption and deficiency",
+      "los": [3]
+    }
+  ],
+  "cards": [
+    {
+      "key": "24_1_q0",
+      "front": "Two patients both have steatorrhea: one from exocrine pancreatic insufficiency and one from lactase non-persistence. Which represents maldigestion versus malabsorption, and how do the two processes differ?",
+      "back": "Maldigestion is failure to chemically break nutrients down into absorbable forms, as in exocrine pancreatic insufficiency where lack of lipase leaves fat undigested. Malabsorption is failure of the intestinal mucosa to take up nutrients that have already been digested, as in lactase non-persistence where unsplit lactose stays in the lumen. The two overlap clinically and are often grouped together, but the defect is in luminal/enzymatic processing versus mucosal transport, respectively."
+    },
+    {
+      "key": "24_2_q0",
+      "front": "A 30-year-old with chronic diarrhea, iron-deficiency anemia, and an itchy vesicular rash on the elbows has a positive tTG-IgA. What genetic association underlies this disease, and what single test confirms the diagnosis?",
+      "back": "This is celiac disease, strongly associated with the HLA-DQ2 and HLA-DQ8 haplotypes, with the rash being dermatitis herpetiformis. The confirmatory test is a duodenal (small bowel) biopsy showing villous atrophy, crypt hyperplasia, and intraepithelial lymphocytosis, performed while the patient is still eating gluten."
+    },
+    {
+      "key": "24_3_q0",
+      "front": "A patient develops macrocytic anemia with paresthesias after ileal resection. Which vitamin is responsible, where is it normally absorbed, and which two labs distinguish it from the look-alike folate deficiency?",
+      "back": "The vitamin is B12 (cobalamin), normally absorbed in the terminal ileum bound to intrinsic factor, so ileal resection causes deficiency. Both B12 and folate deficiency raise homocysteine, but only B12 deficiency raises methylmalonic acid; B12 deficiency also produces neurologic signs (paresthesias) whereas folate deficiency does not. Thus an elevated methylmalonic acid level distinguishes B12 from folate deficiency."
+    }
+  ]
+}

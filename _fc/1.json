@@ -1,0 +1,149 @@
+{
+  "sections": [
+    {"title": "Structure and function of the GI tract", "los": [1]},
+    {"title": "Principles of GI pathophysiology", "los": [2]},
+    {"title": "Clinical disease manifestations", "los": [3]}
+  ],
+  "cards": [
+    {
+      "key": "1_1_cc2_0",
+      "front": "Which enteric plexus lies in the submucosa, and what two functions does it control?",
+      "back": "The submucosal (Meissner) plexus sits in the submucosa and controls glandular secretion and local blood flow. It is the plexus that communicates with the glands."
+    },
+    {
+      "key": "1_1_cc2_1",
+      "front": "Which enteric plexus lies between the circular and longitudinal muscle layers, and what does it govern?",
+      "back": "The myenteric (Auerbach) plexus lies between the inner circular and outer longitudinal muscle of the muscularis externa and controls motility. It is the plexus that communicates with muscle."
+    },
+    {
+      "key": "1_1_cc7_0",
+      "front": "Why can a patient with a complete spinal cord transection above the sacral outflow still digest food?",
+      "back": "The enteric nervous system functions autonomously, so digestion continues even when the CNS connection is lost. The CNS only modulates how vigorously the gut works, it does not initiate digestion."
+    },
+    {
+      "key": "1_1_cc9_0",
+      "front": "Which extrinsic nerves provide parasympathetic input to the GI tract, and how does their territory divide?",
+      "back": "The vagus nerve supplies parasympathetic input from the esophagus through the proximal two-thirds of the colon, while the pelvic nerves (S2-S4) cover the distal one-third of the colon, rectum, and internal anal sphincter. Parasympathetic activity increases motility and secretion and relaxes sphincters."
+    },
+    {
+      "key": "1_1_cc9_1",
+      "front": "How does sympathetic innervation affect the gut, and why does this make GI ischemia a feature of shock?",
+      "back": "Sympathetic input (T5-L2 via splanchnic nerves) decreases motility and secretion, contracts sphincters, and vasoconstricts splanchnic vessels. That splanchnic vasoconstriction is why GI ischemia occurs in shock states."
+    },
+    {
+      "key": "1_2_cc1_0",
+      "front": "In the cellular adaptation cascade, what defines metaplasia and is it reversible?",
+      "back": "Metaplasia is the replacement of one mature cell type by another mature cell type better suited to the stress. It is reversible if the inciting stressor is removed."
+    },
+    {
+      "key": "1_2_cc1_1",
+      "front": "What distinguishes dysplasia from metaplasia, and how is high-grade dysplasia treated?",
+      "back": "Dysplasia is replacement tissue that shows disordered growth and nuclear atypia. It may still be reversible early, but high-grade dysplasia is treated as pre-malignant."
+    },
+    {
+      "key": "1_2_cc1_2",
+      "front": "What histologic event marks the transition from dysplasia to carcinoma, and is it reversible?",
+      "back": "Carcinoma is defined by frank invasion through the basement membrane. This step is irreversible."
+    },
+    {
+      "key": "1_2_cc5_0",
+      "front": "What muscle type forms the upper esophageal sphincter, and what dysphagia results from its failure?",
+      "back": "The upper esophageal sphincter is skeletal muscle responsible for voluntary initiation of the swallow. Failure here causes oropharyngeal dysphagia."
+    },
+    {
+      "key": "1_2_cc5_1",
+      "front": "What innervation relaxes the lower esophageal sphincter, and what happens when those neurons are lost?",
+      "back": "The lower esophageal sphincter is smooth muscle relaxed by inhibitory NO/VIP signaling from myenteric (Auerbach) neurons. Loss of these inhibitory neurons prevents LES relaxation, producing achalasia."
+    },
+    {
+      "key": "1_2_cc7_0",
+      "front": "What pattern of dysphagia points to a motility disorder rather than a mechanical one, and what is the classic example?",
+      "back": "Motility dysphagia causes trouble with both solids and liquids from the start, due to failure of coordinated peristalsis or sphincter relaxation. The classic example is achalasia."
+    },
+    {
+      "key": "1_2_cc7_1",
+      "front": "What dysphagia pattern suggests mechanical obstruction, and what conditions classically cause it?",
+      "back": "Obstructive dysphagia causes trouble with solids first that progresses to liquids as the lumen narrows. Classic causes include esophageal cancer, peptic stricture, Schatzki ring, and esophageal web."
+    },
+    {
+      "key": "1_3_cc1_0",
+      "front": "What features distinguish B12 deficiency glossitis from other causes, and what separates it from folate deficiency?",
+      "back": "Vitamin B12 deficiency causes a smooth, beefy-red tongue with megaloblastic anemia and neurologic symptoms such as subacute combined degeneration. The neurologic involvement is what distinguishes B12 from folate deficiency."
+    },
+    {
+      "key": "1_3_cc1_1",
+      "front": "What oral and nail findings accompany iron deficiency anemia, and what syndrome results when an esophageal web is added?",
+      "back": "Iron deficiency anemia causes atrophic glossitis, angular cheilitis, and koilonychia. Adding an upper esophageal web produces Plummer-Vinson syndrome."
+    },
+    {
+      "key": "1_3_cc1_2",
+      "front": "What tongue finding and clinical context suggest scarlet fever, and what organism is responsible?",
+      "back": "Scarlet fever causes a strawberry tongue in a child with pharyngitis and a sandpaper rash. It is caused by group A streptococcus."
+    },
+    {
+      "key": "1_3_cc1_3",
+      "front": "Which vitamin deficiency causes pellagra, and what are its classic clinical features?",
+      "back": "Niacin (B3) deficiency causes pellagra, characterized by the four D's: dermatitis, diarrhea, dementia, and death, with glossitis as a feature."
+    },
+    {
+      "key": "1_3_cc5_0",
+      "front": "How does achalasia classically present?",
+      "back": "Achalasia presents with dysphagia to both solids and liquids from onset, regurgitation of undigested food, and weight loss."
+    },
+    {
+      "key": "1_3_cc5_1",
+      "front": "What is the classic barium swallow finding in achalasia?",
+      "back": "Barium swallow shows the classic bird's beak appearance, a dilated esophagus tapering to a narrowed lower esophageal sphincter."
+    },
+    {
+      "key": "1_3_cc5_2",
+      "front": "What test confirms achalasia, and what findings establish the diagnosis?",
+      "back": "Esophageal manometry confirms achalasia, showing incomplete LES relaxation and aperistalsis. Manometry is the gold standard."
+    },
+    {
+      "key": "1_3_cc7_0",
+      "front": "How does GERD typically present, and what is a reasonable initial management step?",
+      "back": "GERD presents with heartburn and regurgitation that worsen when supine or after meals. An empiric trial of a proton pump inhibitor is reasonable initial management."
+    },
+    {
+      "key": "1_3_cc7_1",
+      "front": "Which alarm features in a patient with reflux symptoms mandate endoscopy?",
+      "back": "Dysphagia, odynophagia, weight loss, anemia, hematemesis, and new symptoms in a patient older than 50 are alarm features. Any of these mandates endoscopy."
+    },
+    {
+      "key": "1_3_cc7_2",
+      "front": "What defines Barrett's esophagus histologically, and how is the diagnosis confirmed?",
+      "back": "Barrett's esophagus is intestinal metaplasia of the distal esophagus, confirmed on biopsy by the presence of goblet cells. Patients undergo surveillance endoscopy at defined intervals."
+    },
+    {
+      "key": "1_3_cc7_3",
+      "front": "What is the feared endpoint of the Barrett's cascade, and what are its risk factors?",
+      "back": "Esophageal adenocarcinoma of the distal third of the esophagus is the feared endpoint. Risk factors include chronic GERD, obesity, smoking, and male sex."
+    },
+    {
+      "key": "1_3_cc11_0",
+      "front": "What is a sliding (Type I) hiatal hernia, and how is it managed?",
+      "back": "In a sliding hiatal hernia, which accounts for about 95% of cases, the GE junction slides up into the chest through the hiatus and presents with reflux symptoms. It is managed medically with PPIs and lifestyle changes."
+    },
+    {
+      "key": "1_3_cc12_0",
+      "front": "What anatomy defines a paraesophageal hiatal hernia, and why may surgery be indicated even when asymptomatic?",
+      "back": "In a paraesophageal hernia (Type II-IV, about 5%), the GE junction stays in place while the fundus herniates alongside the esophagus through the hiatus. Surgical repair may be warranted even when asymptomatic in selected cases because of the risk of strangulation, volvulus, and ischemia."
+    },
+    {
+      "key": "1_3_cc16_0",
+      "front": "How does the relationship of pain to food differ between duodenal and gastric ulcers, and what is the dominant cause of both?",
+      "back": "Duodenal ulcer pain is relieved by food as acid is neutralized, whereas gastric ulcer pain is worsened by food. H. pylori is the dominant cause of both, with NSAIDs second."
+    },
+    {
+      "key": "1_3_cc16_1",
+      "front": "What distinguishes Crohn's disease from ulcerative colitis in distribution, depth, and complications?",
+      "back": "Crohn's disease can affect anywhere from mouth to anus with skip lesions, is transmural, causes fistulas, and classically causes RLQ pain. Ulcerative colitis extends continuously from the rectum upward, is mucosal-only, causes bloody diarrhea, and carries increased colon cancer risk."
+    },
+    {
+      "key": "1_3_cc16_2",
+      "front": "How do internal and external hemorrhoids differ in symptoms and innervation relative to the dentate line?",
+      "back": "Internal hemorrhoids lie above the dentate line, have visceral innervation, and cause painless bleeding. External hemorrhoids lie below the dentate line, have somatic innervation, and are painful, so their management differs accordingly."
+    }
+  ]
+}

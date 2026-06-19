@@ -1,0 +1,208 @@
+{
+  "sections": [
+    {
+      "title": "GI hormones and what controls their release",
+      "los": [1, 2]
+    },
+    {
+      "title": "Functions of the gastrin family",
+      "los": [3]
+    },
+    {
+      "title": "Acid secretion and acid-suppressing drugs",
+      "los": [4, 5]
+    }
+  ],
+  "cards": [
+    {
+      "key": "2_1_cc2_0",
+      "front": "What single distinction separates a true GI hormone from a paracrine signal, and which gastric molecule is the classic paracrine example?",
+      "back": "Hormones travel through the bloodstream to reach distant targets, whereas paracrines diffuse locally through interstitial fluid to nearby cells. Histamine in the stomach is the canonical paracrine."
+    },
+    {
+      "key": "2_1_cc4_0",
+      "front": "Which enteroendocrine cell produces secretin, where is it located, and what triggers its release?",
+      "back": "Secretin is produced by S cells in the duodenum, and it is released in response to an acidic luminal pH below 4.5."
+    },
+    {
+      "key": "2_1_cc4_1",
+      "front": "Which duodenal cell type secretes CCK, and what luminal nutrients stimulate it?",
+      "back": "CCK is secreted by duodenal I cells, and its release is triggered by fats and proteins in the duodenum."
+    },
+    {
+      "key": "2_1_cc4_2",
+      "front": "Which cell releases GIP, what nutrient triggers it, and what is its special hormonal nickname?",
+      "back": "GIP is released by duodenal K cells in response to glucose. It is the incretin, meaning it potentiates insulin release after oral glucose."
+    },
+    {
+      "key": "2_1_cc4_3",
+      "front": "Which enteroendocrine cell secretes motilin, and during what state does it act?",
+      "back": "Motilin is secreted by duodenal M cells. It acts between meals, driving the migrating motor complex (MMC) waves during fasting."
+    },
+    {
+      "key": "2_1_cc4_4",
+      "front": "Where are the G cells that produce gastrin located, and what three stimuli trigger gastrin release?",
+      "back": "Gastrin is produced by G cells in the gastric antrum. Its release is triggered by luminal peptides, gastric distention, and vagal gastrin-releasing peptide (GRP)."
+    },
+    {
+      "key": "2_1_cc4_5",
+      "front": "Which gastric cell secretes somatostatin, and what is its overarching role among GI hormones?",
+      "back": "Somatostatin is secreted by gastric D cells. It acts as the universal inhibitor of the GI tract, suppressing secretion of most other gut hormones and gastric acid."
+    },
+    {
+      "key": "2_1_cc4_6",
+      "front": "Which gastric cell releases histamine, and is histamine technically a hormone or a paracrine signal?",
+      "back": "Histamine is released by gastric enterochromaffin-like (ECL) cells. It is a paracrine signal, not a true hormone, although it is grouped with the GI hormones for exam purposes."
+    },
+    {
+      "key": "2_2_cc2_0",
+      "front": "What luminal change triggers secretin, what cells does it target, and what is the net effect?",
+      "back": "A duodenal pH below 4.5 triggers secretin release. Secretin targets pancreatic duct cells, stimulating a bicarbonate-rich secretion that neutralizes gastric acid entering the duodenum."
+    },
+    {
+      "key": "2_2_cc2_1",
+      "front": "When secretin acts on the pancreas, do the duct cells secrete enzymes or bicarbonate, and which hormone drives the other product?",
+      "back": "Pancreatic duct cells secrete bicarbonate, not enzymes, in response to secretin. Enzyme secretion is the job of acinar cells, which are stimulated by CCK."
+    },
+    {
+      "key": "2_2_cc4_0",
+      "front": "A pancreatic neuroendocrine tumor causes watery diarrhea, hypokalemia, and achlorhydria. What hormone is overproduced and what is the syndrome called?",
+      "back": "Excess VIP causes WDHA syndrome (watery diarrhea, hypokalemia, achlorhydria), also called Verner-Morrison syndrome or pancreatic cholera, from a VIPoma."
+    },
+    {
+      "key": "2_2_cc4_1",
+      "front": "What laboratory test confirms a suspected VIPoma, and why is chromogranin A not sufficient?",
+      "back": "A VIPoma is confirmed by measuring an elevated serum VIP level. Chromogranin A is only a non-specific neuroendocrine marker and cannot confirm the diagnosis."
+    },
+    {
+      "key": "2_2_cc8_0",
+      "front": "Trace GIP from its source cell to its trigger to its ultimate target and effect.",
+      "back": "GIP comes from duodenal K cells and is triggered by glucose. It acts on pancreatic beta cells to stimulate insulin release, which is why it is called the glucose-dependent insulinotropic peptide."
+    },
+    {
+      "key": "2_2_cc10_0",
+      "front": "Guanylin and uroguanylin act on which receptor, through what second messenger, and what two clinically important agents share that target?",
+      "back": "They act on guanylyl cyclase C, raising cGMP to drive chloride and water secretion into the lumen. The same target is hit by E. coli heat-stable (ST) toxin in traveler's diarrhea and by linaclotide, a drug for IBS-C."
+    },
+    {
+      "key": "2_3_cc1_0",
+      "front": "What three stimuli increase gastrin release, and what feedback signal shuts gastrin off once the antrum becomes acidic?",
+      "back": "Gastrin is stimulated by luminal peptides and amino acids, gastric distention, and vagal GRP. Acid in the antrum inhibits gastrin release by triggering somatostatin from D cells."
+    },
+    {
+      "key": "2_3_cc1_1",
+      "front": "Through which receptor on parietal cells does gastrin stimulate acid secretion, and how does it relate to the CCK receptor family?",
+      "back": "Gastrin acts on parietal cells via the CCK-B (CCK2) receptor. It belongs to the same receptor family as CCK, but the B subtype is the gastrin-preferring one."
+    },
+    {
+      "key": "2_3_cc3_0",
+      "front": "What clinical triad suggests Zollinger-Ellison syndrome, and what confirmatory test shows a paradoxical response?",
+      "back": "Recurrent ulcers in atypical locations, failure to respond to PPIs, and a serum gastrin above 1000 pg/mL suggest gastrinoma. The secretin stimulation test confirms it, because secretin paradoxically raises gastrin in Zollinger-Ellison syndrome."
+    },
+    {
+      "key": "2_3_cc3_1",
+      "front": "Roughly what fraction of gastrinomas occur in MEN1, and which three organs and screening labs does MEN1 involve?",
+      "back": "About 25% of gastrinomas occur as part of MEN1, which features parathyroid, pancreatic, and pituitary tumors. Screen with PTH and calcium, and prolactin."
+    },
+    {
+      "key": "2_3_cc7_0",
+      "front": "What three actions does CCK perform after a fatty meal, and what is the mnemonic that captures them?",
+      "back": "CCK contracts the gallbladder, relaxes (opens) the sphincter of Oddi, and stimulates pancreatic enzyme release. The mnemonic is Contract gallbladder, Open sphincter of Oddi, K-ick the pancreas."
+    },
+    {
+      "key": "2_3_cc7_1",
+      "front": "Which luminal nutrients trigger CCK, and which nutrients trigger GIP and secretin instead?",
+      "back": "CCK is triggered by fats and proteins in the duodenum. Carbohydrates (glucose) trigger GIP, and luminal acid triggers secretin."
+    },
+    {
+      "key": "2_3_cc7_2",
+      "front": "Where are the CCK-A and CCK-B receptors located, and which one is actually the gastrin receptor?",
+      "back": "CCK-A (CCK1) receptors are on the gallbladder, pancreatic acinar cells, and brainstem satiety centers. CCK-B (CCK2) receptors are on parietal cells and serve as the gastrin receptor."
+    },
+    {
+      "key": "2_3_cc9_0",
+      "front": "On a CCK-stimulated HIDA scan, what gallbladder ejection fraction is normal, and what value suggests biliary dyskinesia?",
+      "back": "In a normal patient CCK contracts the gallbladder to an ejection fraction above 35%. An ejection fraction below 35% suggests biliary dyskinesia."
+    },
+    {
+      "key": "2_4_cc2_0",
+      "front": "On the parietal cell, what receptor does histamine use, what G-protein and second-messenger cascade does it activate, and why is it called the amplifier?",
+      "back": "Histamine binds the H2 receptor, a Gs-coupled GPCR that activates adenylyl cyclase to raise cAMP and activate PKA. It comes from ECL cells as a paracrine and amplifies acid secretion, so blocking it weakens the gastrin and ACh pathways too."
+    },
+    {
+      "key": "2_4_cc2_1",
+      "front": "Which parietal cell receptor does gastrin use, and what G-protein and signaling pathway does it engage?",
+      "back": "Gastrin binds the CCK-B (CCK2) receptor, a Gq-coupled GPCR that activates phospholipase C, producing IP3 and DAG and raising intracellular calcium. Gastrin is a true endocrine hormone from G cells."
+    },
+    {
+      "key": "2_4_cc2_2",
+      "front": "Which muscarinic receptor mediates ACh stimulation of parietal cells, what pathway does it use, and what is its source?",
+      "back": "ACh acts on the M3 muscarinic receptor, a Gq-coupled GPCR that activates phospholipase C to generate IP3 and DAG and raise intracellular calcium. The ACh comes from the vagus nerve as a neurocrine signal."
+    },
+    {
+      "key": "2_4_cc6_0",
+      "front": "Regardless of which of the three receptors is stimulated, what pump is the final common pathway for acid secretion, and what does it exchange?",
+      "back": "The H+/K+ ATPase is the final common pathway. It pumps hydrogen ions out of the parietal cell into the lumen in exchange for potassium ions moving in."
+    },
+    {
+      "key": "2_4_cc6_1",
+      "front": "Why are PPIs prodrugs, and what makes their inhibition of the proton pump so durable?",
+      "back": "PPIs (the -prazoles) are prodrugs activated by gastric acid, after which they bind irreversibly via a disulfide bond to a cysteine on the H+/K+ ATPase. The pump enzyme must be newly synthesized for acid secretion to resume, giving a 12 to 24 hour duration of effect."
+    },
+    {
+      "key": "2_4_cc8_0",
+      "front": "What enzyme supplies the hydrogen ions for parietal cell acid secretion, and what class of drug modestly reduces acid as a side effect by inhibiting it?",
+      "back": "Carbonic anhydrase generates the hydrogen ions used for HCl secretion. Carbonic anhydrase inhibitors such as acetazolamide modestly reduce gastric acid as a side effect, though they are not first-line acid therapy."
+    },
+    {
+      "key": "2_4_cc8_1",
+      "front": "What is the alkaline tide, what causes it, and is it clinically symptomatic?",
+      "back": "The alkaline tide is a transient postprandial rise in venous bicarbonate caused by basolateral export of HCO3- as the parietal cell secretes acid. It is mild, transient, and asymptomatic, but a high-yield physiology concept."
+    },
+    {
+      "key": "2_4_cc10_0",
+      "front": "Destruction of parietal cells produces pernicious anemia. What is the triad that results, and why does each component occur?",
+      "back": "Pernicious anemia gives B12 deficiency with megaloblastic anemia and neurologic symptoms, achlorhydria, and secondary hypergastrinemia. All three follow from loss of parietal cells, which normally make intrinsic factor and acid."
+    },
+    {
+      "key": "2_4_cc12_0",
+      "front": "By what mechanism do NSAIDs cause peptic ulcers, and how do PPIs versus misoprostol counter that mechanism?",
+      "back": "NSAIDs inhibit COX, reducing PGE2 and thereby removing both mucosal protection and prostaglandin-mediated acid suppression. PPIs counter only the acid arm, whereas misoprostol, a PGE1 analog, restores both mucosal protection and acid suppression."
+    },
+    {
+      "key": "2_5_cc2_0",
+      "front": "How do antacids reduce gastric acidity at the molecular level, and what are two common antacid formulations?",
+      "back": "Antacids work by direct chemical neutralization of acid in the lumen, with no receptor or pump targeting. Tums is calcium carbonate, and Maalox combines aluminum hydroxide and magnesium hydroxide."
+    },
+    {
+      "key": "2_5_cc2_1",
+      "front": "Match each antacid cation to its characteristic side effect: aluminum, magnesium, calcium, and sodium bicarbonate.",
+      "back": "Aluminum causes constipation and magnesium causes diarrhea, so they are combined to balance bowel effects. Calcium can cause milk-alkali syndrome at high doses, and sodium bicarbonate causes metabolic alkalosis with a sodium load."
+    },
+    {
+      "key": "2_5_cc4_0",
+      "front": "By blocking the H2 receptor, how do H2 blockers indirectly weaken all three acid-stimulating pathways, and how do they compare to PPIs?",
+      "back": "H2 blockers remove the cAMP amplifier that histamine provides, indirectly weakening the gastrin and ACh pathways as well. They are less powerful than PPIs but have a faster onset."
+    },
+    {
+      "key": "2_5_cc4_1",
+      "front": "Why has cimetidine largely been replaced by famotidine? Name its hormonal and drug-interaction side effects.",
+      "back": "Cimetidine has anti-androgen effects causing gynecomastia, galactorrhea, and impotence, and it is a potent CYP450 inhibitor with many interactions, including warfarin, phenytoin, and theophylline. Famotidine is cleaner and preferred."
+    },
+    {
+      "key": "2_5_cc8_0",
+      "front": "What exactly do PPIs inhibit, by what type of bond, and why does this give maximal acid suppression?",
+      "back": "PPIs irreversibly and covalently inhibit the H+/K+ ATPase. Because this pump is the final common pathway for acid secretion, blocking it produces maximal acid suppression regardless of the stimulus."
+    },
+    {
+      "key": "2_5_cc8_1",
+      "front": "List the major clinical indications for proton pump inhibitors.",
+      "back": "PPIs are used for chronic GERD, erosive esophagitis, and peptic ulcer disease, for Zollinger-Ellison syndrome at high doses, for prevention of NSAID ulcers, and for stress ulcer prophylaxis in ICU patients."
+    },
+    {
+      "key": "2_5_cc10_0",
+      "front": "What are the recognized long-term risks of PPI therapy captured by the BAD MICE mnemonic?",
+      "back": "Long-term PPI risks include B12 deficiency, bone loss/osteoporosis, acquired community-acquired pneumonia, C. difficile infection, low magnesium, interstitial nephritis with CKD, and acid rebound on discontinuation."
+    }
+  ]
+}

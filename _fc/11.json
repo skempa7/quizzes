@@ -1,0 +1,118 @@
+{
+  "sections": [
+    {
+      "title": "Congenital and motor disorders of the esophagus",
+      "los": [1, 2]
+    },
+    {
+      "title": "Esophagitis, Barrett, and varices",
+      "los": [3, 4]
+    },
+    {
+      "title": "Esophageal carcinoma",
+      "los": [5]
+    }
+  ],
+  "cards": [
+    {
+      "key": "11_1_q0",
+      "front": "A newborn cannot pass food to the stomach, and separately a middle-aged woman has esophageal webs, anemia, and dysphagia. What is the most common congenital esophageal anomaly, and what is that adult triad?",
+      "back": "The most common congenital esophageal anomaly is tracheoesophageal fistula, usually accompanied by esophageal atresia, which prevents the newborn from passing food into the stomach. The adult triad is Plummer-Vinson syndrome: esophageal webs, iron-deficiency anemia, and dysphagia, which also carries an increased risk of esophageal carcinoma."
+    },
+    {
+      "key": "11_1_cc6_0",
+      "front": "Among congenital anomalies of the esophagus, which is the most common, what is it usually paired with, and roughly how often does it occur?",
+      "back": "Tracheoesophageal fistula is the most common congenital esophageal anomaly and is usually associated with esophageal atresia. It occurs in roughly 1 in 3,500 births."
+    },
+    {
+      "key": "11_1_cc8_0",
+      "front": "What three findings make up Plummer-Vinson syndrome, why does it matter clinically, and how does an esophageal web differ in location from a Schatzki ring?",
+      "back": "Plummer-Vinson syndrome is the triad of esophageal webs, iron-deficiency anemia, and dysphagia, and it carries an increased risk of esophageal carcinoma. Webs can occur anywhere in the esophagus, whereas a Schatzki ring is located distally at the gastroesophageal junction."
+    },
+    {
+      "key": "11_2_q0",
+      "front": "Four esophageal motor problems present: one LES that will not relax, one stomach herniating through the diaphragm, one pouch above the UES, and one tear after vomiting. How do you sort them, and which tear becomes a surgical emergency?",
+      "back": "Achalasia is failure of LES relaxation with absent peristalsis (dysphagia to solids and liquids, bird-beak), hiatal hernia is herniation of the stomach through the diaphragmatic hiatus, a Zenker diverticulum is an outpouching above the UES, and a Mallory-Weiss tear is a mucosal tear after vomiting. The surgical emergency is Boerhaave syndrome, a full-thickness rupture causing mediastinitis."
+    },
+    {
+      "key": "11_2_cc6_0",
+      "front": "In terms of LES tone, relaxation, peristalsis, and the type of dysphagia, how does achalasia differ from GERD?",
+      "back": "Achalasia features increased LES tone with failure of LES relaxation and absent peristalsis, producing a bird-beak appearance and dysphagia to both solids and liquids. GERD, in contrast, is characterized by decreased LES tone."
+    },
+    {
+      "key": "11_2_cc6_1",
+      "front": "What infectious disease causes secondary achalasia, and by what mechanism does it produce the esophageal dysfunction?",
+      "back": "Chagas disease causes secondary achalasia. The parasite Trypanosoma cruzi destroys the myenteric (Auerbach) plexus, leading to loss of LES relaxation and peristalsis."
+    },
+    {
+      "key": "11_2_cc8_0",
+      "front": "How do sliding and paraesophageal hiatal hernias differ in anatomy and frequency, and which type typically requires surgery and why?",
+      "back": "Sliding hiatal hernia (~85%) is upward displacement of the gastroesophageal junction, while a paraesophageal hernia involves herniation of the gastric fundus with the GE junction often remaining normally positioned. Type IV (paraesophageal) hernias often require surgery because of the risk of volvulus and ischemia."
+    },
+    {
+      "key": "11_2_cc13_0",
+      "front": "How do Mallory-Weiss and Boerhaave syndrome differ in depth of injury and clinical consequence?",
+      "back": "A Mallory-Weiss tear is a mucosal tear, typically causing painful hematemesis after vomiting. Boerhaave syndrome is a full-thickness esophageal rupture that leads to mediastinitis and is a surgical emergency."
+    },
+    {
+      "key": "11_2_cc13_1",
+      "front": "Where are Zenker, traction, and epiphrenic diverticula located, and what distinguishes a true from a false diverticulum?",
+      "back": "A Zenker diverticulum sits above the UES, a traction diverticulum is mid-esophageal, and an epiphrenic diverticulum lies above the LES. A true diverticulum involves all wall layers, whereas a false diverticulum involves only the mucosa and submucosa."
+    },
+    {
+      "key": "11_3_q0",
+      "front": "Four esophagitis pictures appear: acid-driven linear streaks, allergic rings with eosinophils, punched-out viral ulcers, and salmon-colored mucosa with goblet cells. How do you sort the esophagitides, and which is the famous premalignant metaplasia?",
+      "back": "Reflux (GERD) esophagitis produces acid-driven vertical linear erosions, eosinophilic esophagitis produces concentric rings with more than 15 eosinophils per high-power field, and infective esophagitis (HSV/CMV) produces punched-out viral ulcers. The salmon-colored mucosa with goblet cells is Barrett esophagus, the premalignant intestinal metaplasia that predisposes to adenocarcinoma."
+    },
+    {
+      "key": "11_3_cc6_0",
+      "front": "What are the characteristic microscopic and macroscopic findings of reflux esophagitis (GERD)?",
+      "back": "Microscopically, GERD shows basal zone hyperplasia, elongated papillae, and inflammatory cells. Macroscopically, it produces vertical linear erosions."
+    },
+    {
+      "key": "11_3_cc8_0",
+      "front": "What is the high-yield diagnostic dyad for eosinophilic esophagitis, and why must biopsies be taken at multiple levels?",
+      "back": "The dyad is concentric rings (trachealization) plus more than 15 eosinophils per high-power field. Biopsies are taken at multiple levels because the eosinophilic infiltration is patchy and can be missed with a single sample."
+    },
+    {
+      "key": "11_3_cc10_0",
+      "front": "In infective esophagitis, how do the cellular targets of HSV and CMV inclusions differ, and what is HSV's classic gross ulcer appearance?",
+      "back": "HSV produces nuclear inclusions in squamous epithelial cells and causes punched-out ulcers. CMV produces inclusions in endothelial and fibroblast cells, not in squamous cells."
+    },
+    {
+      "key": "11_3_cc15_0",
+      "front": "Define Barrett esophagus, name its location and driving cause, and state which histologic finding is pathognomonic and what malignancy it predisposes to.",
+      "back": "Barrett esophagus is squamous-to-columnar metaplasia of the distal third of the esophagus driven by chronic GERD. Intestinal metaplasia with goblet cells is the most common and pathognomonic finding, and it confers an increased risk of esophageal adenocarcinoma."
+    },
+    {
+      "key": "11_4_q0",
+      "front": "A cirrhotic patient bleeds massively from the distal esophagus. What vascular lesion is this, what drives it, and how does it differ from a vomiting-induced tear?",
+      "back": "This is esophageal varices, which are dilated submucosal veins in the distal esophagus driven by portal hypertension from cirrhosis. Unlike a Mallory-Weiss tear, which is a mucosal tear caused by vomiting, varices lie beneath intact mucosa and tend to bleed massively."
+    },
+    {
+      "key": "11_4_cc5_0",
+      "front": "What are esophageal varices anatomically, what causes them, and how does their bleeding contrast with a Mallory-Weiss tear?",
+      "back": "Esophageal varices are dilated distal submucosal veins caused by portal hypertension and cirrhosis, lying beneath intact mucosa and prone to massive bleeding. This contrasts with a Mallory-Weiss tear, which is a mucosal tear."
+    },
+    {
+      "key": "11_5_q0",
+      "front": "Two esophageal cancers present: one distal in an obese GERD patient with adjacent goblet cells, and one mid-esophageal in a heavy drinker and smoker. How do you separate adenocarcinoma from squamous cell carcinoma, and what determines prognosis?",
+      "back": "Adenocarcinoma arises in the distal third from Barrett esophagus and GERD, typically in obese Caucasian males, while squamous cell carcinoma arises in the upper or middle third and is linked to alcohol and tobacco. Prognosis for both depends on depth of invasion and lymph node involvement, with late diagnosis yielding a 5-year survival below 25%."
+    },
+    {
+      "key": "11_5_cc6_0",
+      "front": "What is the typical geographic, demographic, anatomic, and molecular profile of esophageal adenocarcinoma?",
+      "back": "Esophageal adenocarcinoma predominates in North America and Europe, arises from Barrett esophagus and GERD in the distal third, and most affects Caucasian males at roughly a 7:1 ratio. It develops via p53 mutation from Barrett metaplasia."
+    },
+    {
+      "key": "11_5_cc8_0",
+      "front": "What is the global, etiologic, anatomic, and morphologic profile of esophageal squamous cell carcinoma?",
+      "back": "Squamous cell carcinoma is the most common esophageal cancer worldwide (~90%) and is driven by the synergistic effect of alcohol and tobacco. It arises in the upper and middle third, progressing from a gray-white plaque to invasive carcinoma."
+    },
+    {
+      "key": "11_5_cc13_0",
+      "front": "What two pathologic factors drive the prognosis and staging of esophageal carcinoma, and what is the survival outlook with late diagnosis?",
+      "back": "Prognosis depends on depth of invasion and lymph node involvement, which determine the stage (0 to IV). Late diagnosis carries a 5-year survival below 25% for adenocarcinoma."
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "sections": [
+    {
+      "title": "Imaging modalities and how studies are performed",
+      "los": [1, 2]
+    },
+    {
+      "title": "Recognizing disease and acute findings on imaging",
+      "los": [3, 4]
+    }
+  ],
+  "cards": [
+    {
+      "key": "26_1_q0",
+      "front": "A plain radiograph distinguishes only four basic densities, from most radiolucent (dark) to most radiopaque (white). What are the four densities, and what substance produces each one?",
+      "back": "The four radiographic densities are air or gas (darkest, lowest attenuation), fat (dark gray), soft tissue or water (gray, includes muscle, organs, and fluid), and bone or calcium or metal (whitest, highest attenuation). Contrast agents such as barium and iodinated dye appear in this same dense white category."
+    },
+    {
+      "key": "26_2_q0",
+      "front": "You need to evaluate the esophageal mucosa for ulcers and polyps. Would you choose single-contrast or double-contrast barium technique, and what does each technique demonstrate best?",
+      "back": "Double-contrast technique is preferred for mucosal detail. Single contrast uses barium alone to fill and distend the lumen, best for showing overall contour, strictures, and gross obstruction. Double contrast combines barium to coat the wall plus gas or effervescent agent to distend the lumen, giving a thin mucosal coating that reveals fine surface lesions such as ulcerations, polyps, and early mucosal disease."
+    },
+    {
+      "key": "26_3_q0",
+      "front": "A barium enema shows an encircling, constricting 'apple-core' (napkin-ring) lesion of the colon, while a separate HIDA scan shows a gallbladder that never fills. What does each finding indicate?",
+      "back": "The apple-core or napkin-ring lesion is the classic sign of an annular, circumferentially constricting colorectal adenocarcinoma narrowing the lumen. A HIDA scan in which the gallbladder fails to fill (non-visualization) indicates cystic duct obstruction, which is the hallmark of acute cholecystitis."
+    },
+    {
+      "key": "26_4_q0",
+      "front": "You compare two abdominal films: one shows dilated proximal bowel with collapsed distal bowel and a distinct caliber transition point, the other shows proportionate dilation of both small and large bowel. Which represents mechanical obstruction, which represents ileus, and what do the air-fluid levels on the first film signify?",
+      "back": "The first film, with dilated proximal bowel, collapsed distal bowel, and a transition (caliber change) point, indicates a mechanical bowel obstruction. The second film, with diffuse proportionate dilation of small and large bowel and no transition point, indicates an adynamic (paralytic) ileus. On the obstruction film, multiple air-fluid levels, classically at differing heights and giving a step-ladder appearance on upright views, reflect trapped gas and fluid backing up proximal to the obstruction."
+    }
+  ]
+}

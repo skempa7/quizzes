@@ -1,0 +1,127 @@
+{
+  "sections": [
+    {
+      "title": "Defining and classifying constipation",
+      "los": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "title": "Drug causes and evaluation",
+      "los": [
+        4,
+        5
+      ]
+    },
+    {
+      "title": "Non-pharmacologic management",
+      "los": [
+        6
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "key": "28_1_q0",
+      "front": "A patient strains and passes hard pellets more than a quarter of the time, fewer than three times a week, for four months. Do they meet the Rome IV criteria for functional constipation, and what extra criterion must you confirm?",
+      "back": "Yes. Rome IV requires at least 2 of 6 symptoms (straining, hard stools, sensation of incomplete evacuation, sensation of anorectal blockage, manual maneuvers, and fewer than 3 spontaneous bowel movements per week), each in more than 25% of defecations, present for at least 3 months with onset at least 6 months earlier. You must also confirm that criteria for IBS are not met, namely that loose stools are rare without laxatives and there is no predominant abdominal pain."
+    },
+    {
+      "key": "28_1_cc3_0",
+      "front": "What are the core Rome IV criteria that define functional constipation, and how is it distinguished from IBS?",
+      "back": "Functional constipation requires at least 2 of 6 features (such as straining, hard or lumpy stools, incomplete evacuation, anorectal blockage, manual maneuvers, and fewer than 3 spontaneous bowel movements per week), each present in more than 25% of defecations for at least 3 months. The criteria for IBS must be insufficiently met, meaning abdominal pain is not a predominant feature."
+    },
+    {
+      "key": "28_1_cc5_0",
+      "front": "On the Bristol Stool Form Scale, which types indicate constipation versus loose stool, and in which direction does the scale run?",
+      "back": "Bristol types 1 and 2 (separate hard lumps and a lumpy, sausage-shaped stool) indicate constipation. Types 6 and 7 indicate loose to watery stool, so the scale runs from hard at the low end to loose at the high end."
+    },
+    {
+      "key": "28_2_cc1_0",
+      "front": "What is the approximate prevalence of constipation in adults, and which demographic groups carry a higher burden?",
+      "back": "Constipation affects roughly 15% of adults. It is more common in women, in non-Caucasian populations, and in people aged 65 and older."
+    },
+    {
+      "key": "28_3_q0",
+      "front": "Two patients both have hard, infrequent stool. One has a normal colon-transit study but cannot expel a rectal balloon. Which type of constipation is that, and how do you confirm it?",
+      "back": "This is a defecatory (dyssynergic) disorder, in which transit is normal but evacuation fails due to poor coordination of the abdominal and pelvic-floor muscles. It is confirmed with anorectal manometry plus a balloon expulsion test, which demonstrate paradoxical puborectalis contraction and impaired expulsion."
+    },
+    {
+      "key": "28_3_cc4_0",
+      "front": "What underlying physiologic defect characterizes slow-transit constipation, and how does the colon respond to stimulation?",
+      "back": "Slow-transit constipation reflects enteric-plexus dysfunction, so the colon shows a blunted propulsive response to meals (the gastrocolic reflex) and to stimulants such as bisacodyl or cholinergic agents. Colonic transit is measurably prolonged."
+    },
+    {
+      "key": "28_3_cc6_0",
+      "front": "What defines dyssynergic defecation, and which tests establish the diagnosis?",
+      "back": "Dyssynergic defecation is failure to coordinate the abdominal and pelvic-floor muscles during evacuation, classically with paradoxical contraction (rather than relaxation) of the puborectalis. It is diagnosed with anorectal manometry plus a balloon expulsion test."
+    },
+    {
+      "key": "28_3_cc11_0",
+      "front": "What single feature discriminates IBS with constipation (IBS-C) from chronic idiopathic constipation (CIC)?",
+      "back": "The discriminator is abdominal pain that is related to defecation or to a change in stool frequency or form. IBS-C features this pain prominently, whereas CIC shares the other bowel symptoms but lacks predominant pain."
+    },
+    {
+      "key": "28_4_q0",
+      "front": "Why does taking a careful medication history change the management of a newly constipated patient?",
+      "back": "Many commonly used drugs cause constipation, so identifying and stopping or substituting an offending agent can resolve the problem without further workup or laxatives. It also prevents unnecessary testing by pointing to a reversible cause rather than a primary motility or structural disorder."
+    },
+    {
+      "key": "28_4_cc3_0",
+      "front": "Which major drug classes are the common pharmacologic causes of constipation?",
+      "back": "Opioids, anticholinergics, tricyclic antidepressants, antihistamines, calcium channel blockers, and iron supplements are the common offenders."
+    },
+    {
+      "key": "28_4_cc5_0",
+      "front": "By what mechanism do opioids cause constipation, and what makes opioid-induced constipation a distinct entity?",
+      "back": "Opioids act on enteric mu-opioid receptors to reduce motility and secretion while increasing sphincter tone, slowing transit and hardening stool. Opioid-induced constipation has its own Rome IV diagnostic criteria, marking it as a distinct clinical entity."
+    },
+    {
+      "key": "28_5_q0",
+      "front": "A 50-year-old reports new constipation together with iron-deficiency anemia. What is the next step in the evaluation, and why?",
+      "back": "Colonoscopy is the next step, because new constipation with iron-deficiency anemia in this age group is an alarm feature concerning for colorectal cancer. The anemia and age each independently mandate structural evaluation of the colon before treating the constipation symptomatically."
+    },
+    {
+      "key": "28_5_cc4_0",
+      "front": "In what order should the work-up of constipation proceed?",
+      "back": "Start with the history including a medication review, then perform a digital rectal examination, then screen for alarm features, and finally order type-specific tests such as colon-transit studies or anorectal manometry. Following this sequence avoids missing reversible causes and red flags."
+    },
+    {
+      "key": "28_5_cc4_1",
+      "front": "What digital rectal exam finding on bearing down points to dyssynergic defecation?",
+      "back": "Paradoxical contraction of the puborectalis (instead of relaxation) when the patient bears down suggests dyssynergic defecation. This finding should prompt confirmatory anorectal manometry and balloon expulsion testing."
+    },
+    {
+      "key": "28_5_cc10_0",
+      "front": "Which alarm features in a constipated patient should trigger colonoscopy?",
+      "back": "Age 45 or older, hematochezia, iron-deficiency anemia, unintentional weight loss of 10 pounds or more, signs of obstruction, and a family history of colorectal cancer or inflammatory bowel disease. Any of these warrants colonoscopy to exclude structural disease."
+    },
+    {
+      "key": "28_5_cc12_0",
+      "front": "Which type-specific tests confirm slow-transit versus dyssynergic constipation, and what is the final distinction to make?",
+      "back": "A colon-transit study confirms slow-transit constipation, while anorectal manometry plus a balloon expulsion test confirm dyssynergic defecation. Once a defecatory disorder and slow transit are sorted out, the remaining step is to distinguish IBS-C from chronic idiopathic constipation based on abdominal pain."
+    },
+    {
+      "key": "28_6_q0",
+      "front": "A patient with dyssynergic defecation has failed fiber and is now asking about surgery. What do you recommend first, and why?",
+      "back": "Recommend pelvic-floor biofeedback therapy first, because it is the first-line treatment for dyssynergic defecation and retrains the abnormal pelvic-floor coordination that fiber cannot fix. Surgery is not indicated for a defecatory disorder, and biofeedback must be tried before any consideration of colectomy."
+    },
+    {
+      "key": "28_6_cc3_0",
+      "front": "What constitutes first-line non-pharmacologic management of constipation?",
+      "back": "First-line measures are increased dietary fiber, adequate fluid intake, and behavioral changes, including timing defecation to take advantage of the morning gastrocolic reflex."
+    },
+    {
+      "key": "28_6_cc8_0",
+      "front": "What is the first-line treatment for refractory or dyssynergic constipation, and where does it fall relative to surgery?",
+      "back": "Biofeedback is first-line for refractory and dyssynergic constipation. It must be attempted and must precede any consideration of colectomy."
+    },
+    {
+      "key": "28_6_cc10_0",
+      "front": "When is subtotal colectomy appropriate for constipation, and when should it be avoided?",
+      "back": "Subtotal colectomy is a last-resort option reserved for documented slow-transit constipation that has failed all other therapy. It should be avoided when pain and bloating predominate, since those features suggest IBS-C, in which surgery does not help and may worsen symptoms."
+    }
+  ]
+}

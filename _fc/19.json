@@ -1,0 +1,137 @@
+{
+  "sections": [
+    {
+      "title": "Congenital anomalies, obstruction, and ischemia",
+      "los": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "title": "Absorption and malabsorptive disease",
+      "los": [
+        4,
+        5
+      ]
+    },
+    {
+      "title": "Small bowel tumors",
+      "los": [
+        6
+      ]
+    }
+  ],
+  "cards": [
+    {
+      "key": "19_1_q0",
+      "front": "A newborn vomits bile on the first day of life. Which congenital small-bowel lesions belong on the differential, and which one is remembered by the \"rule of 2s\"?",
+      "back": "Bilious vomiting in a newborn suggests a congenital obstruction such as duodenal atresia or stenosis, intestinal atresia, malrotation with volvulus, or meconium ileus. Meckel diverticulum is the lesion classically recalled by the \"rule of 2s.\""
+    },
+    {
+      "key": "19_1_cc3_0",
+      "front": "Which congenital small-bowel anomaly presents with bilious vomiting in the first 24 to 48 hours of life and is strongly associated with Down syndrome?",
+      "back": "Duodenal atresia or stenosis. It is associated with Down syndrome and presents with bilious vomiting in the first 24 to 48 hours, often with a double-bubble sign on imaging."
+    },
+    {
+      "key": "19_1_cc5_0",
+      "front": "What are the components of the \"rule of 2s\" used to describe Meckel diverticulum?",
+      "back": "Meckel diverticulum occurs in about 2% of the population, is found within 2 feet of the ileocecal valve, is about 2 inches long, often presents around age 2, and can contain 2 types of ectopic mucosa (gastric and pancreatic)."
+    },
+    {
+      "key": "19_1_cc7_0",
+      "front": "A newborn fails to pass meconium in the first 12 to 24 hours because thick meconium plugs the ileum. What is this called and which underlying disease should you suspect?",
+      "back": "This is meconium ileus, in which inspissated meconium obstructs the ileum. It is classic for cystic fibrosis and is often the earliest clinical manifestation of the disease."
+    },
+    {
+      "key": "19_2_q0",
+      "front": "What are the four mechanical causes of small-bowel obstruction, and what single word signals that the blood supply is now in danger?",
+      "back": "The four mechanical causes are hernia, adhesions, volvulus, and intussusception (adhesions are most common in adults). The danger word is strangulation, which means the blood supply has been compromised."
+    },
+    {
+      "key": "19_2_cc3_0",
+      "front": "In small-bowel obstruction, what does the term strangulation specifically mean and why is it the feared complication?",
+      "back": "Strangulation means the obstruction has compromised the blood supply, leading to ischemia and then gangrene of the bowel. It is the dangerous turn in SBO because it carries the risk of necrosis and perforation."
+    },
+    {
+      "key": "19_2_cc5_0",
+      "front": "Name the four mechanisms of mechanical small-bowel obstruction, and which one is the most common cause in adults?",
+      "back": "The four mechanisms are hernia, adhesions, volvulus, and intussusception. Adhesions are the most common cause of mechanical small-bowel obstruction in adults."
+    },
+    {
+      "key": "19_3_q0",
+      "front": "What is the core pathology sequence of ischemic bowel disease, and how does it distinguish acute arterial occlusion from chronic mesenteric ischemia?",
+      "back": "The sequence is inflammation to ischemia (recoverable) to infarction (necrosis). Acute arterial occlusion (embolus or thrombus of the SMA) causes sudden ischemia and infarction, whereas chronic mesenteric ischemia produces recurrent postprandial pain (abdominal angina) without immediate infarction."
+    },
+    {
+      "key": "19_3_cc2_0",
+      "front": "What is the ordered pathology sequence of ischemic bowel disease, and which stage is still recoverable?",
+      "back": "The sequence is inflammation, then ischemia, then infarction. Ischemia is still recoverable, while infarction means necrosis and dead tissue; cells do not die on the first day, so early intervention can salvage the bowel."
+    },
+    {
+      "key": "19_3_cc4_0",
+      "front": "What gross and clinical findings characterize acute superior mesenteric artery occlusion from an embolus or thrombus?",
+      "back": "Acute SMA occlusion produces edematous, purple-red (hemorrhagic) bowel with pneumatosis (gas in the bowel wall) and absent peristalsis, reflecting transmural infarction."
+    },
+    {
+      "key": "19_3_cc6_0",
+      "front": "What is abdominal angina, and what triad of features points to chronic mesenteric ischemia?",
+      "back": "Abdominal angina is chronic mesenteric ischemia caused by inadequate intestinal blood flow with eating. The triad is postprandial pain, food fear (sitophobia), and weight loss."
+    },
+    {
+      "key": "19_4_q1",
+      "front": "Once malabsorption is diagnosed, Machini said the next step is to localize it. Localize it to what?",
+      "back": "The next step is to localize the defect to one of the three phases of absorption: the intraluminal (digestion) phase, the intestinal (brush border) phase, or the transepithelial (transport into blood) phase."
+    },
+    {
+      "key": "19_4_cc3_0",
+      "front": "What are the three sequential phases of nutrient absorption, and what does each accomplish?",
+      "back": "The phases are intraluminal (luminal digestion of nutrients), intestinal (brush-border processing), and transepithelial (transport across the epithelium into the blood). A defect in any phase can cause malabsorption."
+    },
+    {
+      "key": "19_4_cc5_0",
+      "front": "How does general malabsorption differ from isolated malabsorption, and what is a classic example of each?",
+      "back": "General malabsorption affects all nutrient classes and is exemplified by celiac disease. Isolated malabsorption affects a single nutrient, such as vitamin B12 in terminal-ileal disease, which leads to megaloblastic anemia."
+    },
+    {
+      "key": "19_5_q0",
+      "front": "Three classic small-bowel malabsorptive diseases end in mucosal damage. What is the distinct mechanism and key buzzword for each?",
+      "back": "Lactase deficiency causes osmotic diarrhea from undigested lactose (lactose tolerance test). Celiac disease is a gluten-triggered immune attack on HLA-DQ2/DQ8 individuals causing villous atrophy. Whipple disease is infection by Tropheryma whipplei, filling the lamina propria with PAS-positive macrophages."
+    },
+    {
+      "key": "19_5_cc3_0",
+      "front": "What causes the symptoms of lactase deficiency, and which test confirms the diagnosis?",
+      "back": "In lactase deficiency, undigested lactose draws water into the lumen, producing osmotic diarrhea, bloating, and flatus after milk. The lactose tolerance test (or hydrogen breath test) is diagnostic."
+    },
+    {
+      "key": "19_5_cc5_0",
+      "front": "By what immune mechanism does gluten produce mucosal injury in celiac disease, and what is seen on duodenal biopsy?",
+      "back": "In genetically susceptible individuals (HLA-DQ2 or DQ8), gluten peptides trigger a CD4 and CD8 T-cell immune response. This causes villous atrophy with a flattened mucosal mosaic pattern on duodenal biopsy."
+    },
+    {
+      "key": "19_5_cc7_0",
+      "front": "What organism causes Whipple disease, and how does it produce malabsorption on a histologic level?",
+      "back": "Whipple disease is caused by Tropheryma whipplei, a gram-positive actinomycete. It fills the lamina propria with PAS-positive macrophages that block lymphatic fat transport, leading to malabsorption."
+    },
+    {
+      "key": "19_6_q0",
+      "front": "The small bowel hosts several tumor families. Which polyposis did Machini call number-one important, and what buzzword pins the carcinoid?",
+      "back": "Familial adenomatous polyposis (FAP) was called the number-one-important polyposis. The carcinoid (neuroendocrine) tumor is pinned by its salt-and-pepper chromatin and chromogranin A positivity."
+    },
+    {
+      "key": "19_6_cc3_0",
+      "front": "What gene and inheritance pattern define familial adenomatous polyposis, and what is its cancer risk by age 30?",
+      "back": "FAP is caused by an APC gene mutation and is inherited in an autosomal dominant pattern. It carries a near-100% risk of colorectal cancer by age 30."
+    },
+    {
+      "key": "19_6_cc8_0",
+      "front": "What cell of origin and driver mutation define a gastrointestinal stromal tumor (GIST), and what size cutoffs predict its behavior?",
+      "back": "GISTs arise from the interstitial cells of Cajal and are driven by c-KIT mutations. Tumors under 2 cm are low-risk, while those over 5 cm behave aggressively."
+    },
+    {
+      "key": "19_6_cc10_0",
+      "front": "What histologic and immunohistochemical buzzwords identify a carcinoid tumor, and where in the GI tract is it most often found?",
+      "back": "Carcinoid tumors show salt-and-pepper chromatin and are chromogranin A positive. They most commonly arise in the appendix and rectum, with more than 5% occurring in the duodenum."
+    }
+  ]
+}

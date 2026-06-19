@@ -1,0 +1,118 @@
+{
+  "sections": [
+    {
+      "title": "Large intestine anatomy and vascular lesions",
+      "los": [1, 2]
+    },
+    {
+      "title": "Colorectal and anal tumors and staging",
+      "los": [3, 4]
+    },
+    {
+      "title": "Appendix and peritoneum",
+      "los": [5, 6]
+    }
+  ],
+  "cards": [
+    {
+      "key": "27_1_q0",
+      "front": "What three histologic features let you call a biopsy colon rather than small intestine?",
+      "back": "Colonic mucosa lacks villi, shows straight tubular crypts, and is lined by colonocytes together with abundant goblet cells. The flat, villus-free surface with parallel crypts is the key distinction from the villous small-intestinal mucosa."
+    },
+    {
+      "key": "27_1_cc3_0",
+      "front": "Roughly how long is the large intestine, and what are its two main functions from ileum to anus?",
+      "back": "The large intestine is about 1.5 m (5 ft) long, running from the ileum to the anus. Its main jobs are absorbing water and electrolytes and forming and storing feces."
+    },
+    {
+      "key": "27_1_cc5_0",
+      "front": "On histology, what three mucosal features define normal colonic mucosa?",
+      "back": "Normal colonic mucosa has no villi, straight (non-branching) crypts, and an epithelium of colonocytes plus goblet cells. These buzzwords distinguish it from small intestine."
+    },
+    {
+      "key": "27_2_q0",
+      "front": "Why does angiodysplasia preferentially affect the cecum rather than the sigmoid?",
+      "back": "The cecum has the largest luminal diameter, so by Laplace's law it sustains the highest wall tension. This chronic tension intermittently obstructs submucosal venous outflow, leading to the dilated, tortuous vascular ectasias of angiodysplasia in the cecum and right colon."
+    },
+    {
+      "key": "27_2_cc3_0",
+      "front": "What is angiodysplasia, where does it localize, and how often does it cause major lower-GI bleeding in older patients?",
+      "back": "Angiodysplasia is a vascular ectasia (dilated, tortuous submucosal vessels) of the cecum and right colon. It accounts for roughly 20 to 25 percent of major lower-GI bleeds in patients after the sixth decade of life."
+    },
+    {
+      "key": "27_3_q0",
+      "front": "A large sessile rectal polyp with finger-like projections is biopsied. Which adenoma subtype is it, and why does that matter clinically?",
+      "back": "The finger-like projections indicate a villous adenoma. Villous histology carries the highest malignant potential, especially when the polyp is larger than 2 cm and sessile, so it warrants complete removal and careful surveillance."
+    },
+    {
+      "key": "27_3_cc7_0",
+      "front": "How does malignant potential of colonic adenomas rank by architecture, and which features push the risk highest?",
+      "back": "Malignant risk climbs from tubular to tubulovillous to villous adenomas. The risk is highest when the polyp is greater than 2 cm, sessile, and villous in architecture."
+    },
+    {
+      "key": "27_3_cc9_0",
+      "front": "Match each polyposis syndrome to its causative gene: Peutz-Jeghers, juvenile polyposis, Cowden/Bannayan-Riley-Ruvalcaba, and FAP.",
+      "back": "Peutz-Jeghers is caused by STK11; juvenile polyposis by SMAD4 or BMPR1A; Cowden and Bannayan-Riley-Ruvalcaba by PTEN; and FAP by APC."
+    },
+    {
+      "key": "27_3_cc14_0",
+      "front": "What is the order of genetic hits in the adenoma-carcinoma sequence, and which common drug impedes it?",
+      "back": "The sequence runs APC (the first hit, fitting Knudson's two-hit model), then KRAS, then loss of 18q21/SMAD with TP53 mutation and increased COX expression. Aspirin (a COX inhibitor) impedes progression."
+    },
+    {
+      "key": "27_3_cc16_0",
+      "front": "How do FAP and Lynch syndrome differ in gene, mechanism, and tumor location so you don't swap them?",
+      "back": "FAP results from APC mutation (5q21) and produces a carpet of innumerable polyps. Lynch syndrome results from mismatch-repair gene defects (MSH2, MLH1) causing microsatellite instability, with early-onset, right-sided cancers and few polyps."
+    },
+    {
+      "key": "27_3_cc21_0",
+      "front": "How do left-sided and right-sided colorectal cancers differ in their typical presentation?",
+      "back": "Left-sided CRC tends to be an annular apple-core lesion causing reduced stool caliber and blood-streaked stool. Right-sided CRC is typically a bulky, exophytic mass presenting with occult bleeding and iron-deficiency anemia."
+    },
+    {
+      "key": "27_3_cc21_1",
+      "front": "A patient is found to have Streptococcus bovis endocarditis. What occult diagnosis must you exclude?",
+      "back": "Streptococcus bovis (gallolyticus) endocarditis or bacteremia is classically associated with colorectal cancer, so the patient must undergo colonoscopy to work up for colon cancer."
+    },
+    {
+      "key": "27_3_cc23_0",
+      "front": "What is the dominant histology of anal canal cancer, and which infection drives it?",
+      "back": "Anal canal cancer is predominantly squamous cell carcinoma. It has a strong association with high-risk human papillomavirus, especially HPV types 16 and 18."
+    },
+    {
+      "key": "27_4_q0",
+      "front": "A colon adenocarcinoma is staged T2 N0 M0. What is the next step, and why?",
+      "back": "T2 N0 M0 disease is treated with surgical resection alone, and no adjuvant chemoradiation is needed because the tumor is node-negative and confined to the muscularis propria without metastasis. Surgery is curative at this early stage."
+    },
+    {
+      "key": "27_4_cc3_0",
+      "front": "What does the T stage tell you about whether colon cancer needs more than resection alone?",
+      "back": "T2 N0 M0 colon cancer is managed with resection and does not require added therapy, whereas T3 or higher tumors call for resection followed by chemoradiation. Increasing T stage marks the threshold for adjuvant treatment."
+    },
+    {
+      "key": "27_4_cc5_0",
+      "front": "What is CEA used for in colorectal cancer, and what is the standard operation for rectal cancer?",
+      "back": "CEA is used for monitoring treatment response and detecting recurrence, not for screening. The standard surgical procedure for rectal cancer is total mesorectal excision (TME)."
+    },
+    {
+      "key": "27_5_q0",
+      "front": "How does a mucinous neoplasm of the appendix produce diffuse gelatinous ascites?",
+      "back": "A mucinous appendiceal neoplasm can rupture or perforate, seeding the peritoneal cavity with mucin-producing epithelial cells. These implants continue secreting mucin, filling the abdomen with gelatinous material, a condition called pseudomyxoma peritonei."
+    },
+    {
+      "key": "27_5_cc3_0",
+      "front": "How does the pain of acute appendicitis evolve, and what histologic finding confirms the diagnosis?",
+      "back": "Appendicitis pain begins as vague periumbilical pain and then migrates to the right lower quadrant at McBurney's point. The histologic diagnosis requires neutrophils infiltrating the muscularis propria."
+    },
+    {
+      "key": "27_6_q0",
+      "front": "In a cirrhotic patient with ascites, fever, and neutrophilic ascitic fluid but no surgical source, what is the diagnosis?",
+      "back": "This is spontaneous bacterial peritonitis (SBP). It is defined by an elevated ascitic neutrophil count (250 or more PMNs per microliter) in a cirrhotic patient with no identifiable surgical or perforated source."
+    },
+    {
+      "key": "27_6_cc3_0",
+      "front": "How do you distinguish spontaneous bacterial peritonitis from chemical peritonitis?",
+      "back": "SBP is neutrophilic ascitic fluid in a cirrhotic patient with no surgical source. Chemical peritonitis instead results from irritants such as bile, pancreatic enzymes, or foreign material reaching the peritoneum."
+    }
+  ]
+}
