@@ -21,6 +21,7 @@ B2 = _imp("bld35", "build_kpclaude_35-38.py")   # 35&36 / 37 / 38 source data
 B3 = _imp("bld39", "build_kpclaude_39-42.py")   # 39&40 / 41 / 42 source data
 B4 = _imp("bld43", "build_kpclaude_43-49.py")   # 43&44 / 45&46 / 47 / 48 / 49 source data
 B5 = _imp("bld50", "build_kpclaude_50-54.py")   # 50 / 51 / 52 / 53&54 source data
+B6 = _imp("bld55", "build_kpclaude_55-57.py")   # 55 / 56 / 57 source data
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "quizzes/gi-final/content.js")
@@ -263,6 +264,18 @@ add_block35("52", "Pathology of the Exocrine Pancreas (Lec 52)", "Dr. Broderick 
 add_block35("53", "Medical Aspects of Pancreatic Disorders I & II (Lec 53–54)", "Dr. Ari Lamet",
             f3[4], f3[5], f3[8], f3[7], f3[9], f3[10], f3[11],
             [("53", 30, 0), ("54", 20, 30)], "53-54", buzz=f3[6])
+
+# ---- 55-57 blocks (build_kpclaude_55-57.py): 55, 56, 57 — the final close-out (Lec 58 NOT tested) ----
+g0, g1, g2 = (B6.BLOCKS[i] for i in range(3))
+add_block35("55", "Nutrition in Adults (Lec 55)", "Dr. Marilyn Gordon",
+            g0[4], g0[5], g0[8], g0[7], g0[9], g0[10], g0[11],
+            [("55", 44, 0)], "55", buzz=g0[6])
+add_block35("56", "Porphyrins (Lec 56)", "Dr. Suzanne Riskin",
+            g1[4], g1[5], g1[8], g1[7], g1[9], g1[10], g1[11],
+            [("56", 21, 0)], "56", buzz=g1[6])
+add_block35("57", "Cytochrome P450 (Lec 57)", "Dr. Anna Potter",
+            g2[4], g2[5], g2[8], g2[7], g2[9], g2[10], g2[11],
+            [("57", 38, 0)], "57", buzz=g2[6])
 
 # ==================================================================================
 #  write content.js
